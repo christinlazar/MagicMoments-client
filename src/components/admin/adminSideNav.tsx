@@ -47,8 +47,8 @@ const AdminSidebar = () => {
               </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+             to='/admin/requests'
                 className="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-envelope mt-1"></i>
@@ -56,7 +56,7 @@ const AdminSidebar = () => {
                 <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
                   3
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
               <Link to='/admin/users'
@@ -68,22 +68,22 @@ const AdminSidebar = () => {
               </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="/admin/vendors"
                 className="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-user-headset mt-1"></i>
                 <span className="flex-1 ms-3 whitespace-nowrap font-serif">Vendors</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+             to="/admin/LogOut"
                 className="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-sign-out-alt mt-1"></i>
                 <span className="flex-1 ms-3 whitespace-nowrap font-serif">Logout</span>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

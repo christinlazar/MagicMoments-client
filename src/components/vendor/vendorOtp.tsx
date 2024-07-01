@@ -30,7 +30,7 @@ function VendorVerifyOTPmodal() {
 
     function closeModal(){
         setModal(false)
-        navigate('/register',{state:{toregister:true}})
+        navigate('/vendor',{state:{toVendor:true}})
     }
     async function sendOtp(e:React.FormEvent<HTMLFormElement>){
       try {
@@ -39,7 +39,7 @@ function VendorVerifyOTPmodal() {
         const res = await vendorVerifyOtp(otp)
         if(res){
           if(res.data.success){
-              navigate('/login',{state:{success:true}})
+              navigate('/vendor/vendorLogin',{state:{success:true}})
           }else if(!res.data.success && !res.data.goback){
             toast.error(res.data.message)
             setOtp('')
@@ -47,8 +47,13 @@ function VendorVerifyOTPmodal() {
             toast.error(res.data.message)
             setTimeout(()=>{
               setModal(false)
-              navigate('/register',{state:{toregister:true}})
+              navigate('/vendor',{state:{toregister:true}})
             },2000)
+          }else if(res.data.session == false){
+            toast.error('session has been expired please register again')
+            setTimeout(()=>{
+              navigate('/vendor',{state:{toregister:true}})
+            },3000)
           }
         }
       } catch (error:Error | any) {

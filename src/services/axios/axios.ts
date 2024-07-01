@@ -49,7 +49,7 @@ Api.interceptors.response.use(
             }else if(!response.data.refresh){
                     console.log("hiiiiiiiiiiiiiiiiiiiii")
             }
-        }else if(error.response.status == 401 && !error.response.data.refresh){
+        }else if(error.response.status == 401 && !error.response.data.refresh && error.response.data.accepted != false && error.response.data.role == 'admin'){
             await localStorage.removeItem('accessToken')
             await localStorage.removeItem('adminInfo')
             window.location.href = '/admin'

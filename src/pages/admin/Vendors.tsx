@@ -1,72 +1,65 @@
-import React, { useEffect, useState } from 'react'
-import { Button } from '@material-tailwind/react'
-import { BlockUser, bringUsers ,unblockUser} from '../../api/adminApi'
-import { toast,Toaster } from 'sonner'
-import { useSelector } from 'react-redux'
-
-interface User{
-  _id?:string,
-  name:string,
-  email:string,
-  image?:string,
-  password:string,
-  isBlocked:boolean,
-  phone:string,
-  createdAt:Date
+import React,{useEffect,useState} from 'react'
+import { Toaster,toast } from 'sonner'
+import { bringVendors ,blockVendor,unblockVendor} from '../../api/adminApi';
+export enum AcceptanceStatus {
+    Requested = 'requested',
+    Accepted = 'accepted',
+    Rejected = 'rejected'
 }
-
-interface RootState{
-  auth:{
-    userInfo:string
-  }
+interface Vendor{
+    _id?:string;
+    companyName:string;
+    companyEmail:string;
+    companyLocation:string;
+    password:string;
+    createdAt:Date;
+    category:string;
+    isAccepted:AcceptanceStatus;
+    isBlocked:boolean;
 }
-
-function Users() {
-  const [isBlocked,setIsBlocked] = useState<boolean>(false)
-const [users,setUsers] = useState<User[]>([])
-const [isLoading,setIsLodaing] = useState<boolean>(true)
-  useEffect(   () => {
-    const fetchData = async () =>{
-      try {
-        const userData =  await bringUsers()
-        if(userData?.data.userData){
-           await setUsers(userData?.data.userData)
-        }
-        console.log("usd is",userData)
-      } catch (error) {
-        console.error('error during fetching data',error)
-      }finally{
-        setIsLodaing(false)
+function Vendors() {
+    const [isBlocked,setIsBlocked] = useState<boolean>(false)
+    const [vendors,setVendors] = useState<Vendor[]>([])
+    const [isLoading,setIsLodaing] = useState<boolean>(true)
+      useEffect(   () => {
+        const fetchData = async () =>{
+          try {
+            const vendorData =  await bringVendors()
+            if(vendorData?.data.vendors){
+               await setVendors(vendorData?.data.vendors)
+            }
+            console.log("usd is",vendorData)
+          } catch (error) {
+            console.error('error during fetching data',error)
+          }finally{
+            setIsLodaing(false)
+          }
+       }
+          fetchData()
+      },[isLoading])
+    
+      const unBlockvendor = async (vendorId:string | undefined) =>{
+            const res = await unblockVendor(vendorId as string)
+            console.log(res)
+            if(res?.data.success){
+              localStorage.removeItem('vendorInfo')
+               setVendors(prevVendors => prevVendors.map(vendor=>vendor._id == vendorId ?{...vendor,isBlocked:false}:vendor))
+              toast.success('Vendor has been unblocked')
+            }
       }
-   }
-      fetchData()
-  },[isLoading])
-  const {userInfo} = useSelector((state:RootState)=>state.auth)
-  const unBlockUser = async (userId:string | undefined) =>{
-        const res = await unblockUser(userId as string)
-        console.log(res)
-        if(res?.data.message){
-          await setUsers(prevUsers => prevUsers.map(user=>user._id == userId ?{...user,isBlocked:false}:user))
-          toast.success('User has been unblocked')
-        }
-  }
-   
-  const blockUser = async (userId:string | undefined) =>{
-      const res = await BlockUser(userId as string)
-      console.log("result isssss",res)
-      if(res?.data.success){
-        localStorage.removeItem('userInfo')
-         setUsers(prevUsers => prevUsers.map(user=>user._id == userId ?{...user,isBlocked:true}:user))
-        toast.error('User has been blocked')
+       
+      const blockvendor = async (vendorId:string | undefined) =>{
+          const res = await blockVendor(vendorId as string)
+          if(res?.data.success){
+            await setVendors(prevVendors => prevVendors.map(vendor=>vendor._id == vendorId ?{...vendor,isBlocked:true}:vendor))
+            toast.error('Vendor has been blocked')
+          }
       }
-  }
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  
+    
+      if (isLoading) {
+        return <div>Loading...</div>;
+      }
   return (
-    <>
     <div className="overflow-x-auto p-4">
       <Toaster richColors />
       <table className="min-w-full divide-y divide-gray-200">
@@ -105,18 +98,18 @@ const [isLoading,setIsLodaing] = useState<boolean>(true)
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {users && users.map((user) => (
-            <tr key={user._id}>
+          {vendors && vendors.map((vendor) => (
+            <tr key={vendor._id}>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
                   <div className="ml-4">
-                    <div className="text-sm font-medium text-gray-900">{user.name}</div>
-                    <div className="text-sm text-gray-500">{user.email}</div>
+                    <div className="text-sm font-medium text-gray-900">{vendor.companyName}</div>
+                    <div className="text-sm text-gray-500">{vendor.companyEmail}</div>
                   </div>
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                {!user.isBlocked ? (
+                {!vendor.isBlocked ? (
                   <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                     Active
                   </span>
@@ -126,19 +119,19 @@ const [isLoading,setIsLodaing] = useState<boolean>(true)
                   </span>
                 )}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.phone}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.email}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{vendor.companyLocation}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{vendor.companyEmail}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                {user.isBlocked ? (
+                {vendor.isBlocked ? (
                   <button
-                    onClick={() => unBlockUser(user._id)}
+                    onClick={() => unBlockvendor(vendor._id)}
                     className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
                   >
                     Unblock
                   </button>
                 ) : (
                   <button
-                    onClick={() => blockUser(user._id)}
+                    onClick={() => blockvendor(vendor._id)}
                     className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
                   >
                     Block
@@ -150,10 +143,7 @@ const [isLoading,setIsLodaing] = useState<boolean>(true)
         </tbody>
       </table>
     </div>
-    </>
-
   )
 }
 
-
-export default Users
+export default Vendors

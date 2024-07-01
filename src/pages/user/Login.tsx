@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import logo from '../../assets/license (1).png'
 import RegisterImage from '../../assets/pexels-imagestudio-1488312.jpg'
 import {useLocation, useNavigate} from 'react-router-dom'
-// import {toast,ToastContainer} from 'react-toastify'
 import { userLogin } from '../../api/userApi'
 import { useDispatch } from 'react-redux'
 import { setUserCredentials } from '../../store/slice/AuthSlice'
@@ -21,8 +20,6 @@ function Login() {
     },[])
     const [email,setEmail] = useState<string>('')
     const [password,setPassword] = useState<string>('')
-    const[error1,setError1] = useState<string>('')
-    const[error2,setError2] = useState<string>('')
     const handleSubmit  = async (e:React.FormEvent<HTMLFormElement>) => {
           e.preventDefault()
         try {
@@ -44,6 +41,8 @@ function Login() {
           if(result?.data.success){
              dispatch(setUserCredentials(result.data.accessToken))
              navigate('/',{state:{success:true}})
+          }else if(result?.data.blocked){
+              toast.error('User has been blocked')
           }else{
             toast.error('Invalid user credentials')
           }
@@ -55,25 +54,13 @@ function Login() {
     const showError1 = () =>{
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         if(email.trim() == ''){
-          // setError1('Required!')
-          // setTimeout(()=>{
-          // setError1('')
-          // },2000)
           toast.error('Email field cant be empty')
         }else if(!emailRegex.test(email)){
-          // setError1('Email format is not correct')
-          // setTimeout(()=>{
-          //   setError1('')
-          //   },2000)
           toast.error('Email format cant be empty')
         }
     }
     const showError2 = () =>{
       if(password.trim() == ''){
-        // setError2('Required!')
-        // setTimeout(()=>{
-        //   setError2('')
-        //   },2000)
         toast.error('Password field cant be empty')
       }
     }
@@ -93,12 +80,11 @@ function Login() {
             <label className='font-serif'>Email</label>
             <div className="mb-4 text-lg">
               <input onBlur={showError1} value={email} onChange={(e)=>setEmail(e.target.value)}  className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm" type="text" name="email"  />
-              <small className='text-red-500 font-serif'>{error1}</small>
+           
             </div>
             <label className='font-serif'>Password</label>
             <div className="mb-4 text-lg">
               <input  onBlur={showError2}  value={password} onChange={(e)=>setPassword(e.target.value)} className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm" type="password" name="password" />
-              <small className='text-red-500 font-serif'>{error2}</small>
             </div>
             <div className="mt-8 flex justify-center text-lg text-black">
               <button type="submit" className="rounded-3xl bg-red-600 bg-opacity-100 px-10 py-2 mb-10 text-white shadow-xl backdrop-blur-md transition-colors duration-300 transform hover:scale-105 hover:transition ease-out duration-300 font-serif">sign in</button>

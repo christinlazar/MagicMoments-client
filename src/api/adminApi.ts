@@ -1,6 +1,14 @@
 
 import Api from "../services/axios/axios";
 import adminRoutes from "../services/endpoints/adminEndPoint";
+import { vendorLogOut,userLogOut } from "../store/slice/AuthSlice";
+import { UseSelector, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+interface RootState{
+    auth:{
+        userInfo:string
+    }
+}
 
 export const adminLogin = async (email:string,password:string) =>{
     console.log("inside admin login client side")
@@ -47,4 +55,56 @@ export const unblockUser = async(userId:string) =>{
     } catch (error) {
         console.log(error)
     }
+}
+export const bringVendors = async () =>{
+    try {
+        console.log("bring vendors");
+        
+        const res = await Api.get(adminRoutes.bringVendors)
+       return res
+    } catch (error) {
+        
+    }
+}
+
+export const blockVendor = async(vendorId:string) =>{
+    try {
+        const res = await Api.post(adminRoutes.blockvendor,{vendorId})
+        if(res.data.success){
+            return res
+        }
+        console.log(res)
+        return res
+    } catch (error) {
+        
+    }
+}
+
+export const unblockVendor = async(vendorId:string)=>{
+    try {
+        const res = await Api.post(adminRoutes.unblockvendor,{vendorId})
+        console.log(res)
+        return res
+    } catch (error) {
+        
+    }
+}
+
+export const acceptVendorReq = async(vendorId:string)=>{
+    try {
+        console.log("going to accept req from client side")
+        const res = await Api.post(adminRoutes.acceptRequest,{vendorId})
+        return res
+    } catch (error) {
+        
+    }
+}
+
+export const rejectVendorReq = async(vendorId:string)=>{
+        try {
+            const res = Api.post(adminRoutes.rejectRequest,{vendorId})
+            return res
+        } catch (error) {
+            console.error(error)
+        }
 }

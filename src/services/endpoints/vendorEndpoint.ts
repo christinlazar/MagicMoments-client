@@ -1,7 +1,8 @@
 const vendorEndPoints = {
-    vendorsignUP:'/vendor/signUp',
-    vendorVerifyOtp:'/vendor/verifyOtp',
-    vendorResendOtp:'/vendor/vendorResendOtp'
+    vendorsignUP:'/vendor/vendorVerifyEmail',
+    vendorVerifyOtp:'/vendor/vendorVerifyOtp',
+    vendorResendOtp:'/vendor/vendorResendOtp',
+    vendorLogin:'/vendor/vendorLogin',
 }
 
 export default vendorEndPoints

@@ -1,7 +1,7 @@
 
 import Api from '../services/axios/axios'
 import userEndpoint from '../services/endpoints/userEndpoint'
-
+import { userLogOut } from '../store/slice/AuthSlice'
 
 export const signup = async(name:string,email:string,phone:string,password:string,confirmPassword:string) =>{
     try {
@@ -10,7 +10,7 @@ export const signup = async(name:string,email:string,phone:string,password:strin
         console.log(res)
         const token = res.data.token
         console.log(token)
-        localStorage.setItem('userOtp',token)
+        await localStorage.setItem('userOtp',token)
         return res
     } catch (error:any) {
         console.log(error.message)

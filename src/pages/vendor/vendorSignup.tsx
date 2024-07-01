@@ -12,12 +12,10 @@ function VendorSignup() {
   const [companyEmail,setEmail] = useState<string>("")
   const [password,setPassword] = useState<string>("")
   const [category,setCategory] = useState<string>("")
-    const [place,setPLace] = useState<string>("")
+  const [place,setPlace] = useState<string>("")
   const [error1,setError1] = useState("")
   const [error2,setError2] = useState("")
-  const [error3,setError3] = useState("")
   const [error4,setError4] = useState("")
-  const [error5,setError5] = useState("")
   const [isModalOpen,setIsModalOpen] = useState<boolean>(false)
   const formRef = useRef<HTMLDivElement>(null)
   const location = useLocation()
@@ -34,7 +32,7 @@ function VendorSignup() {
   const {state} = location
      if (state) {
       console.log("state is",state)
-      setIsModalOpen(false); // Set modal open state based on location.state
+      setIsModalOpen(false);
       if (formRef.current) {
         formRef.current.style.display = 'block';
       }
@@ -54,14 +52,14 @@ function VendorSignup() {
           toast.error("password must contain more than 6 letters")
           return 
         }
-        console.log("name","email","password",companyName,companyEmail,password,category,)
+        console.log("-",companyName,companyEmail,password,category,)
         setName("")
         setEmail("")
         setPassword("")
+        setCategory("")
+        setPlace("")
         if(companyName.trim() !== '' && companyEmail.trim() !== '' && password.trim() !== '' && place.trim() && category.trim()){
-        //   const result = await signup(companyName,companyEmail,phoneNumber,password,place);
-        console.log(companyName,companyEmail,password,place,category)
-        const result = await vendorSignup(companyName,companyEmail,password,place)
+        const result = await vendorSignup(companyName,companyEmail,password,place,category)
           console.log(result)
           if(result?.data.success){
             setIsModalOpen(true)
@@ -145,7 +143,7 @@ function VendorSignup() {
             </div>
             <label className='font-serif'>Company location</label>
             
-            <select onChange={(e)=>setCategory(e.target.value)} className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm" >
+            <select onChange={(e)=>setPlace(e.target.value)} className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm" >
                     <option value='' className='font-serif bg-zinc-800' aria-readonly >Select Location</option>
                     {
                     places.map((place)=>(
@@ -160,7 +158,7 @@ function VendorSignup() {
             </div>
             <div className="mt-8 flex-col justify-center text-lg text-black">
               <button type="submit" className="rounded-3xl bg-red-600 bg-opacity-100 px-10 py-2 mb-10 text-white shadow-xl backdrop-blur-md transition-colors duration-300 transform hover:scale-105 hover:transition ease-out duration-300 font-serif">sign up</button>
-            <Link to='' className='mt-3 ms-2 text-slate-500 font-serif text-sm'>Login</Link>  
+            <Link to='/vendor/vendorLogin' className='mt-3 ms-2 text-slate-500 font-serif text-sm hover:text-red-500'>Login</Link>  
             </div>
           </form>
         </div>

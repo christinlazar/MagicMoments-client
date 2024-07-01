@@ -35,9 +35,10 @@ const authSlice = createSlice({
         vendorLogOut:(state)=>{
             state.vendorInfo = null;
             localStorage.removeItem('vendorInfo')
-        }
+            localStorage.removeItem('accessToken')
+        },
     }
 })
 
-export const {setUserCredentials,userLogOut,setAdminCredentials,adminLogOut,setVendorCredentials} = authSlice.actions
+export const {setUserCredentials,userLogOut,setAdminCredentials,adminLogOut,setVendorCredentials,vendorLogOut} = authSlice.actions
 export default authSlice.reducer
