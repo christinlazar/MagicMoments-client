@@ -43,7 +43,7 @@ function VendorSignup() {
     console.log("get inside this")
     e.preventDefault();
       try {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex =  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if(!companyName.trim() && !emailRegex.test(companyEmail) && !password.trim()){
           toast.error("Please fill all fields")
           return 

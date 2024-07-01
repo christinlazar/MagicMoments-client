@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import logo from '../../assets/license (1).png'
 import RegisterImage from '../../assets/pexels-imagestudio-1488312.jpg'
-import {useLocation, useNavigate} from 'react-router-dom'
+import {useLocation, useNavigate,Link} from 'react-router-dom'
 import { userLogin } from '../../api/userApi'
 import { useDispatch } from 'react-redux'
 import { setUserCredentials } from '../../store/slice/AuthSlice'
 import {Toaster,toast} from 'sonner'
+import Carousel from '../../carousel/Caraousel'
 function Login() {
   const location = useLocation()
   const navigate = useNavigate()
@@ -13,17 +14,17 @@ function Login() {
     useEffect(()=>{
       const {state} = location
       if(state){
-        toast.success("User registration has been completed successfully")
+        // toast.success("User registration has been completed successfully")
       }
       return ()=> state
       
-    },[])
+    },[location])
     const [email,setEmail] = useState<string>('')
     const [password,setPassword] = useState<string>('')
     const handleSubmit  = async (e:React.FormEvent<HTMLFormElement>) => {
           e.preventDefault()
         try {
-           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+           const emailRegex =  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
             if(!email.trim() && !password.trim()){
             return toast.error("Fields cant be empty")
           }
@@ -68,6 +69,7 @@ function Login() {
   return (
     <div className="flex h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style={{ backgroundImage: `url(${RegisterImage})` }}>
           {/* <ToastContainer className='Toastify__toast-container--top-right'/> */}
+          {/* <Carousel/> */}
         <Toaster richColors position="bottom-right" />
 
         <div  style={{display:'block'}} className="rounded-xl bg-white bg-opacity-20 m-20 my-12 px-16 py-30 shadow-lg backdrop-blur-[2px] max-sm:px-4" >
@@ -88,6 +90,9 @@ function Login() {
             </div>
             <div className="mt-8 flex justify-center text-lg text-black">
               <button type="submit" className="rounded-3xl bg-red-600 bg-opacity-100 px-10 py-2 mb-10 text-white shadow-xl backdrop-blur-md transition-colors duration-300 transform hover:scale-105 hover:transition ease-out duration-300 font-serif">sign in</button>
+              <div className='p-2'>
+                <Link to='/forgotpassword?forgot=true' className='font-serif text-xs text-slate-900 hover:text-red-500'>Forgot password?</Link>
+              </div>
             </div>
           </form>
         </div>

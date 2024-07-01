@@ -2,7 +2,7 @@
 import React,{useEffect,useState} from 'react'
 import { Toaster,toast } from 'sonner'
 import { useLocation } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setVendorCredentials } from '../../store/slice/AuthSlice'
 import { vendorLogin } from '../../api/vendorApi'
@@ -25,7 +25,8 @@ function VendorLogin() {
     const handleSubmit  = async (e:React.FormEvent<HTMLFormElement>) => {
           e.preventDefault()
         try {
-           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+           const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
             if(!email.trim() && !password.trim()){
             return toast.error("Fields cant be empty")
           }
@@ -43,6 +44,8 @@ function VendorLogin() {
           if(result?.data.accepted  == false){
             console.log("came back here")
                 toast.error("The request has'nt been accepted yet")
+          }else if(result?.data.passwordIncorrect){
+                toast.error("Password is incorrect")
           }
           else if(result?.data.success == true){
              dispatch(setVendorCredentials(result.data.accessToken))
@@ -88,6 +91,7 @@ function VendorLogin() {
       </div>
       <div className="mt-8 flex justify-center text-lg text-black">
         <button type="submit" className="rounded-3xl bg-red-600 bg-opacity-100 px-10 py-2 mb-10 text-white shadow-xl backdrop-blur-md transition-colors duration-300 transform hover:scale-105 hover:transition ease-out duration-300 font-serif">sign in</button>
+      <Link to='/vendor' className='mt-3 ms-2 text-gray-900 font-serif text-sm hover:text-red-500'>Register</Link>  
       </div>
     </form>
   </div>

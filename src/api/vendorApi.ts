@@ -55,7 +55,7 @@ export const vendorLogin = async (email:string,password:string) =>{
         const result = await Api.post(vendorEndPoints.vendorLogin,{email,password})
         console.log("result is -",result)
         if(result.data.accessToken){
-            localStorage.setItem('accessToken',result.data.accessToken)
+            localStorage.setItem('vendorAccessToken',result.data.accessToken)
         }
         return result
     } catch (error) {

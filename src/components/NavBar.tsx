@@ -29,7 +29,7 @@ function NavBar() {
       setText('Login')
       setLinkPath('/login')
     }
-    },[location,userInfo])
+    },[location,userInfo,linkPath])
     const toggleDropdown = () => {
       setIsDropdownOpen(!isDropdownOpen);
     };
@@ -43,6 +43,7 @@ function NavBar() {
             navigate('/')
       }
     }
+    // const userInfo = useSelector((state:RootState)=>state.auth)
   return (
     <nav className="bg-gray border-gray-200 dark:bg-gray-900 dark:border-gray-700 h-15">
     <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-8 p-2">
@@ -64,7 +65,11 @@ function NavBar() {
       <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} w-full md:block md:w-auto`} id="navbar-dropdown">
         <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
           <li>
+            {
+              userInfo ?
+          <Link to='/logout' onClick={()=>logOut(linkPath)} className="block py-2 px-3 text-gray-900 rounded hover:bg-red-500 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent font-serif">Logout</Link>:
           <Link to={linkPath} onClick={()=>logOut(linkPath)} className="block py-2 px-3 text-gray-900 rounded hover:bg-red-500 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent font-serif">{linkText}</Link>
+            }
           </li>
           <li>
              <Link to='/profile' className="block py-2 px-3 text-gray-900 rounded hover:bg-red-500 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent font-serif">Profile</Link>

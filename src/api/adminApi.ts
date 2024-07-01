@@ -15,7 +15,7 @@ export const adminLogin = async (email:string,password:string) =>{
 try {
     const res = await Api.post(adminRoutes.adminlogin,{email,password})
     if(res.data.success){
-        localStorage.setItem('accessToken',JSON.stringify(res.data.accessToken))
+        localStorage.setItem('adminAccessToken',JSON.stringify(res.data.accessToken))
     }
     return res
 } catch (error) {
@@ -38,6 +38,8 @@ export const BlockUser = async (userId:string) =>{
     try {
         const blocked = await Api.post(adminRoutes.blockUser,{userId})
         if(blocked.data.success){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
             return blocked
         }
     } catch (error) {
