@@ -5,8 +5,17 @@ import VendorLogin from "../pages/vendor/vendorLogin";
 import VendorLoggedIn from "../components/vendor/vendorLoggedIn";
 import VendorHome from "../pages/vendor/vendorHome";
 import VendorNavBar from "../components/vendor/vendorNavBar";
-
+import { vendorLogOut } from "../store/slice/AuthSlice";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 const VendorRoutes = () =>{
+    const dispatch = useDispatch()
+    useEffect(()=>{
+      const userInfo = localStorage.getItem('userInfo')
+      if(!userInfo){
+        dispatch(vendorLogOut())
+      }
+    },[dispatch])
     return (
         <>
            <Routes>

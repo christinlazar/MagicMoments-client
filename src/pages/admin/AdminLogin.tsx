@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import {useNavigate} from 'react-router-dom'
 import logo from '../../assets/license (1).png'
-import RegisterImage from '../../assets/pexels-david-bartus-43782-1677009.jpg'
+import RegisterImage from '../../assets/samantha-gades-x40Q9jrEVT0-unsplash.jpg'
 import { Toaster ,toast } from 'sonner'
 import { adminLogin } from '../../api/adminApi'
 import { FunctionBody } from 'typescript'

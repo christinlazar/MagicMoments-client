@@ -27,6 +27,8 @@ const authSlice = createSlice({
         adminLogOut:(state) =>{
             state.adminInfo = null;
             localStorage.removeItem('adminInfo')
+            localStorage.removeItem('adminAccessToken')
+
         },
         setVendorCredentials:(state,action)=>{
             state.vendorInfo = action.payload
@@ -35,7 +37,7 @@ const authSlice = createSlice({
         vendorLogOut:(state)=>{
             state.vendorInfo = null;
             localStorage.removeItem('vendorInfo')
-            localStorage.removeItem('accessToken')
+            localStorage.removeItem('vendorAccessToken')
         },
     }
 })

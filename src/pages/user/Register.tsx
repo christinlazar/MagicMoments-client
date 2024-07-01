@@ -11,7 +11,7 @@ const  Register:React.FC = () => {
 
   const [name,setName] = useState<string>("")
   const [email,setEmail] = useState<string>("")
-  const [phone,setPhone] = useState<string>("")
+  const [phone,setPhone] = useState<number>(0)
   const [password,setPassword] = useState<string>("")
   const[confirmPassword,setConfrimPassword] = useState<string>("")
   const [error1,setError1] = useState("")
@@ -40,10 +40,12 @@ const  Register:React.FC = () => {
     console.log("get inside this")
     e.preventDefault();
       try {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex =  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if(!name.trim() && !emailRegex.test(email) && !password.trim() && !confirmPassword.trim()){
           toast.error("Please fill all fields")
           return 
+        }else if(!emailRegex.test(email)){
+          toast.error("Email pattern is not correct")
         }
       else if(password.trim().length < 6){
           toast.error("password must contain more than 6 letters")
@@ -54,16 +56,18 @@ const  Register:React.FC = () => {
         else if(confirmPassword.trim().length < 6){
           toast.error("password must contain more than 6 letters")
           return
-        }else if(phone.length !== 10){
-          toast.error("phone number must have 10 numbers")
+        }else if(JSON.stringify(phone).length !== 10){
+          return toast.error("phone number must have 10 numbers")
+        }else if(typeof(phone)!= 'number'){
+          return toast.error('Phone number must be number type')
         }
         console.log("name","email","password",name,email,password)
         setName("")
         setEmail("")
-        setPhone("")
+        setPhone(0)
         setConfrimPassword("")
         setPassword("")
-        if(name.trim() !== '' && email.trim() !== '' && password.trim() !== '' && confirmPassword.trim() !== '' && phone.trim() !== '' && phone.length == 10){
+        if(name.trim() !== '' && email.trim() !== '' && password.trim() !== '' && confirmPassword.trim() !== '' && JSON.stringify(phone).trim() !== '' && JSON.stringify(phone).length == 10){
           const result = await signup(name,email,phone,password,confirmPassword);
           console.log(result)
           if(result?.data.success){
@@ -77,6 +81,7 @@ const  Register:React.FC = () => {
             }  
           }
         }else{
+          e.preventDefault()
           toast.error('fields cant be empty')
         }   
       } catch (error) {
@@ -85,49 +90,26 @@ const  Register:React.FC = () => {
   }
   const showError1 = () =>{
       if(!name.trim()){
-        // setError1('Required!')
-        // setTimeout(()=>{
-        //     setError1('')
-        // },2000)
         toast.error("Name can't be empty")
       }
   }
   const showError2 = () =>{
     if(!email.trim()){
-      // setError2('Required!')
-      // setTimeout(()=>{
-      //     setError2('')
-      // },2000)
       toast.error("Email can't be empty")
     }
 }
  const showError3 = () =>{
-  if(!phone.trim()){
-    // setError3('Required!')
-    // setTimeout(()=>{
-    //     setError3('')
-    // },2000)
+  if(!JSON.stringify(phone).trim()){
     toast.error("phone number  can't be empty")
   }
-//   }else if(typeof(phone) != 'number'){
-//     toast.error("phone number must be number")
-// }
 }
  const showError4 = () =>{
   if(!password.trim()){
-    // setError4('Required!')
-    // setTimeout(()=>{
-    //     setError4('')
-    // },2000)
     toast.error("Password can't be empty")
   }
 }
 const showError5 = () =>{
   if(!confirmPassword.trim()){
-    // setError5('Required!')
-    // setTimeout(()=>{
-    //     setError5('')
-    // },2000)
     toast.error(`Confirm password can't be empty`)
   }
 }
@@ -137,8 +119,6 @@ const showError5 = () =>{
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-700 bg-opacity-50 z-0"></div>
       )}
-     
-        {/* <ToastContainer  className ='Toastify__toast-container--top-right'/> */}
         <Toaster richColors position="bottom-right" />
         <div  style={{display:'block'}} className="rounded-xl bg-white bg-opacity-20 m-20 my-12 px-16 py-30 shadow-lg backdrop-blur-[2px] max-sm:px-4" ref={formRef}>
         <div className="text-white" >
@@ -161,7 +141,7 @@ const showError5 = () =>{
             </div>
             <label className='font-serif'>Phone</label>
             <div className="mb-4 text-lg">
-              <input onBlur={showError3} value={phone} onChange={(e)=>setPhone(e.target.value)} className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm" type="text" name="phone"  />
+              <input onBlur={showError3} value={phone} onChange={(e)=>setPhone(Number(e.target.value))} className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm" type="text" name="phone"  />
               <small className='text-red-600 font-serif  backdrop-blur-[2px]'>{error3}</small>
             </div>
             <label className='font-serif'>Password</label>

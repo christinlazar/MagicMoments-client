@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import { adminLogOut, userLogOut } from '../../store/slice/AuthSlice';
+import {  useDispatch } from 'react-redux';
 const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+
+ 
 
   return (
     <>
@@ -77,13 +82,13 @@ const AdminSidebar = () => {
               </Link>
             </li>
             <li>
-              <Link
-             to="/admin/LogOut"
+              <button
+            //  to=""
                 className="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-sign-out-alt mt-1"></i>
-                <span className="flex-1 ms-3 whitespace-nowrap font-serif">Logout</span>
-              </Link>
+                <span onClick={()=>dispatch(adminLogOut())} className="flex-1 ms-3 whitespace-nowrap font-serif">Logout</span>
+              </button>
             </li>
           </ul>
         </div>

@@ -3,14 +3,14 @@ import Api from '../services/axios/axios'
 import userEndpoint from '../services/endpoints/userEndpoint'
 import { userLogOut } from '../store/slice/AuthSlice'
 
-export const signup = async(name:string,email:string,phone:string,password:string,confirmPassword:string) =>{
+export const signup = async(name:string,email:string,phone:number,password:string,confirmPassword:string) =>{
     try {
         console.log(name,email,password)
         const res = await Api.post(userEndpoint.userSignup,{name,email,phone,password,confirmPassword})
         console.log(res)
         const token = res.data.token
         console.log(token)
-        await localStorage.setItem('userOtp',token)
+         localStorage.setItem('userOtp',token)
         return res
     } catch (error:any) {
         console.log(error.message)
@@ -20,6 +20,7 @@ export const verifyOtp = async(otp:string):Promise<any | undefined> =>{
     try {
         console.log("getting in verifyOtp")
         let token = localStorage.getItem('userOtp')
+        console.log("userOtp is")
         const res = await Api.post(userEndpoint.verifyOtp,{otp},{
             headers:{
                 'authorization':`Bearer ${token}`
@@ -71,5 +72,32 @@ export const ResendOtp = async () =>{
         } catch (error) {
             console.log(error)
         }
+}
+
+export const sendForgotMail = async (email:string) =>{
+    try{
+        const res = await Api.post(userEndpoint.forgotPassword,{email})
+        return res
+    }catch(error){
+        console.error(error)
+    }
+}
+
+export const verifyForgotOtp = async(otp:string) =>{
+try {
+    const res = await Api.post(userEndpoint.verifyForgotOtp,{otp})
+    return res
+} catch (error) {
+    console.log(error)
+}
+}
+
+export const changePassword = async(newPassword:string,newPasswordConfirm:string) =>{
+    try {
+        const res = await Api.post(userEndpoint.changepassword,{newPassword,newPasswordConfirm})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
 }
 
