@@ -62,3 +62,16 @@ export const vendorLogin = async (email:string,password:string) =>{
         console.log(error)
     }
 }
+
+export const addPhotos = async (formData:any) => {
+    try {
+        const response = await Api.post(vendorEndPoints.vendorAddPhotos,{formData},{
+            headers:{
+                "Content-Type":'multipart/form-data'
+            }
+        })
+        console.log("photos added successfulyy",response)
+    } catch (error) {
+        console.error(error)
+    }
+}
