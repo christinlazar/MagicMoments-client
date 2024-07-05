@@ -49,7 +49,7 @@ function VendorLogin() {
           }
           else if(result?.data.success == true){
              dispatch(setVendorCredentials(result.data.accessToken))
-             navigate('/vendor/vendorHome',{state:{success:true}})
+             navigate('/vendor/vendorStore',{state:{success:true}})
           }
         } catch (error) {
           console.log(error)

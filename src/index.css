@@ -60,3 +60,14 @@ code {
   }
 }
 
+.ep-arrow{
+  display: none;
+}
+
+@media (max-width:639px) {
+  .sidebar{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+  }
+}
