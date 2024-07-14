@@ -5,6 +5,12 @@ module.exports = {
     extend: {
       backdropBlur: {
         xs: '2px',
+      },
+      fontFamily:{
+        montserrat:['Montserrat', 'sans-serif'],
+      },
+      colors:{
+       'custom-green':'#b1d8d9'
       }
     },
   },

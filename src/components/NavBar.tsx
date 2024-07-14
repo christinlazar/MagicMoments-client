@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react'
-import navLogo from '../assets/license (3).png'
+import navLogo from '../assets/wedding (2).png'
 import {Link, useLocation,useNavigate} from 'react-router-dom'
 import { useSelector,useDispatch } from 'react-redux';
 import { RootState } from '../store/Store';
@@ -45,16 +45,16 @@ function NavBar() {
     }
     // const userInfo = useSelector((state:RootState)=>state.auth)
   return (
-    <nav className="bg-gray border-gray-200 dark:bg-gray-900 dark:border-gray-700 h-15">
-    <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-8 p-2">
+    <nav className="bg-gray border-gray-200 dark:bg-gray-900 dark:border-gray-700 h-16">
+    <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-8 p-4">
       <a href="" className="flex items-center space-x-3 rtl:space-x-reverse">
         <img src={navLogo} className="h-8" alt="Flowbite Logo" />
-        <span className="self-center text-xl font-bold whitespace-nowrap dark:text-white text-red-500 font-serif">Magic Moments</span>
+        <span className="self-center text-xl font-bold whitespace-nowrap shadow-sm dark:text-white text-blue-950 font-montserrat">Magic Moments</span>
       </a>
       <button
         onClick={toggleMobileMenu}
         type="button"
-        className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        className="inline-flex items-center  p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
         aria-controls="navbar-dropdown"
         aria-expanded={isMobileMenuOpen}>
         <span className="sr-only">Open main menu</span>
@@ -67,12 +67,12 @@ function NavBar() {
           <li>
             {
               userInfo ?
-          <Link to='/logout' onClick={()=>logOut(linkPath)} className="block py-2 px-3 text-gray-900 rounded hover:bg-red-500 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent font-serif">Logout</Link>:
-          <Link to={linkPath} onClick={()=>logOut(linkPath)} className="block py-2 px-3 text-gray-900 rounded hover:bg-red-500 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent font-serif">{linkText}</Link>
+          <Link to='/logout' onClick={()=>logOut(linkPath)} className="block py-2 px-3 text-gray-900 rounded hover:bg-red-500 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent font-montserrat">Logout</Link>:
+          <Link to={linkPath} onClick={()=>logOut(linkPath)} className="block py-2 px-3 text-gray-900 rounded hover:bg-red-500 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent font-montserrat">{linkText}</Link>
             }
           </li>
           <li>
-             <Link to='/profile' className="block py-2 px-3 text-gray-900 rounded hover:bg-red-500 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent font-serif">Profile</Link>
+             <Link to='/profile' className="block py-2 px-3 text-gray-900 rounded hover:bg-red-500 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent  font-montserrat">Profile</Link>
           </li>
         </ul>
       </div>

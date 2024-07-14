@@ -16,12 +16,15 @@ Api.interceptors.request.use(
         let vendorInfo = localStorage.getItem('vendorInfo')
         let userOtp = localStorage.getItem('userOtp')
         let vendorOtp = localStorage.getItem('vendorOtp')
+        let vendorAccessToken = localStorage.getItem('vendorAccessToken')
         console.log(window.location.pathname,"pathname")
         if(accessToken && userInfo  && !userOtp &&!vendorOtp && !window.location.pathname.includes('/admin')){
             config.headers.Authorization = `Bearer ${accessToken}`
         }else if(adminAccessToken && adminInfo && !userOtp && !vendorOtp){
             console.log("for admin")
             config.headers.Authorization = `Bearer ${adminAccessToken}`
+        }else if( vendorAccessToken && vendorInfo && !userOtp && !vendorOtp){
+                 config.headers.Authorization = `Bearer ${vendorAccessToken}`
         }
         return config
     },
@@ -67,12 +70,17 @@ Api.interceptors.response.use(
                 localStorage.removeItem('adminAccessToken')
                    window.location.href = '/admin'
             }
+        }else if(error.response.status == 401 && error.response.data.role == 'vendor'){
+            console.log("going to refresh vendor token");
+            const response = await Api.post('vendor/refresh-token',{},{withCredentials:true})
+            console.log(response)
+            if(response.status == 200 && response.data.refresh){
+                localStorage.setItem('vendorAccessToken',response.data.vendorAccessToken)
+                Api.defaults.headers.common['Authorization'] = `Bearer ` + response.data.vendorAccessToken
+                return Api(originalRequest)
+            }  
         }
-        // else if(error.response.status == 401 && !error.response.data.refresh && error.response.data.accepted != false && error.response.data.role == 'admin'){
-        //      localStorage.removeItem('accessToken')
-        //      localStorage.removeItem('adminInfo')
-        //     window.location.href = '/admin'
-        // }
+      
         return Promise.reject(error)
     }
 )

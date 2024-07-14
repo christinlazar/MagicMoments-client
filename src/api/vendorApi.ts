@@ -55,7 +55,7 @@ export const vendorLogin = async (email:string,password:string) =>{
         const result = await Api.post(vendorEndPoints.vendorLogin,{email,password})
         console.log("result is -",result)
         if(result.data.accessToken){
-            localStorage.setItem('vendorAccessToken',result.data.accessToken)
+            localStorage.setItem('vendorAccessToken',JSON.stringify(result.data.accessToken))
         }
         return result
     } catch (error) {
@@ -65,13 +65,26 @@ export const vendorLogin = async (email:string,password:string) =>{
 
 export const addPhotos = async (formData:any) => {
     try {
-        const response = await Api.post(vendorEndPoints.vendorAddPhotos,{formData},{
-            headers:{
-                "Content-Type":'multipart/form-data'
-            }
-        })
-        console.log("photos added successfulyy",response)
+        const result = await Api.post(vendorEndPoints.vendorAddPhotos,formData)
+        console.log("photos added successfulyy",result)
+        if(result){
+            return result
+        }
     } catch (error) {
         console.error(error)
+    }
+}
+
+export const addVideos = async (FormData:any)=>{
+    try {
+        const result = await Api.post(vendorEndPoints.vendorAddVideos,FormData,{
+            headers:{
+                'Content-Type':'multipart/form-data'
+            }
+        })
+        console.log("videos added successfully",result)
+        return result
+    } catch (error) {
+        
     }
 }

@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react'
-import navLogo from '../../assets/license (6).png'
+import navLogo from '../../assets/wedding (2).png'
 import {Link, useLocation,useNavigate} from 'react-router-dom'
 import { useSelector,useDispatch } from 'react-redux';
 import { RootState } from '../../store/Store';
@@ -31,7 +31,7 @@ function VendorNavBar() {
     <div className="md:max-w-screen-xl flex flex-wrap items-center justify-between mx-6 sm:mx-20 py-4">
       <a href="" className="flex items-center space-x-3 rtl:space-x-reverse">
         <img src={navLogo} className="h-8" alt="Flowbite Logo" />
-        <span className="self-center text-xl font-bold whitespace-nowrap dark:text-white text-purple-500 font-serif">Magic Moments</span>
+        <span className="self-center text-xl font-bold whitespace-nowrap dark:text-white text-cyan-950 font-montserrat">Magic Moments</span>
       </a>
        <button
         onClick={toggleMobileMenu}

@@ -65,7 +65,7 @@ const VendorSidebar = () => {
              to='/vendor/addPhotos'
                 className="flex items-center p-2 text-gray-900 hover:text-purple-500  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
-                <i className="fi fi-rr-envelope mt-1"></i>
+                <i className ="fi fi-rr-images"></i>
                 <span className="flex-1 ms-3 whitespace-nowrap font-serif font-bold text-sm">Photos</span>
               </Link>
             </li>
@@ -74,7 +74,7 @@ const VendorSidebar = () => {
            
                 className="flex items-center p-2 text-gray-900 hover:text-purple-500  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
-                <i className="fi fi-rr-users-alt mt-1"></i>
+               <i className ="fi fi-rr-video-camera-alt"></i>
                 <span className="flex-1 ms-3 whitespace-nowrap font-serif font-bold text-sm">Videos</span>
               </Link>
             </li>

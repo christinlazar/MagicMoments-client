@@ -1,10 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import VendorSidebar from '../../components/vendor/vendorSideNav'
-
+import { addVideos } from '../../api/vendorApi'
+import {toast,Toaster} from 'sonner'
 function AddVideos() {
+  const [videos,setVideos] = useState<FileList | null>(null)
+  const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
+    console.log("in handleChange")
+    console.log("e.target.flies",e.target.files)
+     if(e.target.files){
+      setVideos(e.target.files)
+     }
+  }
+  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
+    console.log("in handlesubmit")
+    e.preventDefault()
+    if(!videos){
+      return 
+    }
+    console.log("videos are--",videos)
+    const formData = new FormData()
+    for(let i = 0;i<videos.length;i++){
+      formData.append('videos',videos[i])
+    }
+
+    const response = await addVideos(formData)
+    if(response?.data.success){
+      toast.success('Videos has been added successfully')
+    }
+  }
   return (
     <>
     <div className="flex ">
+      <Toaster richColors position="bottom-right"/>
       <div className=' mt-5 hidden md:block'>
       <VendorSidebar/>
       </div>
@@ -14,19 +41,20 @@ function AddVideos() {
             <i className="fi fi-rr-video-camera-alt mt-3 ms-3 text-2xl"></i>
             </div>
                   <div className='me-3 p-6'>
-
+            <form onSubmit={handleSubmit}>
                           <p className='text text-slate-900 text-sm mx-3 mt-2'>Showcase your work by adding videos to your Storefront.
                             Add unlimited videos related to your business and wedding services.</p>
                          <div className='h-52 border border-purple-300  sm:w-3/4 mt-3 ms-2 flex flex-col items-center justify-around p-4'>
                          <i className="fi fi-rr-video-camera-alt text-7xl"></i>
-                         <input type='file' className='focus:outline-none border border-purple-200 rounded text-sm w-[90%]'/>
+                         <input onChange={handleFileChange} name='videos' type='file' className='focus:outline-none border border-purple-200 rounded text-sm w-[90%]'/>
                             
-                  <button className="px-4 mt-4 py-2 rounded-full cursor-pointer text-white border-0 bg-purple-500 shadow-md tracking-wider uppercase text-xs transition-all duration-500 ease-linear
-                   hover:tracking-widest hover:bg-purple-500 hover:text-white
-                    hover:shadow-lg hover:shadow-[rgba(93,24,220,0.5)] active:translate-y-2 
-                    active:tracking-widest active:bg-purple-500 active:text-white active:shadow-none 
-                    active:transition-none">Add Videos</button>
+                          <button className="px-4 mt-4 py-2 rounded-full cursor-pointer text-white border-0 bg-cyan-950 shadow-md tracking-wider uppercase text-xs transition-all duration-500 ease-linear
+                          hover:tracking-widest hover:bg-cyan-950 hover:text-white
+                            hover:shadow-lg  hover:shadow-[rgba(24,57,220,0.43)]  active:translate-y-2 
+                            active:tracking-widest active:bg-cyan-950 active:text-white active:shadow-none 
+                            active:transition-none">Add Videos</button>
                     </div>
+              </form>
               </div>
               <div>
               </div>
