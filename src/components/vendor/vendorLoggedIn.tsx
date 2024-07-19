@@ -14,7 +14,7 @@ interface RootState{
 const VendorLoggedIn = () =>{
     const {vendorInfo} = useSelector((state:RootState)=>state.auth)
     return (
-            vendorInfo ? <><VendorNavBar/> <div><Outlet/> </div> </>: <Navigate to='/vendor/vendorLogin'/>
+            vendorInfo ? <> <VendorNavBar/> <div> <Outlet/> </div> </>: <Navigate to='/vendor/vendorLogin'/>
     )
 }
 

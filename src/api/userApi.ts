@@ -2,7 +2,7 @@
 import Api from '../services/axios/axios'
 import userEndpoint from '../services/endpoints/userEndpoint'
 import { userLogOut } from '../store/slice/AuthSlice'
-
+import { bookingDataInterface } from '../pages/user/SingleVendorView'
 export const signup = async(name:string,email:string,phone:number,password:string,confirmPassword:string) =>{
     try {
         console.log(name,email,password)
@@ -98,6 +98,44 @@ export const changePassword = async(newPassword:string,newPasswordConfirm:string
         return res
     } catch (error) {
         console.log(error)
+    }
+}
+
+export const getVendors = async () =>{
+    try {
+        const result = await Api.get(userEndpoint.getAllVendors)
+        return result
+    } catch (error) {
+        
+    }
+}
+
+export const bringThatVendor = async (vendorId:string) =>{
+    try {
+        console.log("In bring that vendor");
+        
+        const result = await Api.post(userEndpoint.bringVendorDetail,{vendorId})
+        return result
+    } catch (error) {
+        
+    }
+}
+
+export const handleStripePayment = async (companyName:string | undefined,vendorId:string | undefined,amount:string | undefined) =>{
+    try {
+        const result = await Api.post(userEndpoint.stripePayment,{companyName,vendorId,amount})
+        return result
+    } catch (error) {
+        
+    }
+}
+
+export const SendBookingRequest = async (bookingData:bookingDataInterface) =>{
+    try {
+        console.log("bookingdata is",bookingData)
+        const result = await Api.post(userEndpoint.sendbookingrequest,{bookingData})
+    } catch (error) {
+        
     }
 }
 

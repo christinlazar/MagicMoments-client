@@ -71,3 +71,114 @@ code {
     justify-content:space-between;
   }
 }
+
+.dates::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.dates {
+  scrollbar-width: none; /* Firefox */
+}
+
+/* General styles to ensure content is scrollable */
+.dates {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  overflow-y: auto; /* Ensure it is scrollable */
+  /* max-height: 10rem;  */
+  /* Adjust max-height to your needs */
+}
+
+/* .Btn {
+  width: 130px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(2, 6, 30);
+  border: none;
+  color: white;
+  font-weight: 600;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.103);
+  position: relative;
+  overflow: hidden;
+  transition-duration: .3s;
+}
+
+.svgIcon {
+  width: 16px;
+}
+
+.svgIcon path {
+  fill: white;
+}
+
+.Btn::before {
+  width: 130px;
+  height: 130px;
+  position: absolute;
+  content: "";
+  background-color: white;
+  border-radius: 50%;
+  left: -100%;
+  top: 0;
+  transition-duration: .3s;
+  mix-blend-mode: difference;
+}
+
+.Btn:hover::before {
+  transition-duration: .3s;
+  transform: translate(100%,-50%);
+  border-radius: 0;
+}
+
+.Btn:active {
+  transform: translate(5px,5px);
+  transition-duration: .3s;
+} */
+.button {
+  display: inline-block;
+  /* border-radius: 4px; */
+  background-color: #134251;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  /* font-size: 17px; */
+  /* padding: 16px; */
+  width: 130px;
+  transition: all 0.5s;
+  cursor: pointer;
+ }
+ 
+ .button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+  margin-bottom: 3px;
+ }
+ 
+ .button span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -15px;
+  transition: 0.5s;
+ }
+ 
+ .button:hover span {
+  padding-right: 15px;
+ }
+ 
+ .button:hover span:after {
+  opacity: 1;
+  right: 0;
+ }
+
+ .black-overlay {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  opacity: 1; /* Full opacity for the overlay */
+}

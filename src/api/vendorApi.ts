@@ -55,7 +55,7 @@ export const vendorLogin = async (email:string,password:string) =>{
         const result = await Api.post(vendorEndPoints.vendorLogin,{email,password})
         console.log("result is -",result)
         if(result.data.accessToken){
-            localStorage.setItem('vendorAccessToken',JSON.stringify(result.data.accessToken))
+            localStorage.setItem('vendorAccessToken',result.data.accessToken)
         }
         return result
     } catch (error) {
@@ -86,5 +86,53 @@ export const addVideos = async (FormData:any)=>{
         return result
     } catch (error) {
         
+    }
+}
+export const addStoreDetails = async (formData:any)=>{
+    try {
+        console.log(formData)
+        const result = await Api.post(vendorEndPoints.submitStoreDetials,formData)
+        return result
+    } catch (error) {
+        
+    }
+}
+
+export const getVendorData = async ()=>{
+    try {
+        console.log("here in getvendata")
+        const result = await Api.get(vendorEndPoints.getVendor)
+        return result
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// export const getVendors = async () =>{
+//     try {
+//         const result = await Api.get(vendorEndPoints.getAllVendors)
+//         return result
+//     } catch (error) {
+        
+//     }
+// }
+
+// export const bringThatVendor = async (vendorId:string) =>{
+//     try {
+//         console.log("In bring that vendor");
+        
+//         const result = await Api.post(vendorEndPoints.bringVendorDetail,{vendorId})
+//         return result
+//     } catch (error) {
+        
+//     }
+// }
+
+export const addUnavailableDates = async (dates:string[]) =>{
+    try {
+        const result = await Api.post(vendorEndPoints.addUnAvaialblesDates,{dates})
+        return result
+    } catch (error) {
+        console.error(error)
     }
 }

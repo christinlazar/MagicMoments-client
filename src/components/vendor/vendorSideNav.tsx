@@ -40,7 +40,7 @@ const VendorSidebar = () => {
         } bg-gray-50 dark:bg-gray-800 mx-6`}
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 py-6 overflow-y-auto mt-4 mx-4">
+        <div className="h-full px-3 py-6 overflow-y-auto mt-4 mx-4 ">
           <ul className="space-y-2 font-medium">
           <li>
               <Link to='/vendor/vendorStore'

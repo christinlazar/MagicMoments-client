@@ -7,7 +7,11 @@ const userRoutes = {
     resendOtp:'/user/resendOtp',
     forgotPassword:'/user/sendForgotMail',
     verifyForgotOtp:'/user/verifyForgotOtp',
-    changepassword:'/user/changePassword'
+    changepassword:'/user/changePassword',
+    getAllVendors:'/user/getAllVendors',
+    bringVendorDetail:'/user/bringVendorDetial',
+    stripePayment :'/user/stripe-payment',
+    sendbookingrequest:'/user/sendBookingRequest'
 }
 
 export default userRoutes 

@@ -45,8 +45,8 @@ function NavBar() {
     }
     // const userInfo = useSelector((state:RootState)=>state.auth)
   return (
-    <nav className="bg-gray border-gray-200 dark:bg-gray-900 dark:border-gray-700 h-16">
-    <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-8 p-4">
+    <nav className="bg-gray  dark:bg-gray-900 dark:border-gray-700 h-16 fixed w-[100%] bg-white ">
+    <div className=" flex flex-wrap items-center justify-between mx-8 p-4">
       <a href="" className="flex items-center space-x-3 rtl:space-x-reverse">
         <img src={navLogo} className="h-8" alt="Flowbite Logo" />
         <span className="self-center text-xl font-bold whitespace-nowrap shadow-sm dark:text-white text-blue-950 font-montserrat">Magic Moments</span>

@@ -12,6 +12,9 @@ import { useDispatch } from "react-redux";
 import { userLogOut } from "../store/slice/AuthSlice";
 import UserForgotPassword from "../pages/user/userForgotPassword";
 import ChangePassword from "../pages/user/ChangePassword";
+import SingleVendorView from "../pages/user/SingleVendorView";
+import PaymentFailed from "../pages/user/PaymentFailed";
+import PaymentSuccess from "../pages/user/PaymentSuccess";
 // import useAuthentication from "../hooks/useAuthentication";
 
 interface RootState{
@@ -32,6 +35,9 @@ const UserRoute:React.FC = () => {
             <NavBar/>
                <Routes>
                 <Route path='' element={<Home/>}/>
+                <Route path='/singleVendorView' element={<SingleVendorView/>}/>
+                <Route path= '/paymentFailed' element={<PaymentFailed/>}/>
+                <Route path='/paymentSuccess' element={<PaymentSuccess/>}/>
                 <Route path='' element={<UserLoggedOut/>}>
                         <Route path='login' element={<Login/>}/>
                         <Route path='register'element={<Register/>} />
