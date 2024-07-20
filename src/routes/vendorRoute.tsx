@@ -14,7 +14,7 @@ import VendorStoreFront from "../pages/vendor/vendorStoreFront";
 import AddPhotos from "../pages/vendor/addPhotos";
 import AddVideos from "../pages/vendor/addVideos";
 import Availability from "../pages/vendor/availability";
-
+import BookingRequests from "../pages/vendor/bookingRequests";
 const VendorRoutes = () =>{
     const dispatch = useDispatch()
     useEffect(()=>{
@@ -37,6 +37,7 @@ const VendorRoutes = () =>{
                     <Route path='/addPhotos' element={<AddPhotos/>}/>
                     <Route path='/addVideos' element={<AddVideos/>}/>
                     <Route path='/dateAvailability' element={<Availability/>}/>
+                    <Route path='/bookingRequests' element={<BookingRequests/>}/>
             </Route>
         </Routes>
         </>

@@ -11,7 +11,9 @@ const userRoutes = {
     getAllVendors:'/user/getAllVendors',
     bringVendorDetail:'/user/bringVendorDetial',
     stripePayment :'/user/stripe-payment',
-    sendbookingrequest:'/user/sendBookingRequest'
+    sendbookingrequest:'/user/sendBookingRequest',
+    checkIsBookingAccepted:'/user/isBookingAccepted',
+    checkIsBookingExisting:'/user/isBookingExisting'
 }
 
 export default userRoutes 

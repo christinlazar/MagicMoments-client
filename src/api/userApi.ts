@@ -134,6 +134,25 @@ export const SendBookingRequest = async (bookingData:bookingDataInterface) =>{
     try {
         console.log("bookingdata is",bookingData)
         const result = await Api.post(userEndpoint.sendbookingrequest,{bookingData})
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const checkIsReqAccepted = async (vendorId:string | undefined) =>{
+    try {
+        const result = await Api.post(userEndpoint.checkIsBookingAccepted,{vendorId})
+        return result
+    } catch (error) {
+        
+    }
+}
+
+export const  isExistingBookingRequest = async (vendorId:string | undefined) =>{
+    try {
+        const result = await Api.post(userEndpoint.checkIsBookingExisting,{vendorId})
+        return result
     } catch (error) {
         
     }

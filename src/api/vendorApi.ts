@@ -136,3 +136,23 @@ export const addUnavailableDates = async (dates:string[]) =>{
         console.error(error)
     }
 }
+
+export const fetchBookingRequests = async () =>{
+    try {
+        
+        const result = await Api.get(vendorEndPoints.bringBookingRequests)
+        return result
+    } catch (error) {
+        
+    }
+}
+
+export const acceptBookingRequest = async (bookingId:string) =>{
+    try {
+        console.log("in acceptance");
+        const result = await Api.post(vendorEndPoints.acceptBookingrequest,{bookingId})
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}

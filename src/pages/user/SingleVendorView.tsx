@@ -1,19 +1,14 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import image1 from '../../assets/pexels-yaroslav-shuraev-4937768.jpg'
-import image2 from '../../assets/pexels-yulianaphoto-9197336.jpg'
-import image3 from '../../assets/pexels-zvolskiy-1721944.jpg'
-import image4 from '../../assets/pexels-andres-alvarez-1800503-3373974.jpg'
-import image5 from '../../assets/pexels-nghia-trinh-333496-931796.jpg'
-import image6 from '../../assets/pexels-jonathanborba-3062228.jpg'
 // import { bringThatVendor } from '../../api/vendorApi'
-import { bringThatVendor, SendBookingRequest } from '../../api/userApi'
+import { bringThatVendor, isExistingBookingRequest, SendBookingRequest } from '../../api/userApi'
 import { createPortal } from 'react-dom'
 import { addUnavailableDates } from '../../api/vendorApi'
-import { handleStripePayment } from '../../api/userApi'
+import { handleStripePayment,checkIsReqAccepted } from '../../api/userApi'
 import {loadStripe} from '@stripe/stripe-js'
 import { useSelector } from 'react-redux'
+import { toast, Toaster } from 'sonner'
  enum AcceptanceStatus {
   Requested = 'requested',
   Accepted = 'accepted',
@@ -47,6 +42,7 @@ interface RootState{
   }
 }
 
+
 function SingleVendorView() {
     const location = useLocation()
     const userId = location.state
@@ -57,10 +53,11 @@ function SingleVendorView() {
     const [date,setDate] = useState<string>('')
     const [noOfDays,setNoOfDays] = useState<string>('')
     const modalRef = useRef<any>(null)
-    const bookingRef = useRef<any>(null)
     const navigate = useNavigate()
     const {userInfo} = useSelector((state:RootState)=>state.auth)
+ 
     console.log("userInfo is",userInfo)
+
     useEffect(()=>{
       const bringVendorDetial = async () =>{
           const response = await bringThatVendor(userId)
@@ -79,19 +76,28 @@ function SingleVendorView() {
     const closeModal = () =>{
       setModalOpen(false)
       setIsOverlayVisisble(false)
-
     }
 
-    const handlePay = async () =>{
+    const handlePay = async (vendorId:string | undefined) =>{
       try {
         if(userInfo != null){
-          let vendorId = vendorDetail?._id
-          let amount = vendorDetail?.startingPrice
-          let companyName = vendorDetail?.companyName
-          const resposne = await handleStripePayment(companyName,vendorId,amount)
-          console.log("response of payment is",resposne?.data.result)
-          if(resposne?.data.result.url){
-            window.location.href = resposne?.data.result.url
+          const response = await checkIsReqAccepted(vendorId)
+          console.log(response)
+          const bookingData  = response?.data.result
+        
+          if(response?.data.success && bookingData.bookingStatus == "accepted"){
+            let vendorId = vendorDetail?._id
+            let amount = vendorDetail?.startingPrice
+            let companyName = vendorDetail?.companyName
+            const resposne = await handleStripePayment(companyName,vendorId,amount)
+            console.log("response of payment is",resposne?.data.result)
+            if(resposne?.data.result.url){
+              window.location.href = resposne?.data.result.url
+            }
+          }else if(response?.data.success && bookingData.bookingStatus == "requested"){
+            toast.warning("your request haven't accepted yet.Please wait for the confirmation")
+          }else{
+            toast.error("You haven't send a booking request yet!.please send a booking request")
           }
         }else{
             navigate('/login')
@@ -101,16 +107,21 @@ function SingleVendorView() {
       }
     }
 
-    const bookNow = () =>{
+    const bookNow = async (vendorId:string | undefined) =>{
       try {
-        if(userInfo !== null){
-          setOpenBooking(true)
-          setIsOverlayVisisble(true)
+        const response = await isExistingBookingRequest(vendorId)
+        if(response?.data.success){
+          if(userInfo !== null){
+            setOpenBooking(true)
+            setIsOverlayVisisble(true)
+          }else{
+            navigate('/login')
+          }
         }else{
-          navigate('/login')
+          toast.error("already existing an Booking request for this vendor")
         }
       } catch (error) {
-        
+        console.error(error)
       }
     }
     const closeBookingModal = () =>{
@@ -127,6 +138,23 @@ function SingleVendorView() {
         }
         const sendBookingRequestResponse = await SendBookingRequest(bookingData)
         console.log(sendBookingRequestResponse)
+        if(sendBookingRequestResponse?.data.reqSend == false){
+           toast.error("The Slot has already been booked")
+           setDate('')
+           setNoOfDays('')
+           setTimeout(()=>{
+            setOpenBooking(false)
+            setIsOverlayVisisble(false)
+           },3000)
+        }else{
+          toast.success("your booking request has been send")
+          setDate('')
+          setNoOfDays('')
+          setTimeout(()=>{
+            setOpenBooking(false)
+            setIsOverlayVisisble(false)
+           },3000)
+        }
     }
   return (
     <>
@@ -135,6 +163,7 @@ function SingleVendorView() {
           <div className="absolute inset-0 bg-black opacity-50 z-20"></div>
         )}
     <div className='h-5/6 flex mt-20' ref={modalRef}>
+    <Toaster richColors position='bottom-right'/>
       <div className='w-1/2 mx-20'>
         <div className='grid grid-rows-6 grid-flow-col gap-1 h-[75%] rounded-md'>
           <div className='border row-span-6 col-span-2 text-center'>
@@ -190,12 +219,14 @@ function SingleVendorView() {
                 Pay
           <svg className ="svgIcon" viewBox="0 0 576 512"><path d="M512 80c8.8 0 16 7.2 16 16v32H48V96c0-8.8 7.2-16 16-16H512zm16 144V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V224H528zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm56 304c-13.3 0-24 10.7-24 24s10.7 24 24 24h48c13.3 0 24-10.7 24-24s-10.7-24-24-24H120zm128 0c-13.3 0-24 10.7-24 24s10.7 24 24 24H360c13.3 0 24-10.7 24-24s-10.7-24-24-24H248z"></path></svg>
           </button> */}
+         
+                
+            <button onClick={()=>handlePay(vendorDetail?._id)} className='button mt-6 h-10 rounded-full text-sm'>
+               <span >Pay now</span>
+            </button>
+        
 
-          <button onClick={handlePay} className='button mt-6 h-10 rounded-full text-sm'>
-            <span >Pay now</span>
-          </button>
-
-          <button onClick={bookNow} className='button ms-3 mt-6 h-10 rounded-full text-sm'>
+          <button onClick={()=>bookNow(vendorDetail?._id)} className='button ms-3 mt-6 h-10 rounded-full text-sm'>
             <span >Book now</span>
           </button>
 

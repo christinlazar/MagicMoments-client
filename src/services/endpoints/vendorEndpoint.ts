@@ -7,9 +7,10 @@ const vendorEndPoints = {
     vendorAddVideos:'/vendor/addVideos',
     submitStoreDetials:'/vendor/submitStoreDetials',
     getVendor:'/vendor/getVendorData',
-    // getAllVendors:'/vendor/getAllVendors',
-    // bringVendorDetail:'/vendor/bringVendorDetial',
-    addUnAvaialblesDates:'/vendor/unAvailableDates'
+    addUnAvaialblesDates:'/vendor/unAvailableDates',
+    bringBookingRequests:'/vendor/getBookingRequests',
+    getThatRequestedUser:'/vendor/getThatRequestedUser',
+    acceptBookingrequest:'/vendor/acceptBookingrequest',
 }
 
 export default vendorEndPoints

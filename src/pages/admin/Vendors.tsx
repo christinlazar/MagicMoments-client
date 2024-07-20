@@ -56,9 +56,9 @@ function Vendors() {
           }
       }
     
-      if (isLoading) {
-        return <div>Loading...</div>;
-      }
+      // if (isLoading) {
+      //   return <div>Loading...</div>;
+      // }
   return (
     <div className="overflow-x-auto p-4">
       <Toaster richColors />

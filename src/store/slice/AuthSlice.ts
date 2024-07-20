@@ -39,6 +39,7 @@ const authSlice = createSlice({
             localStorage.removeItem('vendorInfo')
             localStorage.removeItem('vendorAccessToken')
         },
+       
     }
 })
 

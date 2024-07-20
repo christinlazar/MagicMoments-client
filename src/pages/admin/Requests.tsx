@@ -75,9 +75,9 @@ function Vendors() {
       }
    
     
-      if (isLoading) {
-        return <div>Loading...</div>;
-      }
+      // if (isLoading) {
+      //   return <div>Loading...</div>;
+      // }
   return (
     <div className="overflow-x-auto p-4">
       <Toaster richColors />
@@ -134,15 +134,6 @@ function Vendors() {
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                {/* {!rq.isBlocked ? (
-                  <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                    Active
-                  </span>
-                ) : (
-                  <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                    Blocked
-                  </span>
-                )} */}
                 {
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
                     {rq.isAccepted}
@@ -152,25 +143,7 @@ function Vendors() {
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{rq.companyEmail}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{rq.companyLocation}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{vendor.companyLocation}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{vendor.companyEmail}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                {vendor.isBlocked ? (
-                  <button
-                    onClick={() => unBlockvendor(vendor._id)}
-                    className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
-                  >
-                    Unblock
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => blockvendor(vendor._id)}
-                    className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
-                  >
-                    Block
-                  </button>
-                )}
-              </td> */}
+          
               <button
                     onClick={() => acceptRequest(rq._id as string)}
                     className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"

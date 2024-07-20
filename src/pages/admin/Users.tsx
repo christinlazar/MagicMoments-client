@@ -61,9 +61,9 @@ const [isLoading,setIsLodaing] = useState<boolean>(true)
       }
   }
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
   
   return (
     <>
