@@ -84,13 +84,13 @@ function SingleVendorView() {
           const response = await checkIsReqAccepted(vendorId)
           console.log(response)
           const bookingData  = response?.data.result
-        
+          console.log("booking Data",bookingData)
           if(response?.data.success && bookingData.bookingStatus == "accepted"){
             let vendorId = vendorDetail?._id
             let amount = vendorDetail?.startingPrice
             let companyName = vendorDetail?.companyName
-            const resposne = await handleStripePayment(companyName,vendorId,amount)
-            console.log("response of payment is",resposne?.data.result)
+            const resposne = await handleStripePayment(companyName,vendorId,amount,bookingData)
+            console.log("response of payment is",resposne)
             if(resposne?.data.result.url){
               window.location.href = resposne?.data.result.url
             }

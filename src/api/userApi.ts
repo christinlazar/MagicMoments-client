@@ -121,9 +121,10 @@ export const bringThatVendor = async (vendorId:string) =>{
     }
 }
 
-export const handleStripePayment = async (companyName:string | undefined,vendorId:string | undefined,amount:string | undefined) =>{
+export const handleStripePayment = async (companyName:string | undefined,vendorId:string | undefined,amount:string | undefined,bookingData:any) =>{
     try {
-        const result = await Api.post(userEndpoint.stripePayment,{companyName,vendorId,amount})
+        const result = await Api.post(userEndpoint.stripePayment,{companyName,vendorId,amount,bookingData})
+        console.log("resssssssss is",result)
         return result
     } catch (error) {
         
@@ -152,6 +153,7 @@ export const checkIsReqAccepted = async (vendorId:string | undefined) =>{
 export const  isExistingBookingRequest = async (vendorId:string | undefined) =>{
     try {
         const result = await Api.post(userEndpoint.checkIsBookingExisting,{vendorId})
+        console.log("result isssssss",result)
         return result
     } catch (error) {
         
