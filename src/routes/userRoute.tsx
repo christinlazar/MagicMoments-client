@@ -15,8 +15,9 @@ import ChangePassword from "../pages/user/ChangePassword";
 import SingleVendorView from "../pages/user/SingleVendorView";
 import PaymentFailed from "../pages/user/PaymentFailed";
 import PaymentSuccess from "../pages/user/PaymentSuccess";
+import BookingDetials from "../pages/user/BookingDetials";
 // import useAuthentication from "../hooks/useAuthentication";
-
+import BookingRequests from "../pages/user/BookingRequests";
 interface RootState{
         auth:{
         userInfo:string
@@ -46,6 +47,8 @@ const UserRoute:React.FC = () => {
                                 <Route path= "profile" element={<Profile/>}/>
                                 <Route path= '/paymentFailed' element={<PaymentFailed/>}/>
                                 <Route path='/paymentSuccess' element={<PaymentSuccess/>}/>
+                                <Route path='/bookingDetials' element={<BookingDetials/>}/>
+                                <Route path='/bookingRequests' element={<BookingRequests/>}/>
                                 </Route>
               
 

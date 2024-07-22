@@ -160,3 +160,30 @@ export const  isExistingBookingRequest = async (vendorId:string | undefined) =>{
     }
 }
 
+export const fetchBookingDetials = async () => {
+    try{
+        const result = await Api.post(userEndpoint.fetchBookingDetials)
+        return result
+    }catch(error){
+        console.error(error)
+    }
+}
+
+export const fetchBookingRequests = async () =>{
+    try {
+        const result = await Api.post(userEndpoint.fetchBookingRequests)
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const cancelBookingRequest = async (bookingId:string) =>{
+    try {
+        const result = await Api.post(userEndpoint.cancelBooking,{bookingId})
+        return result
+    } catch (error) {
+        
+    }
+}
+

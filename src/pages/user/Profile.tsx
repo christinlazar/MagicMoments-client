@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../store/Store'
 import { useNavigate } from 'react-router-dom'
 import { userLogOut } from '../../store/slice/AuthSlice'
-
+import { Toaster,toast } from 'sonner'
+import SideBar from '../../components/user/SideBar'
 
 
 function Profile() {
@@ -26,12 +27,12 @@ function Profile() {
     }
   }
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-          <input type='text' placeholder='type somothing' value={content} onChange={(e)=>{setContent(e.target.value)}}/>
-          <button type='submit'>Submit</button>
-      </form>
-    </div>
+    <div className="flex ps-12">
+    <Toaster richColors position="bottom-right" />
+        <div className='mt-20 hidden md:block'>
+            <SideBar/>
+        </div>
+</div>
   )
 }
 

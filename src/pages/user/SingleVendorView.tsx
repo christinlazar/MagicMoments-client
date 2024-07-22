@@ -109,17 +109,19 @@ function SingleVendorView() {
 
     const bookNow = async (vendorId:string | undefined) =>{
       try {
+        console.log("gonna book nowwwww")
+        if(userInfo !== null){
         const response = await isExistingBookingRequest(vendorId)
-        if(response?.data.success){
-          if(userInfo !== null){
+          if(response?.data.success){
             setOpenBooking(true)
             setIsOverlayVisisble(true)
           }else{
-            navigate('/login')
+          toast.error("already existing an Booking request for this vendor")
           }
         }else{
-          toast.error("already existing an Booking request for this vendor")
+          navigate('/login')
         }
+        
       } catch (error) {
         console.error(error)
       }
@@ -130,6 +132,7 @@ function SingleVendorView() {
     }
 
     const handleBookingSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
+      console.log("hanlde booking in in in")
         e.preventDefault()
         const bookingData = {
           date:date,

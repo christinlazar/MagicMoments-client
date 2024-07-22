@@ -9,9 +9,6 @@ const VendorSidebar = () => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
-
- 
-
   return (
     <>
     <button

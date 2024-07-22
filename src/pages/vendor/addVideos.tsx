@@ -2,8 +2,19 @@ import React, { useState } from 'react'
 import VendorSidebar from '../../components/vendor/vendorSideNav'
 import { addVideos } from '../../api/vendorApi'
 import {toast,Toaster} from 'sonner'
+import { createPortal } from 'react-dom'
+import { useSelector } from 'react-redux'
+
+interface RootState{
+  auth:{
+      vendorInfo:string
+  }
+}
 function AddVideos() {
   const [videos,setVideos] = useState<FileList | null>(null)
+  const [isOverlayVisible,setIsOverlayVisisble] = useState(false)
+  const [isUploading,setIsUploading] = useState(false)
+  const vendorInfo = useSelector((state:RootState)=>state.auth)
   const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
     console.log("in handleChange")
     console.log("e.target.flies",e.target.files)
@@ -20,11 +31,17 @@ function AddVideos() {
     console.log("videos are--",videos)
     const formData = new FormData()
     for(let i = 0;i<videos.length;i++){
+        if(!videos[i].type.startsWith('/video')){
+          return toast.error("Videos can only be added")
+        }
       formData.append('videos',videos[i])
     }
-
+    setIsUploading(true)
+    setIsOverlayVisisble(true)
     const response = await addVideos(formData)
     if(response?.data.success){
+      setIsUploading(false)
+      setIsOverlayVisisble(false)
       toast.success('Videos has been added successfully')
     }
   }
@@ -35,6 +52,9 @@ function AddVideos() {
       <div className=' mt-5 hidden md:block'>
       <VendorSidebar/>
       </div>
+      {isOverlayVisible && (
+          <div className="absolute inset-0 bg-white opacity-80 z-20"></div>
+        )}
           <div className="  flex-grow  m-10">  
             <div className='flex'>
             <h2 className='font font-serif text-2xl ms-4 text-slate-900 shadow-[0_35px_60px_-15px_rgba(168,85,247,0.3)] p-2 font-bold'>Videos</h2>
@@ -58,6 +78,16 @@ function AddVideos() {
               </div>
               <div>
               </div>
+              {isUploading && vendorInfo !== null && createPortal(
+            <div className='flex items-center justify-center z-40' style={{ color: 'black', padding: '20px', borderRadius: '5px', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                    <div className="loader">
+                    <span className="loader-text text-2xl">Uploading</span>
+                    <span className="load"></span>
+            </div>
+              
+          </div>,
+          document.body
+        )}
           </div>
     </div>
 </>

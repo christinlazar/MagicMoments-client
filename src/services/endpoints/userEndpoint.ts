@@ -13,7 +13,10 @@ const userRoutes = {
     stripePayment :'/user/stripe-payment',
     sendbookingrequest:'/user/sendBookingRequest',
     checkIsBookingAccepted:'/user/isBookingAccepted',
-    checkIsBookingExisting:'/user/isBookingExisting'
+    checkIsBookingExisting:'/user/isBookingExisting',
+    fetchBookingDetials:'/user/fetchBookingDetials',
+    fetchBookingRequests:'/user/fetchBookingRequests',
+    cancelBooking:'/user/cancelBooking'
 }
 
 export default userRoutes 

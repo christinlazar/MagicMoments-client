@@ -16,14 +16,30 @@ const Availabilty: React.FC = () => {
     e.preventDefault()
     try {
       dates.forEach((date)=> datesArray.push(date.format()))
+
+      console.log(datesArray)
+      
+
       if(datesArray.length == 0){
         return toast.error("Please select at-least one date to add")
+      }
+      const todayDate = new Date()
+      console.log(todayDate)
+      for(let i = 0;i<datesArray.length;i++){
+        console.log("hoo,hoo",datesArray[i])
+        if(new Date(datesArray [i]) < todayDate){
+          return toast.error("The dates must be today or of futures.")
+        }
       }
       const response = await addUnavailableDates(datesArray)
       console.log(response)
       if(response?.data.success){
         toast.success("Dates has been added successfully")
         setDates([])
+      }else if(response?.data.success == false){
+        toast.error("Some dates has already been added,Try again")
+        setDates([])
+        return
       }
     } catch (error) {
       console.error(error)
