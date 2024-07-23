@@ -47,7 +47,7 @@ function AddVideos() {
   }
   return (
     <>
-    <div className="flex ">
+    <div className="flex ps-12">
       <Toaster richColors position="bottom-right"/>
       <div className=' mt-5 hidden md:block'>
       <VendorSidebar/>

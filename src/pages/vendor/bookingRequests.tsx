@@ -30,7 +30,7 @@ function BookingRequests() {
     }
 
   return (
-    <div className="flex ">
+    <div className="flex ps-12">
     <div className=' mt-5 hidden md:block'>
     <VendorSidebar />
     </div>

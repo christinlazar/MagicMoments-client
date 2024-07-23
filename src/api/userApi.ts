@@ -187,3 +187,12 @@ export const cancelBookingRequest = async (bookingId:string) =>{
     }
 }
 
+export const showPhotosToUser = async (vendorId:string) =>{
+    try {
+        const result = await Api.post(userEndpoint.bringPhotos,{vendorId})
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
+

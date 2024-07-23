@@ -156,3 +156,21 @@ export const acceptBookingRequest = async (bookingId:string) =>{
         console.error(error)
     }
 }
+
+export const fetchBookings = async () =>{
+    try {
+        const result = await Api.get(vendorEndPoints.fetchBookings)
+        return result
+    } catch (error) {
+        
+    }
+}
+
+export const addServices = async (serviceData:string[]) =>{
+    try {
+        const result = await Api.post(vendorEndPoints.addServices,{serviceData:serviceData})
+        return result
+    } catch (error) {
+        
+    }
+}

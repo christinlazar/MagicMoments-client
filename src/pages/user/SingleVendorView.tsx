@@ -28,7 +28,8 @@ interface Vendor{
   description:string,
   phoneNumber:string,
   startingPrice:string,
-  unAvailableDates:string[]
+  unAvailableDates:string[],
+  services:string[],
   isBlocked:boolean;
 }
 export interface bookingDataInterface{
@@ -132,8 +133,18 @@ function SingleVendorView() {
     }
 
     const handleBookingSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
-      console.log("hanlde booking in in in")
         e.preventDefault()
+
+
+        const currentDate = new Date();
+        const bookingDate = new Date(date);
+        if (bookingDate < currentDate) {
+            toast.error("You cannot book a slot in the past");
+            setDate('');
+            setNoOfDays('');
+            return;
+        }
+
         const bookingData = {
           date:date,
           noOfDays,
@@ -159,6 +170,7 @@ function SingleVendorView() {
            },3000)
         }
     }
+
   return (
     <>
     <div className='border border-gray-300 opacity-60'></div>
@@ -216,6 +228,15 @@ function SingleVendorView() {
               </div>
             </ul>
           </div>
+          <h1 className='font-semibold font-montserrat pe-2 pt-2 pb-2 text-cyan-800'>Our services</h1>
+          <ul>
+          {
+          vendorDetail?.services && vendorDetail.services.map((service)=>(
+            <li className='text-xs font-montserrat pe-1 pt-1 pb-1'>{service}</li>
+          ))
+          }
+          </ul>
+         
 
 {/* 
           <button className="Btn mt-6 text-sm h-10">
@@ -231,6 +252,10 @@ function SingleVendorView() {
 
           <button onClick={()=>bookNow(vendorDetail?._id)} className='button ms-3 mt-6 h-10 rounded-full text-sm'>
             <span >Book now</span>
+          </button>
+
+          <button onClick={()=>navigate('/photos',{state:vendorDetail?._id})} className='button ms-3 mt-6 h-10 rounded-full text-sm'>
+            <span >Photos</span>
           </button>
 
 

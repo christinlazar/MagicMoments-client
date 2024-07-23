@@ -42,7 +42,7 @@ function VendorStoreFront() {
         }
         return(
             <>
-              <div className="flex">
+              <div className="flex ps-12">
                 <Toaster richColors position='bottom-right'/>
                 <div className='hidden md:block'>
                 <VendorSidebar/>

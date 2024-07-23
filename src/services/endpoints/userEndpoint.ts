@@ -16,7 +16,8 @@ const userRoutes = {
     checkIsBookingExisting:'/user/isBookingExisting',
     fetchBookingDetials:'/user/fetchBookingDetials',
     fetchBookingRequests:'/user/fetchBookingRequests',
-    cancelBooking:'/user/cancelBooking'
+    cancelBooking:'/user/cancelBooking',
+    bringPhotos:'/user/bringPhotos'
 }
 
 export default userRoutes 

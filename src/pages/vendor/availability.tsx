@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import "react-multi-date-picker/styles/colors/green.css";
 import VendorSidebar from '../../components/vendor/vendorSideNav';
@@ -6,54 +6,117 @@ import { addUnavailableDates } from '../../api/vendorApi';
 import { toast, Toaster } from 'sonner';
 
 const Availabilty: React.FC = () => {
+
   const [dates, setDates] = useState<DateObject[]>([]);
-  let datesArray:string[] = []
+  const [errorFound,setError] = useState(false)
   const handleDateChange = (selectedDates: DateObject[]) => {
     setDates(selectedDates);
   };
 
-  const addDates = async (e:React.FormEvent<HTMLFormElement>) =>{
-    e.preventDefault()
-    try {
-      dates.forEach((date)=> datesArray.push(date.format()))
+  useEffect(()=>{
 
-      console.log(datesArray)
+  },[errorFound])
+
+  // const addDates = async (e:React.FormEvent<HTMLFormElement>) =>{
+  //   e.preventDefault()
+  //   try {
+  //     dates.forEach((date)=> datesArray.push(date.format()))
+
+  //     console.log(datesArray)
       
 
-      if(datesArray.length == 0){
-        return toast.error("Please select at-least one date to add")
+  //     if(datesArray.length == 0){
+  //       return toast.error("Please select at-least one date to add")
+  //     }
+  //     const today = new Date()
+  //     today.setHours(0, 0, 0, 0)
+
+  //     for(let i = 0;i<datesArray.length;i++){
+  //           const dt = new Date(datesArray[i])
+  //           console.log(today,dt)
+  //           dt.setHours(0, 0, 0, 0)
+  //           if(dt < today){
+  //              toast.error("one or more dates are previous date")
+  //             return 
+  //           }
+  //     }
+  //     const response = await addUnavailableDates(datesArray)
+  //     console.log(response)
+  //     if(response?.data.success){
+  //       toast.success("Dates has been added successfully")
+  //       setDates([])
+  //     }else if(response?.data.success == false){
+  //       toast.error("Some dates has already been added,Try again")
+  //       setDates([])
+  //       return
+  //     }
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
+  const addDates = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      let datesArray: string[] = [];
+
+      dates.forEach((date) => datesArray.push(date.format()));
+      console.log(datesArray);
+  
+      if (datesArray.length === 0) {
+        return toast.error("Please select at least one date to add");
       }
-      const todayDate = new Date()
-      console.log(todayDate)
-      for(let i = 0;i<datesArray.length;i++){
-        console.log("hoo,hoo",datesArray[i])
-        if(new Date(datesArray [i]) < todayDate){
-          return toast.error("The dates must be today or of futures.")
+  
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); 
+      const todayTime = today.getTime();
+      console.log(todayTime);
+  
+      for (let i = 0; i < datesArray.length; i++) {
+        const dt = datesArray[i];
+        let newdt = new Date(dt).getTime();
+        console.log(newdt);
+  
+        if (isNaN(newdt)) {
+          toast.error(`Invalid date: ${dt}`);
+          setDates([]);
+          return;
+        }
+  
+        if (newdt < todayTime) {
+          setDates([]);
+          toast.error("Can't add the past dates");
+          return;
         }
       }
-      const response = await addUnavailableDates(datesArray)
-      console.log(response)
-      if(response?.data.success){
-        toast.success("Dates has been added successfully")
-        setDates([])
-      }else if(response?.data.success == false){
-        toast.error("Some dates has already been added,Try again")
-        setDates([])
-        return
+  
+    
+      const response = await addUnavailableDates(datesArray);
+      console.log(response);
+  
+      if (response?.data.success) {
+        toast.success("Dates have been added successfully");
+        setDates([]);
+      } else if (response?.data.success === false) {
+        toast.error("Some dates have already been added, try again");
+        setDates([]);
+        return;
       }
-    } catch (error) {
-      console.error(error)
-    }
+      
+  } catch (error) {
+    console.error(error);
   }
+};
+
+
   return (
-    <div className="flex ">
+    <div className="flex ps-12">
     <div className=' mt-5 hidden md:block'>
     <VendorSidebar  />
     </div>
     <Toaster richColors position ='bottom-right'/>
         <div className="  flex-grow  ">  
           <div>
-    <div className="min-h-screen bg-gray-100 flex items-start justify-center p-14">
+    <div className="min-h-screen bg-gray-100 flex items-start justify-center p-10">
       <div className="bg-white shadow-md rounded p-6 w-full max-w-lg">
         <form onSubmit={addDates}>
         <h1 className="text-xl font-bold mb-4 text-center text-md font-montserrat">Add Unavailable Dates</h1>
@@ -72,7 +135,7 @@ const Availabilty: React.FC = () => {
         <div>
           <h2 className="text-xl font font-montserrat mb-2">Selected Dates:</h2>
           <ul className="list-disc list-inside">
-            {dates.map((date,index) => (
+            { dates && dates.map((date,index) => (
               <li key={index} className="mb-1">{date.format("DD/MM/YYYY")}</li>
             ))}
           </ul>

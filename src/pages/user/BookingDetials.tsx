@@ -75,6 +75,12 @@ function BookingDetials() {
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
+              Amount_paid
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
               Cancel 
             </th>
           </tr>
@@ -111,6 +117,12 @@ function BookingDetials() {
                   > */}
                     {booking.vendorId.companyName}
                 {/* </button> */}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-bold font-montserrat text-gray-500">
+          
+           
+                    {booking.amountPaid}
+             
               </td>
               <td>
               <button

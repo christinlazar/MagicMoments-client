@@ -11,6 +11,8 @@ const vendorEndPoints = {
     bringBookingRequests:'/vendor/getBookingRequests',
     getThatRequestedUser:'/vendor/getThatRequestedUser',
     acceptBookingrequest:'/vendor/acceptBookingrequest',
+    fetchBookings:'/vendor/fetchBookings',
+    addServices:'/vendor/addServices'
 }
 
 export default vendorEndPoints
