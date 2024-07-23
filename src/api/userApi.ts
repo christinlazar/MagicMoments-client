@@ -196,3 +196,11 @@ export const showPhotosToUser = async (vendorId:string) =>{
     }
 }
 
+export const showVideosToUser = async (vendorId:string) =>{
+    try {
+        const result = await Api.post(userEndpoint.bringVideos,{vendorId})
+        return result
+    } catch (error) {
+        console.log(error)
+    }
+}

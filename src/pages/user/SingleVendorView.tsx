@@ -257,9 +257,15 @@ function SingleVendorView() {
           <button onClick={()=>navigate('/photos',{state:vendorDetail?._id})} className='button ms-3 mt-6 h-10 rounded-full text-sm'>
             <span >Photos</span>
           </button>
+         
 
 
 
+        </div>
+        <div className='flex justify-start items-start'>
+          <button onClick={()=>navigate('/videos',{state:vendorDetail?._id})} className='button ms-3 mt-6 h-10 rounded-full text-sm'>
+            <span >Videos</span>
+          </button>
         </div>
         {modalOpen && userInfo !== null && createPortal(
             <div className='z-40 h-96 w-96 shadow-2xl border border-gray-500 border-opacity-50 rounded-xl overflow-y-auto ' style={{ color: 'black', backgroundColor: 'white', padding: '20px', borderRadius: '5px', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
