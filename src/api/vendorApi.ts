@@ -174,3 +174,30 @@ export const addServices = async (serviceData:string[]) =>{
         
     }
 }
+
+export const bringchats = async () =>{
+    try {
+        const result = await Api.post(vendorEndPoints.bringChats)
+        return result
+    } catch (error) {
+        
+    }
+}
+
+export const bringvendorUserChat = async (userId:string) =>{
+    try {
+        const result = await Api.post(vendorEndPoints.bringVendorUserchat,{userId})
+        return result
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// export const sendMessageToUser = async (conversationId:string,receiverId:string,senderId:string,message:string)=>{
+//     try {
+//         const result = await Api.post(vendorEndPoints.sendMessageToUser,{conversationId,receiverId,senderId,message})
+//         return result
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }

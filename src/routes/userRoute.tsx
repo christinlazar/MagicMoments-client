@@ -20,6 +20,7 @@ import BookingDetials from "../pages/user/BookingDetials";
 import BookingRequests from "../pages/user/BookingRequests";
 import Photos from "../pages/user/Photos";
 import Videos from "../pages/user/Videos";
+import Chat from "../pages/user/SingleChat";
 interface RootState{
         auth:{
         userInfo:string
@@ -53,6 +54,7 @@ const UserRoute:React.FC = () => {
                                 <Route path='/bookingRequests' element={<BookingRequests/>}/>
                                 <Route path='/photos' element={<Photos/>}/>
                                 <Route path='/videos' element={<Videos/>}/>
+                                <Route path='/singleChat' element={<Chat/>}/>
                                 </Route>
               
 

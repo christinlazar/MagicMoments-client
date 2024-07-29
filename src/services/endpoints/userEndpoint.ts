@@ -18,7 +18,9 @@ const userRoutes = {
     fetchBookingRequests:'/user/fetchBookingRequests',
     cancelBooking:'/user/cancelBooking',
     bringPhotos:'/user/bringPhotos',
-    bringVideos:'/user/bringVideos'
+    bringVideos:'/user/bringVideos',
+    getVendorChat:'/chat/getvendorChat',
+    sendMessage:'/chat/sendMessage'
 }
 
 export default userRoutes 

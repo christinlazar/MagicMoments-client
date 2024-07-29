@@ -43,9 +43,9 @@ const [isOverlayVisible,setIsOverlayVisisble] = useState(false)
       {isOverlayVisible && (
           <div className="absolute inset-0 bg-black opacity-50 z-20"></div>
         )}
-      <div className='flex overflow-x-auto h-full'>
+      <div className='xl:flex overflow-x-auto h-full'>
         {photos && photos.map((photo, index) => (
-          <div onClick={()=>popUpImage(photo)} key={index} className='w-1/2 min-w-[200px] mx-2'>
+          <div onClick={()=>popUpImage(photo)} key={index} className=' w-full xl:w-1/2 min-w-[200px] mx-2'>
             <div className='grid grid-rows-6 grid-flow-col gap-1 h-[75%] rounded-md'>
               <div className='border row-span-6 col-span-2 text-center overflow-hidden'>
                 <img 

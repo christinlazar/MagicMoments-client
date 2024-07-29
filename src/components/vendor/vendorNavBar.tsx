@@ -76,11 +76,11 @@ function VendorNavBar() {
         </div>
         <div className='px-10'>
         <i className="fi fi-rr-store-alt text-2xl text-white mt-2"></i>
-        <span className="flex-1 ms-3 whitespace-nowrap text-sm font-serif font-bold text-slate-200">Store</span>
+        <span onClick={()=>navigate('/vendor/vendorStore')} className="flex-1 ms-3 whitespace-nowrap text-sm font-serif font-bold text-slate-200 hover:cursor-pointer">Store</span>
         </div>
         <div className='px-10'>
         <i className="fi fi-rr-messages text-2xl text-white mt-2"></i>
-        <span className="flex-1 ms-3 whitespace-nowrap text-sm font-serif font-bold text-slate-200">Messages</span>
+        <span onClick={()=>navigate('/vendor/vendorChat')} className="flex-1 ms-3 whitespace-nowrap text-sm font-serif font-bold text-slate-200 hover:cursor-pointer">Messages</span>
         </div>
         <div className='px-10'>
         <i className="fi fi-rr-review text-2xl text-white mt-2"></i>

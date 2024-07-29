@@ -204,3 +204,20 @@ export const showVideosToUser = async (vendorId:string) =>{
         console.log(error)
     }
 }
+
+export const getVendorChat = async (vendorId:string | undefined)=>{
+    try {
+        const result = await Api.post(userEndpoint.getVendorChat,{vendorId})
+        return result
+    } catch (error) {
+        
+    }
+}
+export const sendmessage = async (message:string,conversationId:string,senderModel:'User'|'Vendor',receiverId:string,receiverModel:'User' | 'Vendor') =>{
+    try {
+        const result = await Api.post(userEndpoint.sendMessage,{message,conversationId,senderModel,receiverId,receiverModel})
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}

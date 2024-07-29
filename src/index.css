@@ -147,7 +147,7 @@ code {
   text-align: center;
   /* font-size: 17px; */
   /* padding: 16px; */
-  width: 130px;
+  width: 110px;
   transition: all 0.5s;
   cursor: pointer;
  }
@@ -302,4 +302,6 @@ code {
     width: 16px;
   }
 }
+
+
 

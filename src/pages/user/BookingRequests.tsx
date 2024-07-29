@@ -50,92 +50,87 @@ function BookingRequests() {
             </div>
             <div className="overflow-x-auto mt-5 pt-20 px-6 w-full">
       <Toaster richColors position='bottom-right' />
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
-          <tr>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+      <div className="overflow-x-auto">
+  <table className="min-w-full divide-y divide-gray-200 hidden md:table">
+    <thead className="bg-gray-50">
+      <tr>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Request_To</th>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Request Status</th>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total No of Days</th>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Starting_date</th>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company_Name</th>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cancel</th>
+      </tr>
+    </thead>
+    <tbody className="bg-white divide-y divide-gray-200">
+      {bookingsReqs && bookingsReqs.map((req:any, index) => (
+        <tr key={req._id}>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <div className="flex items-center">
+              <div className="text-sm font-medium text-gray-900 font-montserrat">{req.vendorId.companyName}</div>
+            </div>
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+              {req.bookingStatus}
+            </span>
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ps-20">{req.noOfDays}</td>
+          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ps-10">{req.startingDate}</td>
+          <td className="px-6 py-4 whitespace-nowrap text-sm font-bold font-montserrat text-gray-500">{req.vendorId.companyName}</td>
+          <td>
+            <button
+              onClick={() => cancelRequest(req._id)}
+              className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
             >
-             Request_To
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              Cancel
+            </button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  {/* Responsive Layout */}
+  <div className="md:hidden">
+    {bookingsReqs && bookingsReqs.map((req:any, index) => (
+      <div key={index} className="border w-full border-gray-200 rounded-md mb-4 ">
+        <div className="flex flex-col w-auto">
+          <div className="flex items-center mb-2">
+            <span className="font-bold w-32">Request_To:</span>
+            <span className="text-gray-700 ms-6">{req.vendorId.companyName}</span>
+          </div>
+          <div className="flex items-center mb-2">
+            <span className="font-bold w-32">Request Status:</span>
+            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 ms-6">{req.bookingStatus}</span>
+          </div>
+          <div className="flex items-center mb-2">
+            <span className="font-bold w-32">Total No of Days:</span>
+            <span className="text-gray-700 ms-6">{req.noOfDays}</span>
+          </div>
+          <div className="flex items-center mb-2">
+            <span className="font-bold w-32">Starting_date:</span>
+            <span className="text-gray-700 ms-6">{req.startingDate}</span>
+          </div>
+          <div className="flex items-center mb-2">
+            <span className="font-bold w-32">Company_Name:</span>
+            <span className="text-gray-700 ms-6">{req.vendorId.companyName}</span>
+          </div>
+          <div className="mt-4">
+            <button
+              onClick={() => cancelRequest(req._id)}
+              className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
             >
-            Request Status
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Toatl No of Days
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-             Starting_date
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Company_Name
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Cancel 
-            </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {bookingsReqs && bookingsReqs.map((req:any) => (
-            <tr key={req._id} >
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="flex items-center">
-                  <div className="">
-                    <div className="text-sm font-medium text-gray-900 font-montserrat">{req.vendorId.companyName}</div>
-                    {/* <div className="text-sm text-gray-500">Email</div> */}
-                  </div>
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {
-               
-                    // ):
-                    // (
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                       {req.bookingStatus}
-                      </span>  
-                    // )
-                }
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ps-20">{req.noOfDays}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ps-10">{req.startingDate}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-bold font-montserrat text-gray-500">
-          
-              {/* <button
-                    // onClick={() => acceptRequest(rq._id as string)}
-                    className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
-                  > */}
-                    {req.vendorId.companyName}
-                {/* </button> */}
-              </td>
-              <td>
-              <button
-                    onClick={() => cancelRequest(req._id as string)}
-                    className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
-                  >
-                    Cancel
-                </button>
-              </td>
-            </tr>
-             ))}  
-        </tbody>
-      </table>
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+
     </div>
     </div>
   )

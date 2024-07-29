@@ -72,7 +72,13 @@ function NavBar() {
             }
           </li>
           <li>
-             <Link to='/profile' className="block py-2 px-3 text-gray-900 rounded hover:bg-red-500 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent  font-montserrat">Profile</Link>
+             <Link to='/profile' className="block py-2 px-3 text-gray-900 rounded hover:bg-cyan-950  md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent  font-montserrat">Profile</Link>
+          </li>
+          <li className=''>
+             <Link to='/bookingDetials' className="block py-2 px-3 text-gray-900 rounded hover:bg-cyan-950 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent  font-montserrat sm:hidden">Booking Detials</Link>
+          </li>
+          <li>
+             <Link to='/bookingRequests' className="block py-2 px-3 text-gray-900 rounded hover:bg-cyan-950 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent  font-montserrat sm:hidden">Booking Requests</Link>
           </li>
         </ul>
       </div>

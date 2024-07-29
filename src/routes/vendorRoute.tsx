@@ -17,6 +17,8 @@ import Availability from "../pages/vendor/availability";
 import BookingRequests from "../pages/vendor/bookingRequests";
 import EventBookings from "../pages/vendor/EventBookings";
 import Services from "../pages/vendor/services";
+import VendorChat from "../pages/vendor/VendorChat";
+import SingleVendorChat from "../pages/vendor/singleVendorChat";
 const VendorRoutes = () =>{
     const dispatch = useDispatch()
     useEffect(()=>{
@@ -25,7 +27,7 @@ const VendorRoutes = () =>{
         dispatch(vendorLogOut())
       }
     },[dispatch])
-    const userInfo = useSelector((state:RootState)=>state.auth)
+
     return (
         <>
            <Routes>
@@ -42,6 +44,8 @@ const VendorRoutes = () =>{
                     <Route path='/bookingRequests' element={<BookingRequests/>}/>
                     <Route path='/eventBookings' element={<EventBookings/>}/>
                     <Route path='/services' element={<Services/>}/>
+                    <Route path='/vendorChat' element={<VendorChat/>}/>
+                    <Route path='/vendorSingleChat' element={<SingleVendorChat/>}/>
             </Route>
         </Routes>
         </>

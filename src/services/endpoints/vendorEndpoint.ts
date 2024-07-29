@@ -12,7 +12,10 @@ const vendorEndPoints = {
     getThatRequestedUser:'/vendor/getThatRequestedUser',
     acceptBookingrequest:'/vendor/acceptBookingrequest',
     fetchBookings:'/vendor/fetchBookings',
-    addServices:'/vendor/addServices'
+    addServices:'/vendor/addServices',
+    bringChats:'/chat/getChats',
+    bringVendorUserchat:'/chat/bringVendorUserChat',
+    sendMessageToUser:'/chat/sendMessageTouser',
 }
 
 export default vendorEndPoints

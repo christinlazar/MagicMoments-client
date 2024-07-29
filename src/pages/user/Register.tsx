@@ -115,7 +115,7 @@ const showError5 = () =>{
 }
   return (
    
-    <div className="flex h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style={{ backgroundImage: `url(${RegisterImage})` }}>
+    <div className="flex h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat mt-10 p-20" style={{ backgroundImage: `url(${RegisterImage})` }}>
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-700 bg-opacity-50 z-0"></div>
       )}
@@ -124,38 +124,38 @@ const showError5 = () =>{
         <div className="text-white" >
           <div className="mb-2 flex flex-col items-center">
             <img className='my-4' src={logo} width="50" alt="Magic moments Logo"/>
-            <h1 className="mb-2 text-2xl">Magic Moments</h1>
+            <h1 className="mb-2 text-xl font-montserrat text-cyan-950">Magic Moments</h1>
           </div>
           <form  onSubmit={handleSubmit} id='form' >
-            <label className='font-serif'>First Name</label>
+            <label className='font-serif text-cyan-950'>First Name</label>
             <div className="mb-4 text-lg">
               <input onBlur={showError1}  value={name} onChange={(e)=>setName(e.target.value)} className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm" type="text" name="name"  />
               
                 <small className='text-red-600 font-serif  backdrop-blur-[2px]'>{error1}</small>
 
             </div>
-            <label className='font-serif'>Email</label>
+            <label className='font-serif text-cyan-950'>Email</label>
             <div className="mb-4 text-lg">
               <input onBlur={showError2} value={email} onChange={(e)=>setEmail(e.target.value)} className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm" type="text" name="email"  />
               <small className='text-red-600 font-serif  backdrop-blur-[2px]'>{error2}</small>
             </div>
-            <label className='font-serif'>Phone</label>
+            <label className='font-serif text-cyan-950'>Phone</label>
             <div className="mb-4 text-lg">
               <input onBlur={showError3} value={phone} onChange={(e)=>setPhone(Number(e.target.value))} className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm" type="text" name="phone"  />
               <small className='text-red-600 font-serif  backdrop-blur-[2px]'>{error3}</small>
             </div>
-            <label className='font-serif'>Password</label>
+            <label className='font-serif text-cyan-950'>Password</label>
             <div className="mb-4 text-lg">
               <input onBlur={showError4} value={password} onChange={(e)=>setPassword(e.target.value)} className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm" type="password" name="password" />
               <small className='text-red-600 font-serif  backdrop-blur-[2px]'>{error4}</small>
             </div>
-            <label className='font-serif'>Confirm your Password</label>
+            <label className='font-serif text-cyan-950'>Confirm your Password</label>
             <div className="mb-4 text-lg">
               <input onBlur={showError5} value={confirmPassword} onChange={(e)=>setConfrimPassword(e.target.value)} className= "bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm" type="password" name="confirmPassword" />
               <small className='text-red-600 font-serif backdrop-blur-[2px]'>{error5}</small>
             </div>
             <div className="mt-8 flex justify-center text-lg text-black">
-              <button type="submit" className="rounded-3xl bg-red-600 bg-opacity-100 px-10 py-2 mb-10 text-white shadow-xl backdrop-blur-md transition-colors duration-300 transform hover:scale-105 hover:transition ease-out duration-300 font-serif">sign up</button>
+              <button type="submit" className="rounded-3xl bg-cyan-950 bg-opacity-100 px-10 py-2 mb-10 text-white shadow-xl backdrop-blur-md transition-colors duration-300 transform hover:scale-105 hover:transition ease-out duration-300 font-serif">sign up</button>
             </div>
           </form>
         </div>

@@ -40,7 +40,7 @@ function Home() {
 
   return (
 
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white pt-20">
       <div className="container mx-auto px-4 py-2">
         <div className="flex flex-wrap">
           {images.map((image, index) => (
@@ -61,47 +61,46 @@ function Home() {
           <h4 className='text-xl'>BOOKING YOUR WEDDING PHOTOGRAPHER</h4>
       </div>
       <div className='h-60 mx-4  mb-4 grid grid-cols-3'>
+      <div className='bg-white p-4 flex items-center justify-center'>
+  <div className='p-2 sm:w-3/4 h-auto flex flex-col items-center'>
+    <div className='h-20 w-1/2 sm:w-1/4'>
+      <img className=' h-16 w-16 sm:h-full sm:w-full opacity-80' src={magnifier} alt="Magnifier" />
+    </div>
+    <div>
+      <p className='font-montserrat font-bold text-xs m-2 text-center'>SEARCH</p>
+    </div>
+    <div className='flex items-center justify-center'>
+      <p className='font-montserrat text-xs m-0 w-full sm:w-1/2 sm:ms-16 text-center sm:text-left'>Find Photographers matching your Style & Budget</p>
+    </div>
+  </div>
+</div>
+
         <div className='bg-white p-4 flex items-center justify-center'>
-            <div className='p-2 w-3/4 h-3/4 flex flex-col items-center'>
-              <div className='h-20 w-1/4'>
-                  <img className='h-full w-full opacity-80' src={magnifier}></img>
+        <div className='p-2 sm:w-3/4 h-auto flex flex-col items-center'>
+              <div className='h-20 w-1/2 sm:w-1/4'>
+                  <img className=' h-16 w-16 sm:h-full sm:w-full opacity-80' src={heart}></img>
               </div>
               <div>
-              <p className='font-montserrat font-bold text-xs m-2'>SEARCH</p>
+              <p className='font-montserrat font-bold text-xs m-2 text-center'>FAVORITE</p>
               </div>
               <div>
                 <div className='flex items-center justify-center'>
-              <p className='font-montserrat text-xs m-0 w-1/2 ms-16'>Find Photographers matching your Style & Budget</p>
+              <p className='font-montserrat text-xs m-0 w-full sm:w-1/2 sm:ms-16 text-center sm:text-left'>Shortlist & compare Photographers you Love</p>
                 </div>
               </div>
             </div>
         </div>
         <div className='bg-white p-4 flex items-center justify-center'>
-        <div className='p-2 w-3/4 h-3/4 flex flex-col items-center'>
-              <div className='h-20 w-1/4'>
-                  <img className='h-full w-full opacity-80' src={heart}></img>
+        <div className='p-2 sm:w-3/4 h-auto flex flex-col items-center'>
+              <div className='h-20 w-1/2 sm:w-1/4'>
+                  <img className='h-16 w-16 sm:h-full sm:w-full opacity-80' src={email}></img>
               </div>
               <div>
-              <p className='font-montserrat font-bold text-xs m-2'>FAVORITE</p>
-              </div>
-              <div>
-                <div className='flex items-center justify-center'>
-              <p className='font-montserrat text-xs m-0 w-1/2 ms-16'>Shortlist & compare Photographers you Love</p>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div className='bg-white p-4 flex items-center justify-center'>
-        <div className='p-2 w-3/4 h-3/4 flex flex-col items-center'>
-              <div className='h-20 w-1/4'>
-                  <img className='h-full w-full opacity-80' src={email}></img>
-              </div>
-              <div>
-              <p className='font-montserrat font-bold text-xs m-2'>CONTACT</p>
+              <p className='font-montserrat font-bold text-xs m-2 text-center'>CONTACT</p>
               </div>
               <div>
                 <div className='flex items-center justify-center'>
-              <p className='font-montserrat text-xs m-0 w-1/2 ms-16'>Get a quote, check your date and Book direct!</p>
+              <p className='font-montserrat text-xs m-0 w-full sm:w-1/2 sm:ms-16 text-center sm:text-left'>Get a quote, check your date and Book direct!</p>
                 </div>
               </div>
             </div>
@@ -152,9 +151,9 @@ function Home() {
               <div>
                   <h1 className='font-montserrat text-gray-300 text-xl mt-10 mb-3'>JOIN OUR WEDDING COMMUNITY TODAY</h1>
               </div>
-              <div >
+              <div className=''>
                     <p className='font-montserrat text-gray-300 text-sm'>Be found by couples looking for their perfect wedding photographer, showcase your</p>
-                    <p className='font-montserrat text-gray-300 text-sm ms-40'>work, enter our awards and features.</p>
+                    <p className='ms-0 font-montserrat text-gray-300 text-sm sm:ms-40'>work, enter our awards and features.</p>
               </div>
               <div className='my-8'>
                 <button className='border border-gray-300 rounded-md w-36 h-10 font-montserrat text-xs text-slate-300'>
