@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { getVendorChat, sendmessage } from '../../api/userApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMessages, setMessages } from '../../store/slice/AuthSlice';
+import useListenMessages from '../../hooks/useListenMessages';
 
 interface RootState{
   auth:{
@@ -15,7 +16,7 @@ const SingleChat = () => {
   const [message,setmessage] = useState<string>('')
   const location = useLocation()
   const dispatch = useDispatch()
-
+  useListenMessages();
   const conversationData:any = useSelector((state:RootState)=>state.auth.conversations)
 
   let {conversations,companyName,phoneNumber,dp,routeis,vendorId }= location.state

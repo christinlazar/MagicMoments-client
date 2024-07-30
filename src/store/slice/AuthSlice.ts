@@ -5,7 +5,8 @@ const initialState = {
     userInfo:localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo') as string) : null,
     adminInfo:localStorage.getItem('adminInfo') ? JSON.parse(localStorage.getItem('adminInfo') as string) : null,
     vendorInfo:localStorage.getItem('vendorInfo') ? JSON.parse(localStorage.getItem('vendorInfo') as string):null,
-    conversations:{}
+    conversations:[],
+    messages:[]
     // adminConversation
 }
 const authSlice = createSlice({
@@ -49,9 +50,13 @@ const authSlice = createSlice({
        },
        setAdminMessages:(state,action)=>{
         state.conversations = action.payload
+       },
+       setRealMessages:(state,action)=>{
+            state.messages = action.payload
        }
+
     }
 })
 
-export const {setUserCredentials,userLogOut,setAdminCredentials,adminLogOut,setVendorCredentials,vendorLogOut,setMessages,addMessages} = authSlice.actions
+export const {setUserCredentials,userLogOut,setAdminCredentials,adminLogOut,setVendorCredentials,vendorLogOut,setMessages,addMessages,setRealMessages} = authSlice.actions
 export default authSlice.reducer

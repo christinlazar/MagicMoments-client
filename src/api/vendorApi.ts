@@ -193,11 +193,11 @@ export const bringvendorUserChat = async (userId:string) =>{
     }
 }
 
-// export const sendMessageToUser = async (conversationId:string,receiverId:string,senderId:string,message:string)=>{
-//     try {
-//         const result = await Api.post(vendorEndPoints.sendMessageToUser,{conversationId,receiverId,senderId,message})
-//         return result
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
+export const sendMessageToUser = async (conversationId:string,receiverId:string,message:string)=>{
+    try {
+        const result = await Api.post(vendorEndPoints.sendMessageToUser,{conversationId,receiverId,message})
+        return result
+    } catch (error) {
+        console.log(error)
+    }
+}
