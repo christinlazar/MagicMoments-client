@@ -4,6 +4,8 @@ import { bringvendorUserChat, sendMessageToUser } from '../../api/vendorApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { setMessages } from '../../store/slice/AuthSlice'
 import useListenMessages from '../../hooks/useListenMessages'
+import { Toaster } from 'sonner'
+import { setOpenVendorChat } from '../../store/slice/AuthSlice'
 
 interface RootState{
   auth:{
@@ -35,8 +37,10 @@ function SingleVendorChat() {
     setTimeout(()=>{
       lastMessageRef.current?.scrollIntoView({behavior:"smooth"})
     },100)
+    dispatch(setOpenVendorChat(true))
     return ()=>{
       isMounted = false
+      dispatch(setOpenVendorChat(false))
     }
   },[setMessages])
   console.log("conv is conv",conversations)
@@ -55,6 +59,8 @@ function SingleVendorChat() {
   return (
   
     <div className="flex h-screen mb-5">
+      
+      <Toaster richColors position='top-center'/>
       {/* Sidebar */}
       <div className="w-72 bg-gray-200 p-16">
   {/* <div className='rounded-full border border-opacity-50 shadow-lg border-gray-200 h-20 w-20 overflow-hidden'>

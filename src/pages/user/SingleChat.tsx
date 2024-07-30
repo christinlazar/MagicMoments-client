@@ -4,7 +4,9 @@ import { getVendorChat, sendmessage } from '../../api/userApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMessages, setMessages } from '../../store/slice/AuthSlice';
 import useListenMessages from '../../hooks/useListenMessages';
-
+import bgImg from '../../assets/d93b9cd13a14f56aca18a42ec13d9981.jpg'
+import { setOpenUserChat } from '../../store/slice/AuthSlice';
+import { Toaster } from 'sonner';
 interface RootState{
   auth:{
       conversations:[]
@@ -35,9 +37,10 @@ const SingleChat = () => {
     }
     }
     getchat()
-
+    dispatch(setOpenUserChat(true))
     return () =>{
       isMounted = false
+      dispatch(setOpenUserChat(false))
     }
   },[])
 
@@ -58,6 +61,7 @@ const SingleChat = () => {
   return (
     <div className="flex h-screen pt-20 pe-11 ps-10 pb-10">
       {/* Sidebar */}
+      <Toaster richColors position='top-center'/>
       <div className="w-72 bg-gray-200 p-16">
   <div className='rounded-full border border-opacity-50 shadow-lg border-gray-200 h-20 w-20 overflow-hidden'>
     <img className='object-cover w-full h-full' src={dp} alt="Profile" />
@@ -79,15 +83,15 @@ const SingleChat = () => {
         <div className="flex-1 p-4 overflow-auto bg-gray-100">
           {/* Chat Header */}
           <div className="text-center mb-4">
-            <h2 className="text-gray-600 font-montserrat text-sm">FEBRUARY 20, 2018</h2>
+            <h2 className="text-gray-600 font-montserrat text-sm">{`${new Date().getDate()} / ${new Date().getMonth()} / ${new Date().getFullYear()}`}</h2>
           </div>
 
           {/* Messages */}
           {
             conversationData.messages.map((m:any)=>(
               <div key={m._id} className={`flex ${m.senderModel === 'User' ? 'justify-end' : 'justify-start'} mb-2`}>
-          <div className={`${m.senderModel === 'User' ? 'bg-cyan-800 text-white' : 'bg-gray-300 text-black'} p-2 rounded-md max-w-xs`}>
-            <div className="text-sm">{m.message}</div>
+          <div className={`${m.senderModel === 'User' ? 'bg-cyan-700 text-white' : 'bg-gray-300 text-black'} p-2 rounded-md max-w-xs`}>
+            <div className="chat text-sm">{m.message}</div>
           </div>
         </div>
             ))
