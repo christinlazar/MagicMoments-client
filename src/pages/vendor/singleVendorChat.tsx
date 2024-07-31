@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { bringvendorUserChat, sendMessageToUser } from '../../api/vendorApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { setMessages } from '../../store/slice/AuthSlice'
@@ -14,6 +14,7 @@ interface RootState{
 }
 
 function SingleVendorChat() {
+  const navigate = useNavigate()
   const location = useLocation()
   const {userId,userName} = location.state
   const [message,setmessage] = useState('')
@@ -68,7 +69,11 @@ function SingleVendorChat() {
   </div> */}
   <div className="mb-2">
     <h2 className="text-sm font-bold text-cyan-800 mt-2">{userName}</h2>
-    <p className="text-sm text-gray-900 font-montserrat">Message ASAP!</p>
+    <p className="text-sm text-gray-900 font-montserrat mt-5">Message ASAP!</p>
+  </div>
+  <div onClick={()=>navigate('/vendor/VendorVideoCall')} className='flex mt-5 hover:cursor-pointer'>
+  <i className ="fi fi-rr-video-camera-alt text-cyan-800 text-3xl"></i>
+  <p className='text-sm text-gray-700 ms-3 mt-1 font-montserrat'>Start call</p>
   </div>
   {/* <div className='flex'>
   <i className="fi fi-rr-phone-call text-gray-900"></i>
@@ -91,7 +96,7 @@ function SingleVendorChat() {
             conversationData && conversationData?.messages?.map((m:any)=>(
               <div key={m._id} className={`flex ${m.senderModel === 'Vendor' ? 'justify-end' : 'justify-start'} mb-2`}>
           <div ref={lastMessageRef} className={`${m.senderModel === 'Vendor' ? 'bg-cyan-800 text-white' : 'bg-gray-300 text-black'} p-2 rounded-md max-w-xs`}>
-            <div className="text-sm">{m.message}</div>
+            <div className="text-sm font-montserrat">{m.message}</div>
           </div>
         </div>
             ))

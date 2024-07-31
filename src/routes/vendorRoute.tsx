@@ -19,6 +19,7 @@ import EventBookings from "../pages/vendor/EventBookings";
 import Services from "../pages/vendor/services";
 import VendorChat from "../pages/vendor/VendorChat";
 import SingleVendorChat from "../pages/vendor/singleVendorChat";
+import { VendorVideoCall } from "../pages/vendor/vendorVideoCall";
 const VendorRoutes = () =>{
     const dispatch = useDispatch()
     useEffect(()=>{
@@ -46,6 +47,7 @@ const VendorRoutes = () =>{
                     <Route path='/services' element={<Services/>}/>
                     <Route path='/vendorChat' element={<VendorChat/>}/>
                     <Route path='/vendorSingleChat' element={<SingleVendorChat/>}/>
+                    <Route path='/vendorVideoCall' element={<VendorVideoCall/>}/>
             </Route>
         </Routes>
         </>

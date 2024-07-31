@@ -18,6 +18,7 @@ code {
 @tailwind components;
 @tailwind utilities;
 
+
 @layer components {
   .button2 {
     @apply inline-block relative overflow-hidden z-10 text-black py-3 px-6 cursor-pointer text-lg rounded-md bg-gray-200 border border-gray-200 shadow-md transition-all duration-200 ease-in-out;
@@ -302,6 +303,5 @@ code {
     width: 16px;
   }
 }
-
 
 

@@ -7,6 +7,7 @@ import useListenMessages from '../../hooks/useListenMessages';
 import bgImg from '../../assets/d93b9cd13a14f56aca18a42ec13d9981.jpg'
 import { setOpenUserChat } from '../../store/slice/AuthSlice';
 import { Toaster } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 interface RootState{
   auth:{
       conversations:[]
@@ -18,6 +19,7 @@ const SingleChat = () => {
   const [message,setmessage] = useState<string>('')
   const location = useLocation()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   useListenMessages();
   const conversationData:any = useSelector((state:RootState)=>state.auth.conversations)
 
@@ -70,9 +72,13 @@ const SingleChat = () => {
     <h2 className="text-sm font-bold text-cyan-800 mt-2">{companyName}</h2>
     <p className="text-sm text-gray-900 font-montserrat">Message ASAP!</p>
   </div>
-  <div className='flex'>
+  <div className='flex mt-6'>
   <i className="fi fi-rr-phone-call text-gray-900"></i>
-    <p className='text-sm text-gray-900 ms-3 '>{phoneNumber}</p>
+  <p className='text-sm text-gray-900 ms-3 '>{phoneNumber}</p>
+  </div>
+  <div onClick={()=>navigate('/videoCall')} className='flex mt-5 hover:cursor-pointer'>
+  <i className ="fi fi-rr-video-camera-alt text-gray-900 text-xl"></i>
+  <p className='text-sm text-gray-900 ms-3 '>Go to video call</p>
   </div>
 </div>
 

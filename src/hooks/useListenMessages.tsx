@@ -43,15 +43,12 @@ const useListenMessages = () => {
     if (socket) {
       socket.on('newConversation', (conversation:any) => {
         console.log("conversationnnnnnnnnn",conversation)
-       console.log(currentpath)
+       console.log("currrrrr",currentpath)
        if(currentpath == '/singleChat' || currentpath == '/vendor/vendorSingleChat'){
         toast.info(`
             Got one message : 
             ${conversation.messages[conversation.messages.length-1].message}
             `)
-        // toast.custom(()=>(
-        //     <CustomToast/>
-        // ))
        }else{
         console.log("here we can add notifications")
        }

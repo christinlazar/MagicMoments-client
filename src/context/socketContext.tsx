@@ -22,6 +22,7 @@ interface RootState2 {
 interface SocketContextValue {
   socket: Socket | null;
   onlineUsers: any[];
+  me:any
 }
 
 interface TokenPayload {
@@ -34,6 +35,7 @@ export const SocketContext = createContext<SocketContextValue | undefined>(undef
 
 export const SocketContextProvider: React.FC<SocketContextProviderProps> = ({ children }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
+  const [me,setMe] = useState<any>()
   const [onlineUsers, setOnlineUsers] = useState<any[]>([]);
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const { vendorInfo } = useSelector((state: RootState2) => state.auth);
@@ -67,6 +69,10 @@ export const SocketContextProvider: React.FC<SocketContextProviderProps> = ({ ch
         setOnlineUsers(users)
       });
 
+      socket.on("me",(id)=>{
+        setMe(id)
+      })
+
       return () => {
         socket.close();
       };
@@ -79,7 +85,7 @@ export const SocketContextProvider: React.FC<SocketContextProviderProps> = ({ ch
   }, [userInfo, vendorInfo]);
 
   return (
-    <SocketContext.Provider value={{ socket, onlineUsers }}>
+    <SocketContext.Provider value={{ socket, onlineUsers,me}}>
       {children}
     </SocketContext.Provider>
   );
