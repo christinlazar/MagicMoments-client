@@ -5,12 +5,14 @@ import { Toaster, toast } from 'sonner'
 import {useToast} from '@chakra-ui/react'
 import { createPortal } from 'react-dom'
 import { useSelector } from 'react-redux'
+import useListenMessages from '../../hooks/useListenMessages'
 interface RootState{
   auth:{
       vendorInfo:string
   }
 }
 function AddPhotos() {
+  useListenMessages()
   const [photos,setPhotos] = useState<FileList | null>(null)
   const [isUploading,setIsUploading] = useState(false)
   const [isOverlayVisible,setIsOverlayVisisble] = useState(false)

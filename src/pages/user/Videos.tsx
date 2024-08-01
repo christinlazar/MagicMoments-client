@@ -3,7 +3,9 @@ import { Toaster } from 'sonner'
 import { useLocation } from 'react-router-dom'
 import { showPhotosToUser, showVideosToUser } from '../../api/userApi'
 import { createPortal } from 'react-dom'
+import useListenMessages from '../../hooks/useListenMessages'
 function Videos() {
+  useListenMessages()
 const location = useLocation()
 const vendorId = location.state
 console.log(vendorId)

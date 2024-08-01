@@ -4,9 +4,10 @@ import "react-multi-date-picker/styles/colors/green.css";
 import VendorSidebar from '../../components/vendor/vendorSideNav';
 import { addUnavailableDates } from '../../api/vendorApi';
 import { toast, Toaster } from 'sonner';
+import useListenMessages from '../../hooks/useListenMessages';
 
 const Availabilty: React.FC = () => {
-
+useListenMessages()
   const [dates, setDates] = useState<DateObject[]>([]);
   const [errorFound,setError] = useState(false)
   const handleDateChange = (selectedDates: DateObject[]) => {

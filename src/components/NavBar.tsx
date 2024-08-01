@@ -4,6 +4,11 @@ import {Link, useLocation,useNavigate} from 'react-router-dom'
 import { useSelector,useDispatch } from 'react-redux';
 import { RootState } from '../store/Store';
 import { userLogOut } from '../store/slice/AuthSlice';
+// interface RootState{
+//   auth:{
+//     userNotifcations:any
+//   }
+// }
 function NavBar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -30,6 +35,11 @@ function NavBar() {
       setLinkPath('/login')
     }
     },[location,userInfo,linkPath])
+
+
+      const userNotifications = useSelector((state:RootState)=>state.auth.userNotifications)
+      console.log("userNotifications is",userNotifications)
+
     const toggleDropdown = () => {
       setIsDropdownOpen(!isDropdownOpen);
     };
@@ -39,7 +49,7 @@ function NavBar() {
     };
     const logOut = async (linkPath:string) =>{
       if(linkPath == '/logout'){
-          await dispatch(userLogOut())
+           dispatch(userLogOut())
             navigate('/')
       }
     }

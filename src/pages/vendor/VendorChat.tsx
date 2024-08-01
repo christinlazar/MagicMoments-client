@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { bringchats } from '../../api/vendorApi';
 import userImg from '../../assets/user (1).png'
 import { useNavigate } from 'react-router-dom';
+import { toast, Toaster } from 'sonner';
 const VendorChat = () => {
 const [conversations,setConversations] = useState<any>([])
 const [users,setUsers] = useState<[]>([])
+const visisbiltyRef = useRef<any>(null)
 const navigate = useNavigate()
     useEffect(()=>{
         let isMounted = true
@@ -12,9 +14,15 @@ const navigate = useNavigate()
             const response = await bringchats()
             console.log("r is",response?.data.result.conversations)
             if(isMounted){
+              console.log("isMounted")
             setConversations(response?.data.result.conversations)
             setUsers(response?.data.result.users)
+            const lm = messages?.map((m:any)=>m[m.length-1]?.message)
+              // if(lm[0] == undefined){
+              //   toast.warning("you haven't recived a message yet")
+              // }
             }
+           
         }
         bringChats()
         return ()=>{
@@ -22,27 +30,27 @@ const navigate = useNavigate()
         }
     },[])
 
-    console.log("users",users)
     console.log("conversations",conversations)
     
-    let messages = conversations.map((conv:any)=>conv.messages)
-    console.log("lca",messages)
-    const latestMessages = messages.map((m:any)=>m[m.length-1].message)
-    console.log("lm",latestMessages)
+    let messages = conversations.map((conv:any)=>conv?.messages)
+
+    const latestMessages = messages?.map((m:any)=>m[m.length-1]?.message)
+
   return (
     <section className="container mx-auto p-6 font-mono">
+      <Toaster richColors position='bottom-right'/>
       <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
         <div className="w-full overflow-x-auto">
           <table className="w-full">
-            <thead>
-              <tr className="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+            <thead  >
+              <tr ref={visisbiltyRef} className="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
                 <th className="px-4 py-3">Client</th>
                 <th className="px-4 py-3">Latest Message</th>
               </tr>
             </thead>
             <tbody className="bg-white">
               {
-                users && latestMessages && (
+               users && latestMessages? (
                     users.map((u:any,index:number)=>(
                 <tr key={index} className="text-gray-700">
                   <td className="px-4 py-3 border">
@@ -71,6 +79,11 @@ const navigate = useNavigate()
                 </tr>
                     ))
                     
+                ):(
+                  
+                  <div className='flex justify-center'>
+                    {/* <span className='text-red-700 font-montserrat'>You havent'received a message yet</span> */}
+                  </div>
                 )
                 }
             </tbody>

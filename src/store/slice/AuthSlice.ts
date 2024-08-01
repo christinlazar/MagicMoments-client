@@ -10,7 +10,8 @@ const initialState = {
     conversations:[],
     messages:[],
     userNotifications:[],
-    vendorNotifications:[]
+    vendorNotifications:[],
+    videoCallRequest:false
     // adminConversation
 }
 const authSlice = createSlice({
@@ -63,10 +64,19 @@ const authSlice = createSlice({
        },
        setOpenVendorChat:(state,action)=>{
         state.openVendorChat = action.payload
+       },
+       setUserNotifications:(state,action)=>{
+        state.userNotifications = action.payload
+       },
+       setVendorNotifications:(state,action)=>{
+        state.vendorNotifications = action.payload
+       },
+       setVideCallRequest:(state,action)=>{
+        state.videoCallRequest = true
        }
 
     }
 })
 
-export const {setUserCredentials,userLogOut,setAdminCredentials,adminLogOut,setVendorCredentials,vendorLogOut,setMessages,addMessages,setRealMessages,setOpenUserChat,setOpenVendorChat} = authSlice.actions
+export const {setUserCredentials,userLogOut,setAdminCredentials,adminLogOut,setVendorCredentials,vendorLogOut,setMessages,addMessages,setRealMessages,setOpenUserChat,setOpenVendorChat,setUserNotifications,setVendorNotifications,setVideCallRequest} = authSlice.actions
 export default authSlice.reducer

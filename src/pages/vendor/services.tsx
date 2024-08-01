@@ -2,10 +2,13 @@ import React,{ useEffect, useRef, useState } from 'react'
 import VendorSidebar from '../../components/vendor/vendorSideNav'
 import { Toaster,toast } from 'sonner'
 import { addServices } from '../../api/vendorApi'
+import useListenMessages from '../../hooks/useListenMessages'
 function Services() {
 
     const [serviceArr,setServiceArr] = useState<any>([])
-  
+    
+  useListenMessages()
+
     useEffect(()=>{
 
     },[])

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getVendorChat, sendmessage } from '../../api/userApi';
+import { getVendorChat, sendmessage, sendVideoCallReq } from '../../api/userApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMessages, setMessages } from '../../store/slice/AuthSlice';
 import useListenMessages from '../../hooks/useListenMessages';
@@ -13,13 +13,18 @@ interface RootState{
       conversations:[]
   }
 }
-
+interface RootState2{
+  auth:{
+    videoCallRequest:boolean
+  }
+}
 const SingleChat = () => {
   const [conv,setConv] = useState<any>([])
   const [message,setmessage] = useState<string>('')
   const location = useLocation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const lastMessageRef = useRef<any>(null)
   useListenMessages();
   const conversationData:any = useSelector((state:RootState)=>state.auth.conversations)
 
@@ -39,6 +44,9 @@ const SingleChat = () => {
     }
     }
     getchat()
+    setTimeout(()=>{
+      lastMessageRef.current?.scrollIntoView({behavior:"smooth"})
+    },100)
     dispatch(setOpenUserChat(true))
     return () =>{
       isMounted = false
@@ -46,7 +54,13 @@ const SingleChat = () => {
     }
   },[])
 
-  
+  // const {videoCallRequest} = useSelector((state:RootState2)=>state.auth)
+
+  // const sendVideoCallRequest = async () =>{
+  //   const response = await sendVideoCallReq()
+  //   console.log(response)
+  // }
+
   const sendMessage = async (e:React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault()
     const receiverId = conversationData?.participants.find((p:any) => p.participantModel == "Vendor")
@@ -76,10 +90,13 @@ const SingleChat = () => {
   <i className="fi fi-rr-phone-call text-gray-900"></i>
   <p className='text-sm text-gray-900 ms-3 '>{phoneNumber}</p>
   </div>
-  <div onClick={()=>navigate('/videoCall')} className='flex mt-5 hover:cursor-pointer'>
-  <i className ="fi fi-rr-video-camera-alt text-gray-900 text-xl"></i>
-  <p className='text-sm text-gray-900 ms-3 '>Go to video call</p>
-  </div>
+
+      <div onClick={()=>navigate('/videoCall')} className='flex mt-5 hover:cursor-pointer'>
+      <i className ="fi fi-rr-video-camera-alt text-gray-900 text-xl"></i>
+      <p className='text-sm text-gray-900 ms-3 '>Start a call</p>
+      </div>
+  
+
 </div>
 
       {/* Chat Window */}
@@ -96,8 +113,8 @@ const SingleChat = () => {
           {
             conversationData.messages.map((m:any)=>(
               <div key={m._id} className={`flex ${m.senderModel === 'User' ? 'justify-end' : 'justify-start'} mb-2`}>
-          <div className={`${m.senderModel === 'User' ? 'bg-cyan-700 text-white' : 'bg-gray-300 text-black'} p-2 rounded-md max-w-xs`}>
-            <div className="chat text-sm">{m.message}</div>
+          <div ref={lastMessageRef} className={`${m.senderModel === 'User' ? 'bg-cyan-700 text-white' : 'bg-gray-300 text-black'} p-2 rounded-md max-w-xs`}>
+            <div  className={ `chat text-sm`} >{m.message}</div>
           </div>
         </div>
             ))

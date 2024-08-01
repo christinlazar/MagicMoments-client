@@ -6,11 +6,13 @@ import { Navigate, Outlet } from 'react-router-dom'
 import VendorNavBar from '../../components/vendor/vendorNavBar'
 import { addStoreDetails, getVendorData } from '../../api/vendorApi'
 import {toast,Toaster} from 'sonner'
+import useListenMessages from '../../hooks/useListenMessages'
 function VendorStoreFront() {
         const [description,setDescription] = useState<string>('')
         const [phoneNumber,setPhoneNumber] = useState<string>('')
         const [startingPrice,setStartingPrice] = useState<string>('')
         const [vendorData,setVendorData] = useState<any>()
+            useListenMessages()
             useEffect(()=>{
                 const getvendorData = async () =>{
                 const vendorData = await getVendorData()

@@ -5,7 +5,10 @@ import { setMessages } from '../store/slice/AuthSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Toaster,toast } from 'sonner';
+import { setUserNotifications,setVendorNotifications } from '../store/slice/AuthSlice';
 import CustomToast from '../customToasts/CustomToast';
+//@ts-ignore
+import notificationSound from '../assets/sounds/mixkit-positive-notification-951.wav'
 interface SocketContextValue {
   socket: Socket | null;
   onlineUsers: any[];
@@ -32,7 +35,7 @@ const useListenMessages = () => {
     const currentpath = location.pathname
   const dispatch = useDispatch();
   const socketContext = useContext(SocketContext); 
-  const { socket } = socketContext as SocketContextValue; 
+  const { socket,onlineUsers } = socketContext as SocketContextValue; 
   const { conversations } = useSelector((state: RootState) => state.auth)
   const { openUserChat } = useSelector((state: RootState1) => state.auth);
   const { openVendorChat } = useSelector((state: RootState2) => state.auth);
@@ -44,14 +47,13 @@ const useListenMessages = () => {
       socket.on('newConversation', (conversation:any) => {
         console.log("conversationnnnnnnnnn",conversation)
        console.log("currrrrr",currentpath)
-       if(currentpath == '/singleChat' || currentpath == '/vendor/vendorSingleChat'){
+      console.log("-----------------------",openUserChat ,openVendorChat)
+      const sound = new Audio(notificationSound)
+      // sound.play()
         toast.info(`
-            Got one message : 
-            ${conversation.messages[conversation.messages.length-1].message}
-            `)
-       }else{
-        console.log("here we can add notifications")
-       }
+          Got one message : 
+          ${conversation.messages[conversation.messages.length-1].message}
+          `)
         dispatch(setMessages(conversation));
       });
 

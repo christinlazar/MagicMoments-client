@@ -9,6 +9,7 @@ import { handleStripePayment,checkIsReqAccepted } from '../../api/userApi'
 import {loadStripe} from '@stripe/stripe-js'
 import { useSelector } from 'react-redux'
 import { toast, Toaster } from 'sonner'
+import useListenMessages from '../../hooks/useListenMessages'
  enum AcceptanceStatus {
   Requested = 'requested',
   Accepted = 'accepted',
@@ -45,6 +46,7 @@ interface RootState{
 
 
 function SingleVendorView() {
+  useListenMessages()
     const location = useLocation()
     const userId = location.state
     const [vendorDetail,setVendorDetail] = useState<Vendor | null>()

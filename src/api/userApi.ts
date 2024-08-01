@@ -221,3 +221,12 @@ export const sendmessage = async (message:string,conversationId:string,senderMod
         console.error(error)
     }
 }
+
+export const sendVideoCallReq = async () =>{
+    try {
+        const result = await Api.post(userEndpoint.sendVideoMessageReq)
+        return result
+    } catch (error) {
+        
+    }
+}

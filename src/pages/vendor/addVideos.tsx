@@ -4,6 +4,7 @@ import { addVideos } from '../../api/vendorApi'
 import {toast,Toaster} from 'sonner'
 import { createPortal } from 'react-dom'
 import { useSelector } from 'react-redux'
+import useListenMessages from '../../hooks/useListenMessages'
 
 interface RootState{
   auth:{
@@ -11,6 +12,7 @@ interface RootState{
   }
 }
 function AddVideos() {
+  useListenMessages()
   const [videos,setVideos] = useState<FileList | null>(null)
   const [isOverlayVisible,setIsOverlayVisisble] = useState(false)
   const [isUploading,setIsUploading] = useState(false)

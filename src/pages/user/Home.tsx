@@ -11,8 +11,10 @@ import email from '../../assets/email.png'
 // import { getVendors } from '../../api/vendorApi'
 import { getVendors } from '../../api/userApi'
 import { useNavigate } from 'react-router-dom'
+import useListenMessages from '../../hooks/useListenMessages'
+import { Toaster } from 'sonner'
 function Home() {
-
+  useListenMessages()
   const [vendors,setVendors] = useState([])
   const navigate = useNavigate()
   useEffect(()=>{
@@ -41,6 +43,7 @@ function Home() {
   return (
 
     <div className="min-h-screen bg-white pt-20">
+      <Toaster richColors position='top-center'/>
       <div className="container mx-auto px-4 py-2">
         <div className="flex flex-wrap">
           {images.map((image, index) => (

@@ -3,8 +3,10 @@ import VendorSidebar from '../../components/vendor/vendorSideNav'
 import { Toaster,toast } from 'sonner'
 import { acceptBookingRequest, fetchBookingRequests } from '../../api/vendorApi'
 import { useDispatch,  } from 'react-redux'
+import useListenMessages from '../../hooks/useListenMessages'
 
 function BookingRequests() {
+  useListenMessages()
     const [bookingDetails,setBookingDetails] = useState<string[]>([])
     const [acceptReq,setAcceptReq] = useState<boolean>(false)
     const dispatch = useDispatch()

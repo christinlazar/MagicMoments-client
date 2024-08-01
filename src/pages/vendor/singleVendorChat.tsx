@@ -24,6 +24,7 @@ function SingleVendorChat() {
   const conversationData:any = useSelector((state:RootState)=>state.auth.conversations)
   useListenMessages()
   useEffect(()=>{
+    dispatch(setOpenVendorChat(true))
     let isMounted = true
     async function bringuserChat(){
     const response = await bringvendorUserChat(userId)
@@ -38,14 +39,13 @@ function SingleVendorChat() {
     setTimeout(()=>{
       lastMessageRef.current?.scrollIntoView({behavior:"smooth"})
     },100)
-    dispatch(setOpenVendorChat(true))
     return ()=>{
       isMounted = false
       dispatch(setOpenVendorChat(false))
     }
   },[setMessages])
   console.log("conv is conv",conversations)
-
+  console.log("veddorcahttrueorfalse",)
   const sendMessage = async (e:React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault()
     setmessage('')

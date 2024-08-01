@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Toaster,toast } from 'sonner'
 import SideBar from '../../components/user/SideBar'
 import { fetchBookingDetials } from '../../api/userApi'
+import useListenMessages from '../../hooks/useListenMessages';
 export enum PaymentStatus {
     Pending = 'pending',
     Completed = 'completed'
@@ -19,6 +20,7 @@ interface bookingInt extends Document{
 }
 
 function BookingDetials() {
+  useListenMessages()
     const [bookings,setBookings] = useState<bookingInt[] | null>([])
     useEffect(()=>{
         const fetchBookingData = async () =>{

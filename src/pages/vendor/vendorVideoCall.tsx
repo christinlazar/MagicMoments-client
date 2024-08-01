@@ -36,32 +36,13 @@ export const VendorVideoCall = () => {
     const socketContext = useContext(SocketContext); 
     const { socket,me } = socketContext as SocketContextValue; 
 
-    // useEffect(() => {
-	// 	navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
-	// 		setStream(stream)
-    //         if(myVideo.current){
-	// 			myVideo.current.srcObject = stream
-    //         }
-	// 	})
-
-	// socket?.on("me", (id) => {
-    //     console.log("id is iddddddd",id)
-	// 		setMe(id)
-	// 	})
-
-	// 	socket?.on("callUser", (data) => {
-	// 		setReceivingCall(true)
-	// 		setCaller(data.from)
-	// 		setName(data.name)
-	// 		setCallerSignal(data.signal)
-	// 	})
-	// }, [])
+ 
     useEffect(() => {
         navigator.mediaDevices.getUserMedia({ video: true, audio: true })
             .then((mediaStream: MediaStream) => {
                 setStream(mediaStream);
                 if (myVideo.current) {
-                    myVideo.current.srcObject = mediaStream; // Set the video source to the stream
+                    myVideo.current.srcObject = mediaStream; 
                 }
             })
             .catch((error) => {
