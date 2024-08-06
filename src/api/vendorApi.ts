@@ -201,3 +201,13 @@ export const sendMessageToUser = async (conversationId:string,receiverId:string,
         console.log(error)
     }
 }
+
+export const addLongLang = async (position:any) =>{
+    try{
+        const result = await Api.post(vendorEndPoints.addlocation,{position})
+        return result
+    }catch(error){
+        console.error(error)
+    }
+}
+

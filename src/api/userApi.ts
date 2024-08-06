@@ -230,3 +230,21 @@ export const sendVideoCallReq = async () =>{
         
     }
 }
+export const submitReview = async (review:string,rating:number,vendorId:any) =>{
+    try {
+        const result = await Api.post(userEndpoint.sendReview,{review,rating,vendorId})
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const getReviews = async (vendorId:string | undefined) =>{
+    try {
+        console.log("vendor id in get reviewsi in cient side")
+        const result = await Api.post(userEndpoint.getreviews,{vendorId})
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}

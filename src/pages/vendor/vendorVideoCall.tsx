@@ -10,12 +10,15 @@ import Peer from 'simple-peer'
 import { SocketContext } from '../../context/socketContext';
 import { IconButton, TextField } from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/Assignment'
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 interface SocketContextValue {
     socket: Socket | null;
     onlineUsers: any[];
     me:any
   }
+
 
 export const VendorVideoCall = () => {
     console.log("In vide calllllll component")
@@ -35,8 +38,9 @@ export const VendorVideoCall = () => {
 
     const socketContext = useContext(SocketContext); 
     const { socket,me } = socketContext as SocketContextValue; 
+    const navigate = useNavigate()
+    
 
- 
     useEffect(() => {
         navigator.mediaDevices.getUserMedia({ video: true, audio: true })
             .then((mediaStream: MediaStream) => {
@@ -129,6 +133,18 @@ export const VendorVideoCall = () => {
         setCallEnded(true);
         if (connectionRef.current) {
             connectionRef.current = null
+        }
+      
+        if(stream){
+            stream.getTracks().forEach((track:any )=>{
+                track.stop()
+                if(track.kind == "video"){
+                    track.enabled = false
+                }
+                if(track.kind == "audio"){
+                    track.enabled = false
+                }
+            })
         }
     };
 

@@ -19,7 +19,7 @@ interface bookingInt extends Document{
     paymentStatus:PaymentStatus
 }
 
-function BookingDetials() {
+function PaymentDetials() {
   useListenMessages()
     const [bookings,setBookings] = useState<bookingInt[] | null>([])
     useEffect(()=>{
@@ -47,8 +47,8 @@ function BookingDetials() {
       <tr>
         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Booking_id</th>
         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment-status</th>
-        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total No of Days</th>
-        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Starting_date</th>
+        {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total No of Days</th> */}
+        {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Starting_date</th> */}
         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company_Name</th>
         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount_paid</th>
         {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cancel</th> */}
@@ -57,14 +57,14 @@ function BookingDetials() {
     <tbody className="bg-white divide-y divide-gray-200">
       {bookings && bookings.map((booking:any, index) => (
         <tr key={index}>
-          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-montserrat">{booking._id}</td>
+          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-montserrat">{booking._id.split('').reverse().join('')}</td>
           <td className="px-6 py-4 whitespace-nowrap">
             <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
               {booking.paymentStatus}
             </span>
           </td>
-          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{booking.noOfDays}</td>
-          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{booking.startingDate}</td>
+          {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{booking.noOfDays}</td>
+          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{booking.startingDate}</td> */}
           <td className="px-6 py-4 whitespace-nowrap text-sm font-bold font-montserrat text-gray-500">{booking.vendorId.companyName}</td>
           <td className="px-6 py-4 whitespace-nowrap text-sm font-bold font-montserrat text-gray-500">Rs.{booking.amountPaid}</td>
           <td className="px-6 py-4 whitespace-nowrap">
@@ -123,4 +123,4 @@ function BookingDetials() {
   )
 }
 
-export default BookingDetials
+export default PaymentDetials

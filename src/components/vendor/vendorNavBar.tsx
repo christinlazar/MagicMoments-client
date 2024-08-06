@@ -90,6 +90,10 @@ function VendorNavBar() {
         <i className="fi fi-rr-review text-2xl text-white mt-2"></i>
         <span className="flex-1 ms-3 whitespace-nowrap text-sm font-serif font-bold text-slate-200">Booking Requests</span>
         </Link>
+        <Link to='/vendor/paymentDetials' className='px-10'>
+        <i className="fi fi-rr-review text-2xl text-white mt-2"></i>
+        <span className="flex-1 ms-3 whitespace-nowrap text-sm font-serif font-bold text-slate-200">payment Detials</span>
+        </Link>
         </div>
      </nav>
      </>

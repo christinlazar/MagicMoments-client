@@ -16,6 +16,8 @@ const vendorEndPoints = {
     bringChats:'/chat/getChats',
     bringVendorUserchat:'/chat/bringVendorUserChat',
     sendMessageToUser:'/chat/sendMessageTouser',
+    addlocation:'/vendor/addLongLang',
+  
 }
 
 export default vendorEndPoints

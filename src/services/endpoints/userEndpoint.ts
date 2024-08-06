@@ -21,7 +21,9 @@ const userRoutes = {
     bringVideos:'/user/bringVideos',
     getVendorChat:'/chat/getvendorChat',
     sendMessage:'/chat/sendMessage',
-    sendVideoMessageReq:'/chat/videoChatRequest'
+    sendVideoMessageReq:'/chat/videoChatRequest',
+    sendReview:'/user/submitReview',
+    getreviews:'/user/getReviews',
 }
 
 export default userRoutes 

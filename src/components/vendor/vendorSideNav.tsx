@@ -69,7 +69,7 @@ const VendorSidebar = () => {
               </Link>
             </li>
             <li>
-              <Link to='/vendor/locationAndMap'
+              <Link to='/vendor/addlocation'
           
                 className="flex items-center p-2 text-gray-900 hover:text-purple-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >

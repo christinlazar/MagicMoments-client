@@ -1,14 +1,13 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-// import { bringThatVendor } from '../../api/vendorApi'
-import { bringThatVendor, getVendorChat, isExistingBookingRequest, SendBookingRequest } from '../../api/userApi'
+import { bringThatVendor, getReviews, getVendorChat, isExistingBookingRequest, SendBookingRequest, submitReview } from '../../api/userApi'
 import { createPortal } from 'react-dom'
 import { addUnavailableDates } from '../../api/vendorApi'
 import { handleStripePayment,checkIsReqAccepted } from '../../api/userApi'
-import {loadStripe} from '@stripe/stripe-js'
 import { useSelector } from 'react-redux'
 import { toast, Toaster } from 'sonner'
+import { GoogleMap,Marker,LoadScript,MarkerF } from '@react-google-maps/api'
 import useListenMessages from '../../hooks/useListenMessages'
  enum AcceptanceStatus {
   Requested = 'requested',
@@ -16,7 +15,7 @@ import useListenMessages from '../../hooks/useListenMessages'
   Rejected = 'rejected'
 }
 interface Vendor{
-  _id?:string;
+  _id:string;
   companyName:string;
   companyEmail:string;
   companyLocation:string;
@@ -32,6 +31,14 @@ interface Vendor{
   unAvailableDates:string[],
   services:string[],
   isBlocked:boolean;
+}
+
+interface Review{
+  _id:string,
+  vendorId:string,
+  userId:string,
+  review:string,
+  rating:number
 }
 export interface bookingDataInterface{
   date:string;
@@ -59,19 +66,49 @@ function SingleVendorView() {
     const navigate = useNavigate()
     const {userInfo} = useSelector((state:RootState)=>state.auth)
     const [conversations,setConversations] = useState(false)
- 
-    console.log("userInfo is",userInfo)
+    const [locations,setLocations] = useState([])
+    const [review,setReview]= useState<string>('')
+    const [rating, setRating] = useState<number | null | any>(3);
+    const [reviewData,setReviewData] = useState<Review[] | null>([])
+    const [reviewRefresh,setReviewRefresh] = useState<boolean>(false)
 
+    const [isScriptLoaded, setIsScriptLoaded] = useState(false);
+
+
+
+   
     useEffect(()=>{
       const bringVendorDetial = async () =>{
           const response = await bringThatVendor(userId)
           if(response?.data.data){
             setVendorDetail(response?.data?.data)
+            console.log("vendorId issssssssssss",response.data.data)
+            setLocations(response.data.data.location)
+            getreviews(response?.data?.data?._id)
           }
       }
-      bringVendorDetial()
-    },[modalOpen,openBooking])
-    console.log(modalOpen)
+      bringVendorDetial()   
+      setIsScriptLoaded(true)
+      if(window.google?.maps){
+        console.log(window)
+        console.log("google api already presnted")
+      }
+return ()=>{
+  setIsScriptLoaded(false) 
+}
+    },[modalOpen,openBooking,reviewRefresh,isScriptLoaded])
+
+    const getreviews = async (vendorId:string) =>{
+      const response = await getReviews(vendorId)
+      console.log("response2 of getting reviews",response?.data.reviews)
+      if(response?.data){
+        setReviewData(response.data.reviews)
+      }
+    }
+
+
+    console.log("reviewwssss",reviewData);
+    
     const setModal = () =>{
       setModalOpen(true)
       setIsOverlayVisisble(true)
@@ -181,6 +218,31 @@ function SingleVendorView() {
         }
         getChat()
     }
+
+    const mapStyles = {
+      height: "50vh",
+      boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1)"
+    };
+   const defaultCenter = locations[0]
+
+   const defaultCenter2 = {
+    lat:0,
+    lng:0
+   }
+
+   const handleReviewSubmit =  async (e:React.FormEvent<HTMLFormElement>) =>{
+      e.preventDefault()
+      const response = await submitReview(review,rating,vendorDetail?._id)
+      setReview('')
+      setRating(3)
+      if(response?.data.success){
+        setReviewRefresh(true)
+        toast.success('Review submitted successfully')
+      }
+   }
+
+  console.log("rating of star is",rating)
+ 
   return (
     <>
     <div className='border border-gray-300 opacity-60'></div>
@@ -216,7 +278,116 @@ function SingleVendorView() {
 
           </div>
           <p className='text-sm ms-10 mt-1 font-montserrat px-2 pb-6'>{vendorDetail?.description}</p>
-        </div>
+        
+          </div>
+          <div className='ps-16 pb-10 '>
+            <div className='font-montserrat text-2xl font-bold p-6'>
+            <span>Location</span>
+            </div>
+            {
+              isScriptLoaded && (
+                <LoadScript googleMapsApiKey ='AIzaSyCdRUMgE09rO2dkbmmZR_ZVJnS1yJL8oWY '>
+                  {
+                    locations.length > 0 ? (
+            <GoogleMap
+                mapContainerStyle={mapStyles}
+                zoom={6}
+                center={defaultCenter}  
+            >
+                {
+                  locations.map((loc:any,index:number)=>(
+                    <MarkerF key={index} position={loc}  />
+                  ))
+                }
+            </GoogleMap>
+                    ):(
+                      <div>
+                             <span className='text-sm font-montserrat font-bold mb-4'>Location have'nt been added yet!</span>
+                      <GoogleMap
+                mapContainerStyle={mapStyles}
+                zoom={13}
+                center={defaultCenter2}  
+            >
+            </GoogleMap>
+                      </div>
+                   
+                    )
+                  }
+          </LoadScript>
+              )
+            }
+          </div>
+
+          <div className='ps-16 pb-10 '>
+            <div className='font-montserrat text-2xl font-bold p-1 '>
+            <span>Reviews</span>
+            </div>
+           
+             <span className='text-sm text-cyan-950 font-montserrat ms-1 '>
+            If you've got the service,share your thoughts with other customers
+            </span>
+            <div className="flex items-center mt-4">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <button
+          key={star}
+          className={`text-xl cursor-pointer ${
+            star <= rating ? 'text-yellow-500' : 'text-gray-400'
+          }`}
+          onClick={() => setRating(star)} 
+        >
+          ★
+        </button>
+      ))}
+    </div>
+            <form onSubmit={handleReviewSubmit}>
+            <textarea onChange={(e)=>setReview(e.target.value)}  value={review} placeholder='Share your thoughts...' className='border w-full mt-5 shadow-xl text-xs font-montserrat ps-3 pt-5 focus:outline-none h-80'>
+
+            </textarea>
+            <div className='flex justify-end'>
+              <button type='submit' className='button mt-6 h-10 rounded-full text-sm'>
+                submit
+              </button>
+            </div>
+            </form>
+            {
+              reviewData && reviewData.map((rev:any)=>(
+                <article>
+                <div className="flex items-center mb-4">
+                  <div className="font-medium dark:text-white">
+                    <p className='text-sm'>
+                    {rev.userId?.name}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
+                  {[...Array(4)].map((_, index) => (
+                    <svg
+                      key={index}
+                      className={`w-4 h-4 ${index < rev.rating ? 'text-yellow-300' : 'text-gray-300 dark:text-gray-500'}`}
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 22 20"
+                    >
+                      <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                  ))}
+                </div>
+                <footer className="mb-5 text-sm text-gray-500 dark:text-gray-400 bg-white">
+                  <p className='text-sm mt-4'>
+                  {`${new Date(rev.createdAt).getDate()}/${new Date(rev.createdAt).getMonth()}/${new Date(rev.createdAt).getFullYear()}`}
+                  </p>
+                </footer>
+                <p className="mb-2 text-gray-500 font-montserrat text-sm dark:text-gray-400">
+                 {rev.review}
+                </p>
+            </article>
+              ))
+            }
+    
+            </div>
+        
+         
     <div className='flex flex-col items-center xl:hidden '>
       
         <h1 className='font-montserrat text-xl text-cyan-800  my-4 font-bold'>{vendorDetail?.companyName}</h1>
@@ -240,7 +411,7 @@ function SingleVendorView() {
 
         </div>
         </div>
-
+        
         <div>
         <div className='xl:hidden flex flex-col items-center '>
           <h1 className='font-semibold font-montserrat text-xs text-cyan-800 ms-4'>Dates on which we have been booked</h1>
@@ -257,8 +428,8 @@ function SingleVendorView() {
           <h1 className='font-semibold font-montserrat p-4  text-cyan-800'>Our services</h1>
           <ul>
           {
-          vendorDetail?.services && vendorDetail.services.map((service)=>(
-            <li className='text-xs font-montserrat '>{service}</li>
+          vendorDetail?.services && vendorDetail.services.map((service,index)=>(
+            <li key={index} className='text-xs font-montserrat '>{service}</li>
           ))
           }
           </ul>
@@ -275,8 +446,8 @@ function SingleVendorView() {
           </div>
         </div> 
 
-
         </div>
+      
      
           
         {modalOpen && userInfo !== null && createPortal(
