@@ -248,3 +248,59 @@ export const getReviews = async (vendorId:string | undefined) =>{
         console.error(error)
     }
 }
+
+export const searchVendor = async (searchValue:string) =>{
+    try {
+        const result = await Api.post(userEndpoint.searchForVendor,{searchValue})
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const fetchPlaces = async (place:string,radius = 500) => {
+    try {
+        console.log("here in fetch places")
+        const response = await Api.post(userEndpoint.fetchplaces,{place,radius})
+        console.log("Response of fetch places:", response.data);
+        return response 
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const wishlist = async (vendorId:string | null | undefined)=>{
+    try {
+        const result = await Api.post(userEndpoint.addToWishlist,{vendorId})
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const getUserData = async() =>{
+    try {
+        const result = await Api.get(userEndpoint.getUserdata)
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const getVendorsFromWishlist = async() =>{
+    try {
+        const result = await Api.get(userEndpoint.getWishListData)
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const removeVendorWishlist = async (vendorId:string) =>{
+    try {
+        const result = await Api.post(userEndpoint.removeFromWishlist,{vendorId})
+        return result
+    } catch (error) {
+        
+    }
+}

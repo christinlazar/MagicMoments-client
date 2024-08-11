@@ -40,52 +40,52 @@ const AdminSidebar = () => {
         } bg-gray-50 dark:bg-gray-800`}
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 py-6 overflow-y-auto mt-4">
+        <div className="h-full  ms-2 py-6 overflow-y-auto mt-16">
           <ul className="space-y-2 font-medium">
-            <li>
+            <li className='ms-2'>
               <Link to='/admin/dashboard'
           
-                className="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center ps-6 pb-6 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-apps mt-3"></i>
                 <span className="ms-3 font-serif mt-2 ">Dashboard</span>
               </Link>
             </li>
-            <li>
+            <li className='ms-2'>
               <Link
              to='/admin/requests'
-                className="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center ps-6 pb-6 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-envelope mt-1"></i>
                 <span className="flex-1 ms-3 whitespace-nowrap font-serif ">Requests</span>
-                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                  3
-                </span>
+                {/* <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300"> */}
+                  {/* 3 */}
+                {/* </span> */}
               </Link>
             </li>
 
-            <li>
+            <li className='ms-2'>
               <Link to='/admin/users'
            
-                className="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center ps-6 pb-6 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-users-alt mt-1"></i>
                 <span className="flex-1 ms-3 whitespace-nowrap font-serif">Users</span>
               </Link>
             </li>
-            <li>
+            <li className='ms-2'>
               <Link
                 to="/admin/vendors"
-                className="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center ps-6 pb-6 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-user-headset mt-1"></i>
                 <span className="flex-1 ms-3 whitespace-nowrap font-serif">Vendors</span>
               </Link>
             </li>
-            <li>
+            <li className='ms-2'>
               <button
             //  to=""
-                className="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center ps-6 pb-6 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-sign-out-alt mt-1"></i>
                 <span onClick={()=>dispatch(adminLogOut())} className="flex-1 ms-3 whitespace-nowrap font-serif">Logout</span>

@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux'
 import store from './store/Store';
 import { SocketContextProvider } from './context/socketContext';
+import { LoadScript } from '@react-google-maps/api';
 
 // window.process = {
 //   env: {
@@ -21,9 +22,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
         <React.StrictMode>
+        <LoadScript googleMapsApiKey ='AIzaSyCdRUMgE09rO2dkbmmZR_ZVJnS1yJL8oWY '>
           <SocketContextProvider>
              <App />
           </SocketContextProvider>
+        </LoadScript>
        </React.StrictMode>
    </Provider>
 );

@@ -46,7 +46,7 @@ function AddLocation() {
     const gooleMapsApi_Key:string  = process.env.GOOGLE_MAP_API_KEY as string
     return (
         <form onSubmit={lanLonSubmit}>
-            <LoadScript googleMapsApiKey = 'AIzaSyCdRUMgE09rO2dkbmmZR_ZVJnS1yJL8oWY '>
+            {/* <LoadScript googleMapsApiKey = 'AIzaSyCdRUMgE09rO2dkbmmZR_ZVJnS1yJL8oWY '> */}
             <GoogleMap
                 mapContainerStyle={mapStyles}
                 zoom={13}
@@ -55,7 +55,7 @@ function AddLocation() {
             >
                 {markerLocation && <Marker position={markerLocation} />} 
             </GoogleMap>
-        </LoadScript>
+        {/* </LoadScript> */}
         <div className='flex justify-center items-center'>
 
         <Toaster richColors />

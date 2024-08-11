@@ -110,3 +110,40 @@ export const rejectVendorReq = async(vendorId:string)=>{
             console.error(error)
         }
 }
+
+export const monthlyBooking = async () =>{
+    try {
+        console.log("in monthlybooking adminside")
+        const result = await Api.get(adminRoutes.getMonthlyBooking)
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const  getUsersVendors = async () =>{
+    try {
+        const result = await Api.get(adminRoutes.getUsersVendors)
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const yearlyBooking = async () =>{
+    try {
+        const result = await Api.get(adminRoutes.getYearlyBooking)
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const weeklyBooking = async () =>{
+    try {
+        const result = await Api.get(adminRoutes.getWeeklyBooking)
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}

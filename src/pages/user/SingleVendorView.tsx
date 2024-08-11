@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { bringThatVendor, getReviews, getVendorChat, isExistingBookingRequest, SendBookingRequest, submitReview } from '../../api/userApi'
+import { bringThatVendor, fetchPlaces, getReviews, getVendorChat, isExistingBookingRequest, SendBookingRequest, submitReview, wishlist } from '../../api/userApi'
 import { createPortal } from 'react-dom'
 import { addUnavailableDates } from '../../api/vendorApi'
 import { handleStripePayment,checkIsReqAccepted } from '../../api/userApi'
@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux'
 import { toast, Toaster } from 'sonner'
 import { GoogleMap,Marker,LoadScript,MarkerF } from '@react-google-maps/api'
 import useListenMessages from '../../hooks/useListenMessages'
+//@ts-ignore
+import Calendar from 'react-calendar'
  enum AcceptanceStatus {
   Requested = 'requested',
   Accepted = 'accepted',
@@ -66,48 +68,54 @@ function SingleVendorView() {
     const navigate = useNavigate()
     const {userInfo} = useSelector((state:RootState)=>state.auth)
     const [conversations,setConversations] = useState(false)
-    const [locations,setLocations] = useState([])
+    const [locations,setLocations] = useState<any>([])
     const [review,setReview]= useState<string>('')
     const [rating, setRating] = useState<number | null | any>(3);
     const [reviewData,setReviewData] = useState<Review[] | null>([])
     const [reviewRefresh,setReviewRefresh] = useState<boolean>(false)
-
     const [isScriptLoaded, setIsScriptLoaded] = useState(false);
+    const [unAvailableDates,setUnavailableDates] = useState<string[]>([])
 
-
-
-   
     useEffect(()=>{
       const bringVendorDetial = async () =>{
           const response = await bringThatVendor(userId)
           if(response?.data.data){
             setVendorDetail(response?.data?.data)
-            console.log("vendorId issssssssssss",response.data.data)
-            setLocations(response.data.data.location)
+            setUnavailableDates(response?.data.data.unAvailableDates)
+            setLocations(response.data.data.locations)
             getreviews(response?.data?.data?._id)
           }
       }
       bringVendorDetial()   
       setIsScriptLoaded(true)
-      if(window.google?.maps){
-        console.log(window)
-        console.log("google api already presnted")
-      }
+     
 return ()=>{
   setIsScriptLoaded(false) 
 }
-    },[modalOpen,openBooking,reviewRefresh,isScriptLoaded])
+    },[modalOpen,openBooking,reviewRefresh])
+
+    const unavailableDatesFormatted = unAvailableDates.map(date => {
+      const [day, month, year] = date.split('/');
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`; // Format to YYYY-MM-DD
+    });
+  
+
+    const tileClassName = ({ date }: { date: Date }) => {
+      const dateString = date.toISOString().split('T')[0]; // Format date to YYYY-MM-DD
+      return unavailableDatesFormatted.includes(dateString) ? 'unavailable' : 'available';
+    };
+    
+    
+  
 
     const getreviews = async (vendorId:string) =>{
       const response = await getReviews(vendorId)
-      console.log("response2 of getting reviews",response?.data.reviews)
       if(response?.data){
         setReviewData(response.data.reviews)
       }
     }
 
 
-    console.log("reviewwssss",reviewData);
     
     const setModal = () =>{
       setModalOpen(true)
@@ -123,15 +131,12 @@ return ()=>{
       try {
         if(userInfo != null){
           const response = await checkIsReqAccepted(vendorId)
-          console.log(response)
           const bookingData  = response?.data.result
-          console.log("booking Data",bookingData)
           if(response?.data.success && bookingData.bookingStatus == "accepted"){
             let vendorId = vendorDetail?._id
             let amount = vendorDetail?.startingPrice
             let companyName = vendorDetail?.companyName
             const resposne = await handleStripePayment(companyName,vendorId,amount,bookingData)
-            console.log("response of payment is",resposne)
             if(resposne?.data.result.url){
               window.location.href = resposne?.data.result.url
             }
@@ -150,7 +155,6 @@ return ()=>{
 
     const bookNow = async (vendorId:string | undefined) =>{
       try {
-        console.log("gonna book nowwwww")
         if(userInfo !== null){
         const response = await isExistingBookingRequest(vendorId)
           if(response?.data.success){
@@ -191,7 +195,6 @@ return ()=>{
           vendorId:vendorDetail?._id
         }
         const sendBookingRequestResponse = await SendBookingRequest(bookingData)
-        console.log(sendBookingRequestResponse)
         if(sendBookingRequestResponse?.data.reqSend == false){
            toast.error("The Slot has already been booked")
            setDate('')
@@ -223,8 +226,10 @@ return ()=>{
       height: "50vh",
       boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1)"
     };
-   const defaultCenter = locations[0]
-
+    const defaultCenter = {
+      lat:locations[0]?.location?.coordinates[0],
+      lng:locations[0]?.location?.coordinates[1]
+   }
    const defaultCenter2 = {
     lat:0,
     lng:0
@@ -241,15 +246,29 @@ return ()=>{
       }
    }
 
-  console.log("rating of star is",rating)
- 
+   const handleWishlist = async ()=>{
+    const response = await wishlist(vendorDetail?._id)
+    
+    if(response?.data.success){
+      toast.success("added to wishlist")
+    }else{
+      toast.error("Already exists in the wishlist")
+    }
+    }
+    
+
   return (
     <>
-    <div className='border border-gray-300 opacity-60'></div>
+
+
+
+
+        
+    <div className='border border-gray-300 opacity-60 '></div>
     {isOverlayVisible && (
           <div className="absolute inset-0 bg-black opacity-50 z-20"></div>
         )}
-    <div className='h-5/6 flex mt-20' ref={modalRef}>
+    <div className='h-5/6 flex mt-32' ref={modalRef}>
     <Toaster richColors position='bottom-right'/>
       <div className=' xl:w-1/2 xl:mx-20'>
         <div className='xl:grid grid-rows-6 grid-flow-col gap-1 xl:h-[75%] rounded-md'>
@@ -278,7 +297,13 @@ return ()=>{
 
           </div>
           <p className='text-sm ms-10 mt-1 font-montserrat px-2 pb-6'>{vendorDetail?.description}</p>
-        
+
+          </div>
+          <h1 className='font-semibold font-montserrat text-md text-cyan-950 ms-16'>Dates on which we have been booked</h1>
+          <div className=' w-96 p-4 ms-10'>
+          <Calendar 
+                tileClassName={tileClassName}
+              />
           </div>
           <div className='ps-16 pb-10 '>
             <div className='font-montserrat text-2xl font-bold p-6'>
@@ -286,8 +311,8 @@ return ()=>{
             </div>
             {
               isScriptLoaded && (
-                <LoadScript googleMapsApiKey ='AIzaSyCdRUMgE09rO2dkbmmZR_ZVJnS1yJL8oWY '>
-                  {
+                // <LoadScript googleMapsApiKey ='AIzaSyCdRUMgE09rO2dkbmmZR_ZVJnS1yJL8oWY '>
+                  
                     locations.length > 0 ? (
             <GoogleMap
                 mapContainerStyle={mapStyles}
@@ -295,9 +320,17 @@ return ()=>{
                 center={defaultCenter}  
             >
                 {
-                  locations.map((loc:any,index:number)=>(
-                    <MarkerF key={index} position={loc}  />
-                  ))
+                
+                  locations.map((loc:any,index:number)=>{
+                    let pos = {
+                      lat:loc.location?.coordinates[0],
+                      lng:loc.location?.coordinates[1],
+                    }
+                    return  (
+                      <MarkerF key={index} position={pos}  />
+                    )
+                  }  
+                )
                 }
             </GoogleMap>
                     ):(
@@ -312,8 +345,8 @@ return ()=>{
                       </div>
                    
                     )
-                  }
-          </LoadScript>
+                  
+          // </LoadScript>
               )
             }
           </div>
@@ -425,6 +458,8 @@ return ()=>{
               </div>
             </ul>
           </div>
+       
+   
           <h1 className='font-semibold font-montserrat p-4  text-cyan-800'>Our services</h1>
           <ul>
           {
@@ -529,6 +564,9 @@ document.body
           <button onClick={handleChatClick} className='button ms-3 mt-6 h-10 rounded-full text-sm'>
             <span >Message</span>
           </button>
+         
+          <i onClick={handleWishlist} className="fi fi-rr-circle-heart mt-7 ms-5 text-3xl hover:cursor-pointer"></i>
+        
         </div>
       
 

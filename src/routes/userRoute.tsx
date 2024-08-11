@@ -23,6 +23,11 @@ import Videos from "../pages/user/Videos";
 import Chat from "../pages/user/SingleChat";
 import { VideoCall } from "../pages/user/videoCall";
 import PaymentDetials from "../pages/user/PaymentDetials";
+import Vendors from "../pages/user/Vendors";
+import Wishlist from "../pages/user/Wishlist";
+import FourNotFourpage from "../components/user/404page";
+
+
 interface RootState{
         auth:{
         userInfo:string
@@ -59,8 +64,10 @@ const UserRoute:React.FC = () => {
                                 <Route path='/singleChat' element={<Chat/>}/>
                                 <Route path='/videoCall' element={<VideoCall/>}/>
                                 <Route path='/paymentDetials' element={<PaymentDetials/>}/>
+                                <Route path='/servicers' element={<Vendors/>}/>
+                                <Route path='/wishlist' element={<Wishlist/>}/>
                                 </Route>
-              
+                                <Route path='*' element={<FourNotFourpage/>}/>
 
             </Routes>
             </>

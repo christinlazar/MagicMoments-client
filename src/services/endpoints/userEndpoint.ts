@@ -24,6 +24,12 @@ const userRoutes = {
     sendVideoMessageReq:'/chat/videoChatRequest',
     sendReview:'/user/submitReview',
     getreviews:'/user/getReviews',
+    searchForVendor:'/user/searchVendor',
+    fetchplaces:'/user/fetchplaces',
+    addToWishlist:'/user/addtoWishlist',
+    getUserdata:'/user/getuserData',
+    getWishListData:'/user/wishlist',
+    removeFromWishlist:'/user/removefromwishlist',
 }
 
 export default userRoutes 

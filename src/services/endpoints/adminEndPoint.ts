@@ -11,6 +11,10 @@ const adminRoutes = {
     bringRequests:'/admin/bringRequests',
     acceptRequest:'/admin/acceptRequest',
     rejectRequest:'/admin/rejectRequest',
+    getMonthlyBooking:'/admin/monthlyBooking',
+    getUsersVendors:'/admin/getusersvendors',
+    getYearlyBooking:'/admin/yearlyBooking',
+    getWeeklyBooking:'/admin/weeklybooking',
 }
 
 export default adminRoutes

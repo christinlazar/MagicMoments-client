@@ -52,7 +52,7 @@ Api.interceptors.response.use(
                 localStorage.setItem('accessToken',response.data.accessToken);
                 Api.defaults.headers.common['Authorization'] = `Bearer ` + response.data.accessToken
                 return Api(originalRequest)
-            }else if(!response.data.refresh && response.data.role == 'user'){
+            }else if(!response.data.refresh && response.data.role == 'user' ){
                  alert("Session has been expired, please login again")
                  localStorage.removeItem('userInfo')
                  localStorage.removeItem('accessToken')

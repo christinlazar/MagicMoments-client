@@ -8,6 +8,8 @@ import AdminSidebar from "../components/admin/adminSideNav"
 import AdminDashBoard from "../pages/admin/AdminDashBoard"
 import Vendors from "../pages/admin/Vendors"
 import Requests from "../pages/admin/Requests"
+import FourNotFourAdmin from "../pages/admin/404Admin"
+
 const AdminRoute = () =>{
     return(
         <>
@@ -21,6 +23,7 @@ const AdminRoute = () =>{
                 <Route path='/vendors' element={<Vendors/>}/>
                 <Route path='/requests' element={<Requests/>}/>
             </Route>
+            <Route path="*" element={<FourNotFourAdmin/>}/>
             </Routes>
         </>
     )
