@@ -25,6 +25,8 @@ function Users() {
   const [isBlocked,setIsBlocked] = useState<boolean>(false)
 const [users,setUsers] = useState<User[]>([])
 const [isLoading,setIsLodaing] = useState<boolean>(true)
+const [currentPage,setCurrentpage] = useState<number>(1)
+const [pageRange, setPageRange] = useState([1,2,3])
   useEffect(   () => {
     const fetchData = async () =>{
       try {
@@ -64,6 +66,32 @@ const [isLoading,setIsLodaing] = useState<boolean>(true)
   // if (isLoading) {
   //   return <div>Loading...</div>;
   // }
+
+  const userPerPage = 1
+  const indexOfLastReq = userPerPage * currentPage
+  const indexOfFirstReq = indexOfLastReq - userPerPage
+  const currUsers = users.slice(indexOfFirstReq,indexOfLastReq)
+
+  const handlePageChange = (pageNumber:number) =>{
+    console.log(pageNumber)
+    console.log("gggg",Math.floor(users.length/userPerPage))
+    if(pageNumber > Math.ceil(users.length/userPerPage)){
+      console.log("inthisss")
+      return
+    }
+    setCurrentpage(pageNumber)
+    if(pageNumber > pageRange[0] && pageNumber < users.length){
+      setPageRange([pageRange[0]+1,pageRange[1]+1,pageRange[2]+1])
+
+    }
+    if(pageNumber < pageRange[0] && pageNumber > 0){
+      setPageRange([pageRange[0]-1,pageRange[1]-1,pageRange[2]-1])
+
+    }
+    else{
+      return 
+    }
+  }
   
   return (
     <>
@@ -105,7 +133,7 @@ const [isLoading,setIsLodaing] = useState<boolean>(true)
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {users && users.map((user) => (
+          {currUsers && currUsers.map((user) => (
             <tr key={user._id}>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
@@ -132,14 +160,14 @@ const [isLoading,setIsLodaing] = useState<boolean>(true)
                 {user.isBlocked ? (
                   <button
                     onClick={() => unBlockUser(user._id)}
-                    className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
+                    className="inline-block rounded bg-cyan-950 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out focus:outline-none "
                   >
                     Unblock
                   </button>
                 ) : (
                   <button
                     onClick={() => blockUser(user._id)}
-                    className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
+                    className="inline-block rounded bg-cyan-950 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out focus:outline-none "
                   >
                     Block
                   </button>
@@ -149,6 +177,37 @@ const [isLoading,setIsLodaing] = useState<boolean>(true)
           ))}
         </tbody>
       </table>
+      {
+    users.length > 0 && (
+      <div className="flex justify-center p-10 flex-wrap space-x-2">
+      <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="mx-1 h-8 md:h-10 px-2 md:px-4 py-1 md:py-2 text-xs md:text-sm border font-montserrat rounded-md text-white hover:cursor-pointer bg-cyan-950 hover:bg-cyan-950"
+      >
+          Previous
+      </button>
+
+      {pageRange.map((page) => (
+          <button
+          key={page}
+          onClick={() => handlePageChange(page)}
+          className={`mx-1 h-8 md:h-10 px-2 md:px-4 py-1 md:py-2 text-xs md:text-sm border rounded-full ${page === currentPage ? 'bg-cyan-950 text-white' : 'bg-white hover:bg-gray-100'} text-gray-600`}
+          >
+          {page}
+          </button>
+      ))}
+
+      <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === Math.ceil(users?.length / userPerPage)}
+          className="mx-1 h-8 md:h-10 px-2 md:px-4 py-1 md:py-2 text-xs md:text-sm border rounded-md text-white bg-cyan-950 hover:bg-cyan-950"
+      >
+          Next
+      </button>
+      </div>
+    )
+  }
     </div>
     </>
 

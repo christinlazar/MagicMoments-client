@@ -24,6 +24,8 @@ const Chart = () =>{
     const label1 = ['January','February','March','April','May','June','July','August','September','october','November','December']
     const monthnum = [1,2,3,4,5,6,7,8,9,10,11,12]
     const [monthValue,setMonthValue] = useState<number[]>([])
+    const monthRef = useRef<HTMLDivElement>(null)
+    const yearlyRef = useRef<HTMLDivElement>(null)
     useEffect(()=>{
         const chartInstance:any = chartRef.current;
         async function  monthlybooking(){
@@ -42,7 +44,7 @@ const Chart = () =>{
                 label:'Bookings per month',
                 data:monthDataArray,
                 fill:false,
-                borderColor:'rgb(22, 163, 74)',
+                borderColor:'rgb(0, 104, 139)',
                 tension:0.1,
             }]
         })
@@ -87,7 +89,7 @@ const Chart = () =>{
                     label:'Bookings per Year',
                     data:yearlyDataArray,
                     fill:false,
-                    borderColor:'rgb(22, 163, 74)',
+                    borderColor:'rgb(0, 104, 139)',
                     tension:0.1,
                 }]
             })
@@ -99,6 +101,24 @@ const Chart = () =>{
             }
         };
     },[])
+
+    const setchart = async (optionsValue:string) =>{
+        if(optionsValue == "yearly" ){
+           if(monthRef.current && yearlyRef.current){
+            monthRef.current.style.display = "none"
+            yearlyRef.current.style.display = "block"
+           }
+        }
+        if(optionsValue == "monthly"){
+            if(yearlyRef.current && monthRef.current){
+                yearlyRef.current.style.display = "none"
+                monthRef.current.style.display = "block"
+            }
+        }
+    }
+
+
+
     const config = {
         type:'line',
         data:Data
@@ -109,18 +129,32 @@ const Chart = () =>{
     }
 
     return (
-       <div className='flex flex-col '>
-          <div className='w-[70%] h-[60%] ms-24'>
-            {
-             <Line ref={chartRef} {...config} /> 
-            }
-        </div>
-         <div className='p-10 w-[70%] h-[60%] ms-24'>
-         {
-          <Line ref={chartRef2} {...config2} /> 
-         }
-     </div>
-     </div>
+        <div className='flex flex-col items-center'>
+            <div className='items-end'>
+                <select onChange={(e)=>setchart(e.target.value)} className='text-xs focus:outline-none border border-gray-900 rounded-full'>
+                    <option value="monthly" selected >Monthly</option>
+                    <option value="yearly">yearly</option>
+                </select>
+            </div>
+            <div ref={monthRef} className=' ms-14 w-[100%]'>
+            <div className='p-4'>
+                    <span className='text-cyan-950'>MONTHLY BOOKINGS</span>
+            </div>
+            <div className='w-full sm:w-[70%] h-[60%]'>
+            <Line ref={chartRef} {...config} />
+            </div>
+            </div>
+            <div ref={yearlyRef} className='ms-14  w-[100%] hidden'>
+            <div className='p-4'>
+            <span className='text-cyan-950'>YEARLY BOOKINGS</span>
+            </div>
+            <div  className='w-full sm:w-[70%] h-[60%] '>
+            <Line ref={chartRef2} {...config2} />
+            </div>
+            </div>
+      
+      </div>
+      
       
     )
 }

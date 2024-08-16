@@ -304,3 +304,13 @@ export const removeVendorWishlist = async (vendorId:string) =>{
         
     }
 }
+
+export const editReview = async (review:string,reviewId:string) =>{
+    try{
+        const result = await Api.post(userEndpoint.editreview,{review,reviewId})
+        return result
+    }catch(error){
+
+    }
+}
+

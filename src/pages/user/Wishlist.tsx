@@ -4,7 +4,7 @@ import React,{useCallback, useEffect, useState} from 'react'
 import { fetchPlaces, getVendors, getVendorsFromWishlist, removeVendorWishlist, searchVendor } from '../../api/userApi'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsLoadingFalse, setIsLoadingTrue } from '../../store/slice/AuthSlice';
+import { setIsLoadingFalse, setIsLoadingTrue, setWishListDisplayfalse, setWishListDisplayTrue } from '../../store/slice/AuthSlice';
 import { RootState } from '../../store/Store';
 
 
@@ -46,7 +46,7 @@ const debounce = <T extends (...args: any[]) => void>(func: T, delay: number) =>
 const  Wishlist:React.FC = () => {
     const [wishlist,setWishlist] = useState<any>([])
     const [refresh,setRefresh] = useState<boolean>(false)
-
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const isLoading = useSelector((state:RootState)=>state.auth.isLoading)
@@ -63,6 +63,7 @@ const  Wishlist:React.FC = () => {
 
           return () =>{
             setRefresh(false)
+            dispatch(setWishListDisplayTrue())
           }
     },[refresh])
     
@@ -71,38 +72,31 @@ const  Wishlist:React.FC = () => {
     }
 
     const removeFromWishlist = async (vendorId:string) =>{
-
             const response = await removeVendorWishlist(vendorId)
             if(response?.data.success){
-                setRefresh(true)
+              dispatch(setWishListDisplayfalse())
+                setRefresh(true) 
             } 
     }
     
   
   return (
     <>
-    <div className='border border-gray-100 mt-20'></div>
-    {
-      isLoading && (
-        <div className='flex items-center justify-center z-40' style={{ color: 'black', padding: '20px', borderRadius: '5px', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                    <div className="loader">
-                    <span className="loader-text text-2xl">Uploading</span>
-                    <span className="load"></span>
-            </div>
-              
-          </div>
-      )
-    }
+  <div className='border border-gray-100 mt-20'></div>
+  {isLoading && (
+    <div className='flex items-center justify-center z-40' style={{ color: 'black', padding: '20px', borderRadius: '5px', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+      <div className="loader">
+        <span className="loader-text text-2xl">Uploading</span>
+        <span className="load"></span>
+      </div>
+    </div>
+  )}
 
-    <div className="min-h-screen bg-white  border ">
-    {/* <div className='pt-20 ps-20'>
-        <h1 className='text-xl text-cyan-950 font-montserrat font-bold'>YOUR WISH_LIST</h1>
-      </div> */}
-      <div className="flex flex-wrap  justify-stretch ms-10 ">
-        
-        {
-        wishlist.length>0 ? wishlist.map((vendor:any, index:number) => (
-          <div key={index} className="w-[19%] h-auto overflow-hidden shadow-xl my-4 mx-10 flex-shrink-0 hover:drop-shadow-md hover:shadow-2xl snap-start ">
+  <div className="min-h-screen bg-white border">
+    <div className="flex flex-wrap justify-center sm:justify-start ms-2 sm:ms-10">
+      {wishlist.length > 0 ? (
+        wishlist.map((vendor: any, index: number) => (
+          <div key={index} className="w-full sm:w-1/4 h-auto overflow-hidden shadow-xl my-4 mx-2 flex-shrink-0 hover:drop-shadow-md hover:shadow-2xl">
             <img className="object-cover p-3 rounded-3xl aspect-[1/1]" src={vendor?.photos[0]} alt="Vendor photo" />
             <div className="px-6 py-4">
               <div className="font-bold text-xl mb-2 font-montserrat flex justify-center">
@@ -128,20 +122,45 @@ const  Wishlist:React.FC = () => {
                 View Profile
               </button>
             </div>
-            <div onClick={()=>removeFromWishlist(vendor?._id)} className='flex justify-center p-4'>
-            <span className='className="inline-block bg-red-100 rounded-full shadow-xl px-3 py-1 text-sm font-semibold text-red-700 mr-2 mb-2 z-10 hover:cursor-pointer hover:text-white"'>Remove from wishlist</span>
-              </div>  
+            <div onClick={() => removeFromWishlist(vendor?._id)} className='flex justify-center p-4'>
+              <span className='inline-block bg-red-100 rounded-full shadow-xl px-3 py-1 text-sm font-semibold text-red-700 mr-2 mb-2 z-10 hover:cursor-pointer hover:text-red'>
+                Remove from wishlist
+              </span>
+            </div>
           </div>
-        )):(
-            <div  className='flex justify-center items-center p-4 w-full mt-56'>
-            <span className='className="inline-block bg-red-100 rounded-full shadow-xl px-3 py-1 text-sm font-semibold text-red-700 mr-2 mb-2 z-10 hover:text-white"'>No wendors in wishlist</span>
-              </div> 
-        )
-    }
-      </div>
+        ))
+      ) : (
+        <div className='flex justify-center items-center w-full mt-40'>
+          <div className="flex flex-col bg-white rounded-3xl p-6 sm:p-10">
+            <div className="grid items-center justify-center w-full grid-cols-1 text-left">
+              <div>
+                <h2 className="text-lg font-medium tracking-tighter text-gray-600 lg:text-3xl">
+                  <i className="fi fi-rr-sad"></i>
+                </h2>
+                <p className="mt-2 text-md text-gray-500">Sorry, your wishlist is empty</p>
+              </div>
+              <div className="mt-0">
+                <p>
+                  <span className="text-2xl font-bold tracking-tight text-gray-800"></span>
+                  <span className="text-base font-medium text-gray-500"></span>
+                </p>
+              </div>
+            </div>
+            <div onClick={() => navigate('/')} className="flex px-6 p-8 sm:px-8">
+  <p
+    aria-describedby="tier-company"
+    className="flex items-center cursor-pointer justify-center w-full px-6 py-2.5 text-center text-white bg-cyan-800 border-2 border-cyan-800 rounded-full inline-flex text-sm focus:outline-none focus-visible:outline-black focus-visible:ring-black transition-colors duration-200 hover:bg-cyan-800 hover:text-white"
+  >
+    Go back
+  </p>
+</div>
+          </div>
+        </div>
+      )}
     </div>
-    
-    </>
+  </div>
+</>
+
     
   )
 }

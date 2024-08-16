@@ -31,6 +31,8 @@ function NavBar() {
     const {userInfo} = useSelector((state:RootState)=> state.auth)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const wishListDisplay = useSelector((state:RootState)=>state.auth.wishlistDisplay)
+
     useEffect(()=>{
 
       async function fetchUser(){
@@ -55,7 +57,9 @@ function NavBar() {
       setText('Login')
       setLinkPath('/login')
     }
-    },[location,userInfo,linkPath])
+
+
+    },[location,userInfo,linkPath,wishListDisplay])
 
 
       const userNotifications = useSelector((state:RootState)=>state.auth.userNotifications)
@@ -99,26 +103,44 @@ function NavBar() {
           <li>
             {
               userInfo ?
-          <Link to='' onClick={()=>logOut(linkPath)} className="block py-2 px-3 text-gray-900 rounded hover:bg-red-500 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent font-montserrat">Logout</Link>:
-          <Link to={linkPath} onClick={()=>logOut(linkPath)} className="block py-2 px-3 text-gray-900 rounded hover:bg-red-500 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent font-montserrat">{linkText}</Link>
+          <Link to='' onClick={()=>logOut(linkPath)} className="py-2 px-3 text-gray-900 rounded hover:text-white hover:bg-cyan-950 md:hover:bg-transparent md:border-0 md:hover:text-cyan-950 md:p-0 dark:text-white md:dark:hover:text-cyan-950 dark:hover:bg-gray-700 dark:hover:text-cyan-950 md:dark:hover:bg-transparent font-montserrat">Logout</Link>:
+          <Link to={linkPath} onClick={()=>logOut(linkPath)} className="block py-2 px-3 text-gray-900 rounded hover:text-white hover:bg-gray-900 md:hover:bg-transparent md:border-0 md:hover:text-gray-900 md:p-0 dark:text-white md:dark:hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-900 md:dark:hover:bg-transparent font-montserrat">{linkText}</Link>
             }
           </li>
           <li>
-             <Link to='/profile' className="block py-2 px-3 text-gray-900 rounded hover:bg-cyan-950  md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent  font-montserrat">Profile</Link>
+             <Link to='/profile' className="block py-2 px-3 text-gray-900 rounded hover:bg-cyan-950  md:hover:bg-transparent md:border-0 md:hover:text-gray-900 md:p-0 dark:text-white hover:text-white md:dark:hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-900 md:dark:hover:bg-transparent  font-montserrat">Profile</Link>
           </li>
-          <li onClick={()=>navigate('/wishlist')} className="relative hover:cursor-pointer">
-            <i className="fi fi-rr-heart text-cyan-950 "></i>
-             {userData?.wishlist?.length > 0 && ( 
-            <span className="absolute top-[-5px] right-[-5px] bg-red-500 text-white text-xs font-bold rounded-full px-1">
-              {userData?.wishlist.length} {/* Replace with the number of items in the wishlist */}
-            </span>
-          )}
-        </li>
+          {
+            isMobileMenuOpen ? (
+              <li onClick={()=>navigate('/wishlist')} className="relative hover:cursor-pointer">
+              {/* <i className="fi fi-rr-heart text-cyan-950 "></i> */}
+              <div>
+              <span className='text-md text-gray-900 font-montserrat px-3 '>wishlist</span>
+
+              </div>
+               {userData?.wishlist?.length > 0 && ( 
+              <span className="absolute top-[-5px] right-[-5px] bg-red-500 text-white text-xs font-bold rounded-full px-1">
+                {userData?.wishlist.length} 
+              </span>
+            )}
+          </li>
+            ):(
+              <li onClick={()=>navigate('/wishlist')} className="relative hover:cursor-pointer">
+              <i className="fi fi-rr-heart text-cyan-950 "></i>
+               {userData?.wishlist?.length > 0 && ( 
+              <span className="absolute top-[-5px] right-[-5px] bg-red-500 text-white text-xs font-bold rounded-full px-1">
+                {userData?.wishlist.length} 
+              </span>
+            )}
+          </li>
+            )
+          }
+       
           <li className=''>
-             <Link to='/bookingDetials' className="block py-2 px-3 text-gray-900 rounded hover:bg-cyan-950 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent  font-montserrat sm:hidden">Booking Detials</Link>
+             <Link to='/bookingDetials' className="block py-2 px-3 text-gray-900 rounded hover:bg-cyan-950 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent  font-montserrat sm:hidden hover:text-white">Booking Detials</Link>
           </li>
           <li>
-             <Link to='/bookingRequests' className="block py-2 px-3 text-gray-900 rounded hover:bg-cyan-950 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent  font-montserrat sm:hidden">Booking Requests</Link>
+             <Link to='/bookingRequests' className="block py-2 px-3 text-gray-900 rounded hover:bg-cyan-950 md:hover:bg-transparent md:border-0 md:hover:text-red-500 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-red-500 md:dark:hover:bg-transparent  font-montserrat sm:hidden hover:text-white">Booking Requests</Link>
           </li>
         </ul>
       </div>

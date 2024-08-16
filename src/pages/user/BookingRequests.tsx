@@ -21,8 +21,10 @@ interface bookingInt extends Document{
 
 function BookingRequests() {
   useListenMessages()
-    const [bookingsReqs,setBookingReqs] = useState<bookingInt[] | null>([])
+    const [bookingsReqs,setBookingReqs] = useState<bookingInt[] >([])
     const[reload,setReload] = useState<boolean>(false)
+    const [pageRange,setPageRange] = useState<number[]>([1,2,3])
+    const [currentPage,setCurrentpage] = useState<number>(1)
     useEffect(()=>{
         const fetchBookingData = async () =>{
         const response =  await fetchBookingRequests()
@@ -32,6 +34,10 @@ function BookingRequests() {
         }
         }
         fetchBookingData()
+
+        return ()=>{
+          setReload(false)
+        }
     },[reload])
 
     const cancelRequest = async(bookingID:string)=>{
@@ -39,18 +45,44 @@ function BookingRequests() {
         console.log(response)
         if(response?.data.success){
             toast.success("Your booking request has been cancelled")
-            setTimeout(()=>{
+            // setTimeout(()=>{
             setReload(true)
-            },2000)
+            // },2000)
         }
     }
+
+    const reqPerPage = 10
+    const indexOfLastReq = currentPage * reqPerPage
+    const indexOfFirstReq = indexOfLastReq-reqPerPage
+    const currRequests = bookingsReqs?.slice(indexOfFirstReq,indexOfLastReq)
+
+    const handlePageChange = (pageNumber:number)=>{
+      console.log(pageNumber)
+      console.log("gggg",Math.floor(bookingsReqs.length/reqPerPage))
+      if(pageNumber > Math.ceil(bookingsReqs.length/reqPerPage)){
+        console.log("inthisss")
+        return
+      }
+      setCurrentpage(pageNumber)
+      if(pageNumber > pageRange[0] && pageNumber < bookingsReqs.length){
+        setPageRange([pageRange[0]+1,pageRange[1]+1,pageRange[2]+1])
+
+      }
+      if(pageNumber < pageRange[0] && pageNumber > 0){
+        setPageRange([pageRange[0]-1,pageRange[1]-1,pageRange[2]-1])
+ 
+      }
+      else{
+        return 
+      }
+    }
   return (
-    <div className="flex px-12">
+    <div className="flex ">
         <Toaster richColors position="bottom-right" />
             <div className='mt-20 hidden md:block'>
                 <SideBar/>
             </div>
-            <div className="overflow-x-auto mt-5 pt-20 px-6 w-full">
+            <div className="overflow-x-auto mt-5 pt-20 ps-6 w-screen">
       <Toaster richColors position='bottom-right' />
       <div className="overflow-x-auto">
   <table className="min-w-full divide-y divide-gray-200 hidden md:table">
@@ -65,7 +97,7 @@ function BookingRequests() {
       </tr>
     </thead>
     <tbody className="bg-white divide-y divide-gray-200">
-      {bookingsReqs && bookingsReqs.map((req:any, index) => (
+      {currRequests && currRequests.map((req:any, index) => (
         <tr key={req._id}>
           <td className="px-6 py-4 whitespace-nowrap">
             <div className="flex items-center">
@@ -83,7 +115,7 @@ function BookingRequests() {
           <td>
             <button
               onClick={() => cancelRequest(req._id)}
-              className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
+              className="rounded bg-cyan-950 px-6 pb-2 pt-2.5 text-xs   text-white shadow transition duration-150 ease-in-out hover:bg-cyan-950 focus:bg-cyan-950 focus:outline-none active:bg-cyan-950"
             >
               Cancel
             </button>
@@ -94,9 +126,12 @@ function BookingRequests() {
   </table>
 
   {/* Responsive Layout */}
-  <div className="md:hidden">
-    {bookingsReqs && bookingsReqs.map((req:any, index) => (
-      <div key={index} className="border w-full border-gray-200 rounded-md mb-4 ">
+  <div className="p-4 md:hidden">
+    <div>
+      <h1 className='font-montserrat text-xl font-bold pb-6'>Booking Requests</h1>
+    </div>
+    {currRequests && currRequests.map((req:any, index) => (
+      <div key={index} className=" w-full  rounded-md mb-4 ">
         <div className="flex flex-col w-auto">
           <div className="flex items-center mb-2">
             <span className="font-bold w-32">Request_To:</span>
@@ -121,7 +156,7 @@ function BookingRequests() {
           <div className="mt-4">
             <button
               onClick={() => cancelRequest(req._id)}
-              className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
+              className="rounded bg-cyan-950 px-6 pb-2 pt-2.5 text-xs   text-white shadow transition duration-150 ease-in-out hover:bg-cyan-950 focus:bg-cyan-950 focus:outline-none active:bg-cyan-950"
             >
               Cancel
             </button>
@@ -130,9 +165,39 @@ function BookingRequests() {
       </div>
     ))}
   </div>
+  {
+    bookingsReqs.length > 0 && (
+      <div className="flex justify-center p-10 flex-wrap space-x-2">
+      <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="mx-1 h-8 md:h-10 px-2 md:px-4 py-1 md:py-2 text-xs md:text-sm border font-montserrat rounded-md text-white hover:cursor-pointer bg-cyan-950 hover:bg-cyan-950"
+      >
+          Previous
+      </button>
+
+      {pageRange.map((page) => (
+          <button
+          key={page}
+          onClick={() => handlePageChange(page)}
+          className={`mx-1 h-8 md:h-10 px-2 md:px-4 py-1 md:py-2 text-xs md:text-sm border rounded-full ${page === currentPage ? 'bg-cyan-950 text-white' : 'bg-white hover:bg-gray-100'} text-gray-600`}
+          >
+          {page}
+          </button>
+      ))}
+
+      <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === Math.ceil(bookingsReqs?.length / reqPerPage)}
+          className="mx-1 h-8 md:h-10 px-2 md:px-4 py-1 md:py-2 text-xs md:text-sm border rounded-md text-white bg-cyan-950 hover:bg-cyan-950"
+      >
+          Next
+      </button>
+      </div>
+    )
+  }
+  
 </div>
-
-
     </div>
     </div>
   )

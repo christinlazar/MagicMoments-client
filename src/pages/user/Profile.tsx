@@ -44,18 +44,18 @@ function Profile() {
     }
   }
   return (
-    <div className="flex ps-12">
+  <div className="flex ps-12">
     <Toaster richColors position="bottom-right" />
         <div className='mt-20 hidden md:block'>
             <SideBar/>
         </div>
-      <div className='flex flex-col overflow-x-auto h-full w-full mt-28'>
-        <div className='flex'>
-        <h1 className='font-bold font-montserrat text-xl ms-14 mb-6 text-cyan-800 shadow-sm'>PROFILE</h1>
+      <div className='flex flex-col overflow-x-auto h-full w-full mt-28 border me-4'>
+        <div className='flex p-4'>
+        <h1 className='font-bold font-montserrat text-xl ms-2 md:ms-14 mb-6 text-cyan-800 shadow-sm'>PROFILE</h1>
         <i className="fi fi-rr-user-trust ms-4  text-xl"></i>
         </div>
-        <div className='ps-8 mb-4 ms-4 '>
-          <p className='text-cyan-800 p-3 shadow-sm'>
+        <div className='md:ps-8 mb-4 md:ms-4 '>
+          <p className='text-black p-3 shadow-sm'>
         {
           `HI ${userData?.name} Welcome to your profile! We’re so excited to be part of your journey. Here, 
           we celebrate love, laughter, and the beautiful moments that make your story unique.
@@ -65,7 +65,7 @@ function Profile() {
         }
           </p>
         </div>
-      <form className="max-w-sm mx-14">
+      <form className="max-w-sm mx-3 md:mx-14">
       <div className="mb-5  ">
         <label
           htmlFor="email"
@@ -76,7 +76,7 @@ function Profile() {
         <input
           type="email"
           id="email"
-          className="bg-gray-50 border shadow-lg focus:outline-none border-gray-300 text-cyan-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="bg-gray-50 border shadow-lg focus:outline-none border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           value={userData?.name}
           readOnly
         />
@@ -104,7 +104,7 @@ function Profile() {
         </label>
         <input
         value={userData?.phone}
-          className="bg-gray-50 border shadow-lg focus:outline-none border-gray-300 text-cyan-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="bg-gray-50 border shadow-lg focus:outline-none border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           
           readOnly
         />

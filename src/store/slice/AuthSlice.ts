@@ -12,7 +12,8 @@ const initialState = {
     userNotifications:[],
     vendorNotifications:[],
     videoCallRequest:false,
-    isLoading:false
+    isLoading:false,
+    wishlistDisplay:false
 }
 const authSlice = createSlice({
     name:'auth',
@@ -79,10 +80,18 @@ const authSlice = createSlice({
        },
        setIsLoadingFalse:(state)=>{
         state.isLoading = false
+       },
+       setWishListDisplayTrue:(state)=>{
+        state.wishlistDisplay = true
+       },
+       setWishListDisplayfalse:(state)=>{
+        state.wishlistDisplay = false
        }
 
     }
 })
 
-export const {setUserCredentials,userLogOut,setAdminCredentials,adminLogOut,setVendorCredentials,vendorLogOut,setMessages,addMessages,setRealMessages,setOpenUserChat,setOpenVendorChat,setUserNotifications,setVendorNotifications,setVideCallRequest,setIsLoadingTrue,setIsLoadingFalse} = authSlice.actions
+export const {setUserCredentials,userLogOut,setAdminCredentials,adminLogOut,setVendorCredentials,
+    vendorLogOut,setMessages,addMessages,setRealMessages,setOpenUserChat,setOpenVendorChat,setUserNotifications,
+    setVendorNotifications,setVideCallRequest,setIsLoadingTrue,setIsLoadingFalse,setWishListDisplayTrue,setWishListDisplayfalse} = authSlice.actions
 export default authSlice.reducer

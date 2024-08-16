@@ -45,7 +45,7 @@ function SideBar() {
                 className="flex items-center p-2 text-gray-900 hover:text-cyan-900  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-apps mt-3"></i>
-                <span className="ms-3 font-serif mt-2 font-bold text-sm text-cyan-800">Booking Detials</span>
+                <span className="ms-3 font-montserrat mt-2 font-bold text-sm text-cyan-800">Booking Detials</span>
               </Link>
             </li>
 
@@ -55,7 +55,7 @@ function SideBar() {
                 className="flex items-center p-2 text-gray-900 hover:text-cyan-900  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-apps mt-3"></i>
-                <span className="ms-3 font-serif mt-2 font-bold text-sm  text-cyan-800">Booking Requests</span>
+                <span className="ms-3 font-montserrat mt-2 font-bold text-sm  text-cyan-800">Booking Requests</span>
               </Link>
             </li>
             <li>
@@ -64,7 +64,7 @@ function SideBar() {
                 className="flex items-center p-2 text-gray-900 hover:text-cyan-900  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-apps mt-3"></i>
-                <span className="ms-3 font-serif mt-2 font-bold text-sm  text-cyan-800">Payment Detials</span>
+                <span className="ms-3 font-montserrat mt-2 font-bold text-sm  text-cyan-800">Payment Detials</span>
               </Link>
             </li>
           </ul>

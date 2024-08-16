@@ -21,7 +21,9 @@ interface bookingInt extends Document{
 
 function PaymentDetials() {
   useListenMessages()
-    const [bookings,setBookings] = useState<bookingInt[] | null>([])
+    const [bookings,setBookings] = useState<bookingInt[] >([])
+    const [currentPage,setCurrentpage] = useState<number>(1)
+    const [pageRange,setPageRange] = useState<number[]>([1,2,3])
     useEffect(()=>{
         const fetchBookingData = async () =>{
         const response =  await fetchBookingDetials()
@@ -32,6 +34,33 @@ function PaymentDetials() {
         }
         fetchBookingData()
     },[])
+
+    const detailsPerPage = 2
+    const lastIndexOfdetials = currentPage * detailsPerPage
+    const firstIndexOfdetials = lastIndexOfdetials-detailsPerPage
+    const currDetials = bookings?.slice(firstIndexOfdetials,lastIndexOfdetials)
+
+    const handlePageChange = (pageNumber:number) =>{
+      console.log(pageNumber)
+      console.log("gggg",Math.floor(bookings?.length/detailsPerPage))
+      if(pageNumber > Math.ceil(bookings.length/detailsPerPage)){
+        console.log("inthisss")
+        return
+      }
+      setCurrentpage(pageNumber)
+      if(pageNumber > pageRange[0] && pageNumber < bookings.length){
+        setPageRange([pageRange[0]+1,pageRange[1]+1,pageRange[2]+1])
+
+      }
+      if(pageNumber < pageRange[0] && pageNumber > 0){
+        setPageRange([pageRange[0]-1,pageRange[1]-1,pageRange[2]-1])
+ 
+      }
+      else{
+        return 
+      }
+    }
+
   return (
     <div className="flex ps-12">
         <Toaster richColors position="bottom-right" />
@@ -40,22 +69,19 @@ function PaymentDetials() {
             </div>
             <div className="overflow-x-auto mt-5 pt-20 w-full">
       <Toaster richColors position='bottom-right' />
-      <div className='font-montserrat font-bold text-cyan-800 p-4'>Booking Detials</div>
+      <div className='font-montserrat font-bold text-cyan-800 ps-4 pb-4'>Payment Details</div>
   <div className="overflow-x-auto">
   <table className="min-w-full divide-y divide-gray-200 hidden md:table">
     <thead className="bg-gray-50">
       <tr>
         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Booking_id</th>
         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment-status</th>
-        {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total No of Days</th> */}
-        {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Starting_date</th> */}
         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company_Name</th>
         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount_paid</th>
-        {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cancel</th> */}
       </tr>
     </thead>
     <tbody className="bg-white divide-y divide-gray-200">
-      {bookings && bookings.map((booking:any, index) => (
+      {currDetials && currDetials.map((booking:any, index) => (
         <tr key={index}>
           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-montserrat">{booking._id.split('').reverse().join('')}</td>
           <td className="px-6 py-4 whitespace-nowrap">
@@ -79,7 +105,7 @@ function PaymentDetials() {
 
   {/* Responsive Layout */}
   <div className="md:hidden me-6 shadow-md shadow-slate-800 rounded-lg ">
-    {bookings && bookings.map((booking:any, index) => (
+    {currDetials && currDetials.map((booking:any, index) => (
       <div key={index} className="border border-gray-200 rounded-md mb-4 p-4">
         <div className="flex flex-col p-2">
           <div className="flex items-center mb-2 ">
@@ -115,6 +141,38 @@ function PaymentDetials() {
       </div>
     ))}
   </div>
+  {
+    bookings.length > 0 && (
+      <div className="flex justify-center p-10 flex-wrap space-x-2">
+      <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="mx-1 h-8 md:h-10 px-2 md:px-4 py-1 md:py-2 text-xs md:text-sm border font-montserrat rounded-md text-white hover:cursor-pointer bg-cyan-950 hover:bg-cyan-950"
+      >
+          Previous
+      </button>
+
+      {pageRange.map((page) => (
+          <button
+          key={page}
+          onClick={() => handlePageChange(page)}
+          className={`mx-1 h-8 md:h-10 px-2 md:px-4 py-1 md:py-2 text-xs md:text-sm border rounded-full ${page === currentPage ? 'bg-cyan-950 text-white' : 'bg-white hover:bg-gray-100'} text-gray-600`}
+          >
+          {page}
+          </button>
+      ))}
+
+      <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === Math.ceil(bookings?.length / detailsPerPage)}
+          className="mx-1 h-8 md:h-10 px-2 md:px-4 py-1 md:py-2 text-xs md:text-sm border rounded-md text-white bg-cyan-950 hover:bg-cyan-950"
+      >
+          Next
+      </button>
+      </div>
+    )
+  }
+  
 </div>
 
 

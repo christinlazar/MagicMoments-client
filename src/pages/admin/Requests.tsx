@@ -18,12 +18,15 @@ interface Vendor{
     isAccepted:AcceptanceStatus;
     isBlocked:boolean;
 }
+
 function Vendors() {
     const [isBlocked,setIsBlocked] = useState<boolean>(false)
     const [requests,setRequests] = useState<Vendor[]>([])
     const [isLoading,setIsLodaing] = useState<boolean>(true)
     const [acceptReq,setAcceptReq] = useState<boolean>(false)
     const [rejectReq,setRejectReq] = useState<boolean>(false)
+    const [pageRange,setPageRange] = useState<number[]>([1,2,3])
+    const [currentPage,setCurrentpage] = useState<number>(1)
     const navigate = useNavigate()
       useEffect(   () => {
         const fetchData = async () =>{
@@ -31,10 +34,7 @@ function Vendors() {
             const vendorData =  await bringVendors()
             if(vendorData?.data.vendors){
                 const vendorReqs= vendorData.data.vendors
-            //    await setRequests(vendorReqs.map((venreq:any)=>{
-            //         return venreq.isAccepted != 'accepted'
-            //    }))
-            // await setRequests(vendorReqs.map((reqq:any) =>reqq.isAccepted == 'accepted'))
+  
              setRequests(vendorReqs.filter((prevreq:any)=>prevreq.isAccepted == AcceptanceStatus.Requested))
             }
             console.log("usd is",vendorData)
@@ -50,9 +50,7 @@ function Vendors() {
         try {
           const res = await acceptVendorReq(requestId)
           if(res?.data.accepted){
-            // setRequests(prevReqs => prevReqs.map(rq=>rq._id == requestId ?{...rq,isBlocked:false}:rq))
               toast.success('Request has been accepted')
-              // window.location.href = '/admin/requests'
               setAcceptReq(true)
           }
         } catch (error) {
@@ -73,15 +71,36 @@ function Vendors() {
           console.error(error)
         }
       }
+
+      const reqPerPage = 1
+      const indexOfLastReq = reqPerPage * currentPage
+      const indexOfFirstReq = indexOfLastReq - reqPerPage
+      const currReqs = requests.slice(indexOfFirstReq,indexOfLastReq)
+
+      const handlePageChange = (pageNumber:number) =>{
+        console.log(pageNumber)
+        console.log("gggg",Math.floor(requests.length/reqPerPage))
+        if(pageNumber > Math.ceil(requests.length/reqPerPage)){
+          console.log("inthisss")
+          return
+        }
+        setCurrentpage(pageNumber)
+        if(pageNumber > pageRange[0] && pageNumber < requests.length){
+          setPageRange([pageRange[0]+1,pageRange[1]+1,pageRange[2]+1])
+  
+        }
+        if(pageNumber < pageRange[0] && pageNumber > 0){
+          setPageRange([pageRange[0]-1,pageRange[1]-1,pageRange[2]-1])
    
-    
-      // if (isLoading) {
-      //   return <div>Loading...</div>;
-      // }
+        }
+        else{
+          return 
+        }
+      }
   return (
-    <div className="overflow-x-auto p-4">
+    <div className="overflow-x-scroll p-4">
       <Toaster richColors />
-      <table className="min-w-full divide-y divide-gray-200">
+      <table className="min-w-full divide-y divide-gray-200 ">
         <thead className="bg-gray-50">
           <tr>
             <th
@@ -123,7 +142,7 @@ function Vendors() {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {requests && requests.map((rq) => (
+          {currReqs && currReqs.map((rq) => (
             <tr key={rq._id}>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
@@ -146,7 +165,7 @@ function Vendors() {
           
               <button
                     onClick={() => acceptRequest(rq._id as string)}
-                    className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
+                    className="inline-block rounded bg-cyan-950 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
                   >
                     Accept
                 </button>
@@ -154,7 +173,7 @@ function Vendors() {
               <td>
               <button
                     onClick={() => rejectRequest(rq._id as string)}
-                    className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
+                    className="inline-block rounded bg-cyan-950 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
                   >
                     Reject
                 </button>
@@ -163,6 +182,37 @@ function Vendors() {
           ))}
         </tbody>
       </table>
+      {
+    requests.length > 0 && (
+      <div className="flex justify-center p-10 flex-wrap space-x-2">
+      <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="mx-1 h-8 md:h-10 px-2 md:px-4 py-1 md:py-2 text-xs md:text-sm border font-montserrat rounded-md text-white hover:cursor-pointer bg-cyan-950 hover:bg-cyan-950"
+      >
+          Previous
+      </button>
+
+      {pageRange.map((page) => (
+          <button
+          key={page}
+          onClick={() => handlePageChange(page)}
+          className={`mx-1 h-8 md:h-10 px-2 md:px-4 py-1 md:py-2 text-xs md:text-sm border rounded-full ${page === currentPage ? 'bg-cyan-950 text-white' : 'bg-white hover:bg-gray-100'} text-gray-600`}
+          >
+          {page}
+          </button>
+      ))}
+
+      <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === Math.ceil(requests?.length / reqPerPage)}
+          className="mx-1 h-8 md:h-10 px-2 md:px-4 py-1 md:py-2 text-xs md:text-sm border rounded-md text-white bg-cyan-950 hover:bg-cyan-950"
+      >
+          Next
+      </button>
+      </div>
+    )
+  }
     </div>
   )
 }

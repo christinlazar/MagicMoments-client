@@ -6,6 +6,7 @@ const vendorEndPoints = {
     vendorAddPhotos:'/vendor/addPhotos',
     vendorAddVideos:'/vendor/addVideos',
     submitStoreDetials:'/vendor/submitStoreDetials',
+    editStoredetials:'/vendor/editDetails',
     getVendor:'/vendor/getVendorData',
     addUnAvaialblesDates:'/vendor/unAvailableDates',
     bringBookingRequests:'/vendor/getBookingRequests',

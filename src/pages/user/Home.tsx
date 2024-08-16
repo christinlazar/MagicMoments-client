@@ -68,7 +68,7 @@ function Home() {
       <div className='bg-white p-4 flex items-center justify-center'>
   <div className='p-2 sm:w-3/4 h-auto flex flex-col items-center'>
     <div className='h-20 w-1/2 sm:w-1/4 hover:cursor-pointer'>
-      <img className=' h-16 w-16 sm:h-full sm:w-full opacity-80' src={takeaPhoto} alt="Vendors" />
+      <img className='h-12 w-12 md:h-16 md:w-16  sm:h-full sm:w-full opacity-80' src={takeaPhoto} alt="Vendors" />
     </div>
     <div onClick={()=>navigate('/servicers')}>
       <p  className='font-montserrat font-bold text-xs m-2 text-center hover:cursor-pointer'>SEE ALL VENDORS</p>
@@ -80,12 +80,12 @@ function Home() {
 </div>
 
         <div className='bg-white p-4 flex items-center justify-center'>
-        <div className='p-2 sm:w-3/4 h-auto flex flex-col items-center'>
+        <div  onClick={()=>navigate('/wishlist')} className='p-2 sm:w-3/4 h-auto flex flex-col items-center hover:cursor-pointer'>
               <div className='h-20 w-1/2 sm:w-1/4'>
-                  <img className=' h-16 w-16 sm:h-full sm:w-full opacity-80' src={heart}></img>
+                  <img className='h-12 w-12 md:h-16 md:w-16 sm:h-full sm:w-full opacity-80' src={heart}></img>
               </div>
               <div>
-              <p className='font-montserrat font-bold text-xs m-2 text-center'>FAVORITE</p>
+              <p className='font-montserrat font-bold text-xs m-2 text-center'>FAVORITES</p>
               </div>
               <div>
                 <div className='flex items-center justify-center'>
@@ -97,7 +97,7 @@ function Home() {
         <div className='bg-white p-4 flex items-center justify-center'>
         <div className='p-2 sm:w-3/4 h-auto flex flex-col items-center'>
               <div className='h-20 w-1/2 sm:w-1/4'>
-                  <img className='h-16 w-16 sm:h-full sm:w-full opacity-80' src={email}></img>
+                  <img className='h-12 w-12 md:h-16 md:w-16  sm:h-full sm:w-full opacity-80' src={email}></img>
               </div>
               <div>
               <p className='font-montserrat font-bold text-xs m-2 text-center'>CONTACT</p>
@@ -117,10 +117,10 @@ function Home() {
       
       {/* </div> */}
   
-      <div className='border border-black border-opacity-50 flex overflow-x-auto scrollbar-hide snap-x snap-mandatory'>
+      <div className='border  border-black border-opacity-50 flex overflow-x-auto scrollbar-hide snap-x snap-mandatory'>
   {
     vendors && vendors.map((vendor:any, index) => vendor.description && vendor.photos.length >= 4 && (
-      <div key={index} className="w-72 h-auto rounded-md overflow-hidden shadow my-4 mx-10 flex-shrink-0 hover:drop-shadow-md hover:shadow-2xl snap-start">
+      <div key={index} className="w-72 h-auto rounded-md overflow-hidden shadow my-4 ms-5 flex-shrink-0 hover:drop-shadow-md hover:shadow-2xl snap-start">
         <img className="object-cover p-2 rounded-3xl aspect-[1/1]" src={vendor?.photos[0]} alt="Vendor photo" />
         <div className="px-6 py-4">
           <div className="font-bold text-xl mb-2 font-montserrat flex justify-center"><p>{vendor?.companyName}</p></div>

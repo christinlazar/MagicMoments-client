@@ -30,6 +30,7 @@ const userRoutes = {
     getUserdata:'/user/getuserData',
     getWishListData:'/user/wishlist',
     removeFromWishlist:'/user/removefromwishlist',
+    editreview:'/user/editReview'
 }
 
 export default userRoutes 

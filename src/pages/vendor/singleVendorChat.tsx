@@ -57,70 +57,66 @@ function SingleVendorChat() {
   
 
   console.log("convdata is convdata is",conversationData)
+  const formatTime = (date:any) => {
+    const dat = new Date(date)
+    const hours = String(dat?.getHours()).padStart(2, '0');
+    const minutes = String(dat?.getMinutes()).padStart(2, '0'); 
+    return `${hours}:${minutes}`; 
+  };
+  
   return (
   
-    <div className="flex h-screen mb-5">
-      
-      <Toaster richColors position='top-center'/>
-      {/* Sidebar */}
-      <div className="w-72 bg-gray-200 p-16">
-  {/* <div className='rounded-full border border-opacity-50 shadow-lg border-gray-200 h-20 w-20 overflow-hidden'>
-    <img className='object-cover w-full h-full' src={"dp"} alt="Profile" />
-  </div> */}
-  <div className="mb-2">
-    <h2 className="text-sm font-bold text-cyan-800 mt-2">{userName}</h2>
-    <p className="text-sm text-gray-900 font-montserrat mt-5">Message ASAP!</p>
+    <div className="flex flex-col h-screen mb-5 md:flex-row"> 
+  <Toaster richColors position='top-center'/>
+  
+  <div className="w-full md:w-72 bg-gray-200 p-4 md:p-16">
+    <div className="mb-2">
+      <h2 className="text-sm font-bold text-cyan-800 mt-2">{userName}</h2>
+      <p className="text-sm text-gray-900 font-montserrat mt-5">Message ASAP!</p>
+    </div>
+    <div onClick={() => navigate('/vendor/VendorVideoCall')} className='flex mt-5 hover:cursor-pointer'>
+      <i className="fi fi-rr-video-camera-alt text-cyan-800 text-3xl"></i>
+      <p className='text-sm text-gray-700 ms-3 mt-1 font-montserrat'>Start call</p>
+    </div>
   </div>
-  <div onClick={()=>navigate('/vendor/VendorVideoCall')} className='flex mt-5 hover:cursor-pointer'>
-  <i className ="fi fi-rr-video-camera-alt text-cyan-800 text-3xl"></i>
-  <p className='text-sm text-gray-700 ms-3 mt-1 font-montserrat'>Start call</p>
-  </div>
-  {/* <div className='flex'>
-  <i className="fi fi-rr-phone-call text-gray-900"></i>
-    <p className='text-sm text-gray-900 ms-3 '>{"phoneNumber"}</p>
-  </div> */}
+
+  {conversationData && (
+    <div className="flex-1 flex flex-col w-full bg-gray-100">
+      <div className="flex-1 p-4 overflow-auto">
+        <div className="text-center mb-4">
+          {/* <h2 className="text-gray-600 font-montserrat text-sm">FEBRUARY 20, 2018</h2> */}
+        </div>
+        {conversationData.messages?.map((m: any) => (
+          <div key={m._id} className={`flex ${m.senderModel === 'Vendor' ? 'justify-end' : 'justify-start'} mb-2`}>
+            <div>
+            <div ref={lastMessageRef} className={`${m.senderModel === 'Vendor' ? 'bg-cyan-800 text-white' : 'bg-gray-300 text-black'} p-2 rounded-md max-w-xs`}>
+              <div className="text-sm font-montserrat">{m.message}</div>
+            </div>
+            <p className='text-xs p-1'>{formatTime(m.createdAt)}</p>
+              </div>
+           
+          </div>
+        ))}
+      </div>
+
+      <form onSubmit={sendMessage} className="bg-gray-200 p-2">
+        <div className="flex">
+          <input 
+            value={message} 
+            onChange={(e) => setmessage(e.target.value)} 
+            type="text" 
+            className="flex-1 focus:outline-none p-2 border rounded-md font-montserrat text-sm" 
+            placeholder="Type a message..." 
+          />
+          <button className="ml-2 p-2 w-16 bg-cyan-800 text-white rounded-md flex items-center justify-center">
+            <i className="fi fi-rr-paper-plane-top"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  )} 
 </div>
 
-      {/* Chat Window */}
-      {
-        conversationData && (
-          <div className="flex flex-col w-full">
-        <div className="flex-1 p-4 overflow-auto bg-gray-100">
-          {/* Chat Header */}
-          <div className="text-center mb-4">
-            <h2 className="text-gray-600 font-montserrat text-sm">FEBRUARY 20, 2018</h2>
-          </div>
-
-          {/* Messages */}
-          {
-            conversationData && conversationData?.messages?.map((m:any)=>(
-              <div key={m._id} className={`flex ${m.senderModel === 'Vendor' ? 'justify-end' : 'justify-start'} mb-2`}>
-          <div ref={lastMessageRef} className={`${m.senderModel === 'Vendor' ? 'bg-cyan-800 text-white' : 'bg-gray-300 text-black'} p-2 rounded-md max-w-xs`}>
-            <div className="text-sm font-montserrat">{m.message}</div>
-          </div>
-        </div>
-            ))
-          }
-        </div>
-
-        {/* Input Box */}
-        <form onSubmit={sendMessage}>
-        <div className="flex  bg-gray-200">
-          <input  value={message} onChange={(e)=> setmessage(e.target.value)} type="text" className="flex-1 focus:outline-none p-2 border rounded-md font-montserrat text-sm" placeholder="Type a message..." />
-              <div className='flex'>
-              <button className="ml-2 mr-2 p-2 w-16 bg-cyan-800 text-white rounded-md">
-              <i className="fi fi-rr-paper-plane-top"></i>
-              </button>
-                {/* <div className='bg-cyan-800'>
-
-                </div> */}
-              </div>
-        </div>
-        </form>
-      </div>
-        ) 
-      } 
-    </div>
   )
 }
 

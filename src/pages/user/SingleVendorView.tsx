@@ -1,16 +1,17 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { bringThatVendor, fetchPlaces, getReviews, getVendorChat, isExistingBookingRequest, SendBookingRequest, submitReview, wishlist } from '../../api/userApi'
+import { bringThatVendor, editReview, fetchPlaces, getReviews, getUserData, getVendorChat, isExistingBookingRequest, SendBookingRequest, submitReview, wishlist } from '../../api/userApi'
 import { createPortal } from 'react-dom'
 import { addUnavailableDates } from '../../api/vendorApi'
 import { handleStripePayment,checkIsReqAccepted } from '../../api/userApi'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toast, Toaster } from 'sonner'
 import { GoogleMap,Marker,LoadScript,MarkerF } from '@react-google-maps/api'
 import useListenMessages from '../../hooks/useListenMessages'
 //@ts-ignore
 import Calendar from 'react-calendar'
+import { setWishListDisplayfalse, setWishListDisplayTrue } from '../../store/slice/AuthSlice'
  enum AcceptanceStatus {
   Requested = 'requested',
   Accepted = 'accepted',
@@ -53,6 +54,11 @@ interface RootState{
   }
 }
 
+interface pos{
+  lat:number,
+  lng:number
+}
+
 
 function SingleVendorView() {
   useListenMessages()
@@ -67,7 +73,6 @@ function SingleVendorView() {
     const modalRef = useRef<any>(null)
     const navigate = useNavigate()
     const {userInfo} = useSelector((state:RootState)=>state.auth)
-    const [conversations,setConversations] = useState(false)
     const [locations,setLocations] = useState<any>([])
     const [review,setReview]= useState<string>('')
     const [rating, setRating] = useState<number | null | any>(3);
@@ -75,6 +80,11 @@ function SingleVendorView() {
     const [reviewRefresh,setReviewRefresh] = useState<boolean>(false)
     const [isScriptLoaded, setIsScriptLoaded] = useState(false);
     const [unAvailableDates,setUnavailableDates] = useState<string[]>([])
+    const [editModal,setEditModal] = useState<boolean>(false)
+    const [reviewValue,setReviewvalue] = useState<string>('')
+    const [editingReviewId,setEditingReviewId] = useState<string>('')
+    const [userID,setUserID] = useState('')
+    const dispatch = useDispatch()
 
     useEffect(()=>{
       const bringVendorDetial = async () =>{
@@ -91,23 +101,36 @@ function SingleVendorView() {
      
 return ()=>{
   setIsScriptLoaded(false) 
+  dispatch(setWishListDisplayfalse())
+  setReviewRefresh(false)
+
 }
     },[modalOpen,openBooking,reviewRefresh])
 
+
+    useEffect(()=>{
+      async function getuser(){
+      const response = await getUserData()
+      setUserID(response?.data?.user._id)
+      }
+      getuser()
+      return ()=>{
+  setReviewRefresh(false)
+      }
+    },[])
+
     const unavailableDatesFormatted = unAvailableDates.map(date => {
       const [day, month, year] = date.split('/');
-      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`; // Format to YYYY-MM-DD
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`; 
     });
   
 
     const tileClassName = ({ date }: { date: Date }) => {
-      const dateString = date.toISOString().split('T')[0]; // Format date to YYYY-MM-DD
+      const dateString = date.toISOString().split('T')[0]; 
       return unavailableDatesFormatted.includes(dateString) ? 'unavailable' : 'available';
     };
     
     
-  
-
     const getreviews = async (vendorId:string) =>{
       const response = await getReviews(vendorId)
       if(response?.data){
@@ -240,6 +263,9 @@ return ()=>{
       const response = await submitReview(review,rating,vendorDetail?._id)
       setReview('')
       setRating(3)
+      if(response?.data.isAllowed == false){
+        toast.error("Cant add review,you haven't collabrated with this service provider")
+      }
       if(response?.data.success){
         setReviewRefresh(true)
         toast.success('Review submitted successfully')
@@ -248,29 +274,59 @@ return ()=>{
 
    const handleWishlist = async ()=>{
     const response = await wishlist(vendorDetail?._id)
-    
     if(response?.data.success){
+      dispatch(setWishListDisplayTrue())
       toast.success("added to wishlist")
     }else{
       toast.error("Already exists in the wishlist")
     }
     }
+
+    const handleMarkerClick = async (pos:pos)=>{
+      let lat = pos.lat
+      let lng = pos.lng
+      const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`
+      window.open(googleMapsUrl,'_blank')
+    }
+
+    const setEditReviewModal =   (reviewId:string)=>{
+      setEditingReviewId(reviewId)
+      const reviewToShow:any =  reviewData?.filter((rev:any)=>rev?._id == reviewId)
+      setReviewvalue(reviewToShow[0].review)
+      setIsOverlayVisisble(true)
+      setEditModal(true)
+    }
+
+    const closeReviewModal = () =>{
+      setIsOverlayVisisble(false)
+      setEditingReviewId('')
+      setEditModal(false)
+    }
+
+    const submitEditedReview = async () =>{
+            if(reviewValue.trim() == ''){
+              return toast.error("review cant be empty")
+            }
+        console.log("reviewValue",reviewValue,editingReviewId)
+        const response = await editReview(reviewValue,editingReviewId)
+        if(response?.data.success){
+          setReviewRefresh(true)
+            toast.success("Review edited successfully")
+            setIsOverlayVisisble(false)
+            setEditModal(false)
+        }
+    } 
     
 
   return (
-    <>
-
-
-
-
-        
+    <>   
     <div className='border border-gray-300 opacity-60 '></div>
     {isOverlayVisible && (
           <div className="absolute inset-0 bg-black opacity-50 z-20"></div>
         )}
     <div className='h-5/6 flex mt-32' ref={modalRef}>
     <Toaster richColors position='bottom-right'/>
-      <div className=' xl:w-1/2 xl:mx-20'>
+      <div className='w-screen overflow-x-hidden xl:w-1/2 xl:mx-20 scrollbar-hide'>
         <div className='xl:grid grid-rows-6 grid-flow-col gap-1 xl:h-[75%] rounded-md'>
           <div className='border row-span-6 col-span-2 text-center'>
             <img className="h-full object-cover" src={vendorDetail?.photos[0]} alt="Vendor photo" />
@@ -299,20 +355,18 @@ return ()=>{
           <p className='text-sm ms-10 mt-1 font-montserrat px-2 pb-6'>{vendorDetail?.description}</p>
 
           </div>
-          <h1 className='font-semibold font-montserrat text-md text-cyan-950 ms-16'>Dates on which we have been booked</h1>
-          <div className=' w-96 p-4 ms-10'>
+          <h1 className='font-semibold font-montserrat text-md text-cyan-950 ms-7 md:ms-16'>Dates on which we have been booked</h1>
+          <div className=' w-96 p-4 mt-5 md:ms-10'>
           <Calendar 
                 tileClassName={tileClassName}
               />
           </div>
-          <div className='ps-16 pb-10 '>
+          <div className='md:ps-16 pb-10 '>
             <div className='font-montserrat text-2xl font-bold p-6'>
             <span>Location</span>
             </div>
             {
-              isScriptLoaded && (
-                // <LoadScript googleMapsApiKey ='AIzaSyCdRUMgE09rO2dkbmmZR_ZVJnS1yJL8oWY '>
-                  
+              isScriptLoaded && (                  
                     locations.length > 0 ? (
             <GoogleMap
                 mapContainerStyle={mapStyles}
@@ -327,7 +381,7 @@ return ()=>{
                       lng:loc.location?.coordinates[1],
                     }
                     return  (
-                      <MarkerF key={index} position={pos}  />
+                      <MarkerF onClick={()=>handleMarkerClick(pos)} key={index} position={pos}  />
                     )
                   }  
                 )
@@ -345,13 +399,11 @@ return ()=>{
                       </div>
                    
                     )
-                  
-          // </LoadScript>
               )
             }
           </div>
 
-          <div className='ps-16 pb-10 '>
+          <div className=' px-2 md:ps-16 pb-10 '>
             <div className='font-montserrat text-2xl font-bold p-1 '>
             <span>Reviews</span>
             </div>
@@ -373,49 +425,65 @@ return ()=>{
       ))}
     </div>
             <form onSubmit={handleReviewSubmit}>
-            <textarea onChange={(e)=>setReview(e.target.value)}  value={review} placeholder='Share your thoughts...' className='border w-full mt-5 shadow-xl text-xs font-montserrat ps-3 pt-5 focus:outline-none h-80'>
+            <textarea onChange={(e)=>setReview(e.target.value)}  value={review} placeholder='Share your thoughts...' className='border me-5 w-full mt-5 shadow-xl text-xs font-montserrat ps-3 pt-5 focus:outline-none h-80'>
 
             </textarea>
-            <div className='flex justify-end'>
+            <div className='flex justify-center items-center md:justify-end'>
               <button type='submit' className='button mt-6 h-10 rounded-full text-sm'>
                 submit
               </button>
             </div>
             </form>
             {
-              reviewData && reviewData.map((rev:any)=>(
-                <article>
-                <div className="flex items-center mb-4">
-                  <div className="font-medium dark:text-white">
-                    <p className='text-sm'>
-                    {rev.userId?.name}
+              reviewData && reviewData.map((rev:any)=>
+                {
+                 return  (
+                    <article>
+                    <div className="flex items-center mb-4">
+                      <div className="font-medium dark:text-white">
+                        <p className='text-sm'>
+                        {rev.userId?.name}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
+                      {[...Array(4)].map((_, index) => (
+                        <svg
+                          key={index}
+                          className={`w-4 h-4 ${index < rev.rating ? 'text-yellow-300' : 'text-gray-300 dark:text-gray-500'}`}
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 22 20"
+                        >
+                          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <footer className="mb-5 text-sm text-gray-500 dark:text-gray-400 bg-white">
+                      <p className='text-sm mt-4'>
+                      {`${new Date(rev.createdAt).getDate()}/${new Date(rev.createdAt).getMonth()}/${new Date(rev.createdAt).getFullYear()}`}
+                      </p>
+                    </footer>
+                    <p className="mb-2 text-gray-500 font-montserrat text-sm dark:text-gray-400">
+                     {rev.review}
                     </p>
-                  </div>
-                </div>
-                <div className="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
-                  {[...Array(4)].map((_, index) => (
-                    <svg
-                      key={index}
-                      className={`w-4 h-4 ${index < rev.rating ? 'text-yellow-300' : 'text-gray-300 dark:text-gray-500'}`}
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      viewBox="0 0 22 20"
-                    >
-                      <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                    </svg>
-                  ))}
-                </div>
-                <footer className="mb-5 text-sm text-gray-500 dark:text-gray-400 bg-white">
-                  <p className='text-sm mt-4'>
-                  {`${new Date(rev.createdAt).getDate()}/${new Date(rev.createdAt).getMonth()}/${new Date(rev.createdAt).getFullYear()}`}
-                  </p>
-                </footer>
-                <p className="mb-2 text-gray-500 font-montserrat text-sm dark:text-gray-400">
-                 {rev.review}
-                </p>
-            </article>
-              ))
+                    
+                    {
+                      
+                      rev?.userId._id == userID ? 
+                       <div onClick={()=>setEditReviewModal(rev._id)} className='p-1 flex justify-end hover:cursor-pointer'>
+                      <i className="fi fi-rr-edit"></i>
+                        <span className='ms-2'>edit</span>
+                      </div> : ''
+    
+                    }
+                   
+                </article>
+                  )
+                }
+               
+            )
             }
     
             </div>
@@ -429,7 +497,7 @@ return ()=>{
           <span className='text text-sm font-montserrat '>Location : </span>
           <span className='text text-sm font-montserrat '>{vendorDetail?.companyLocation}</span>
         </div>
-        <div className='h-10 w-80 border rounded-lg shadow-md mt-4 flex'>
+        <div className='h-10 w-80 border rounded-lg shadow-md mt-4 ms-12 flex'>
           <i className="fi fi-rr-coins mt-2 px-2"></i>
           <span className='text-xs mt-3 ms-3'>1 Day wedding package starts from Rs {vendorDetail?.startingPrice}</span>
         </div>
@@ -447,17 +515,7 @@ return ()=>{
         
         <div>
         <div className='xl:hidden flex flex-col items-center '>
-          <h1 className='font-semibold font-montserrat text-xs text-cyan-800 ms-4'>Dates on which we have been booked</h1>
-          <div className='mt-3'>
-            <ul className='text-xs'>
-              <li>{vendorDetail?.unAvailableDates[0]}</li>
-              <li>{vendorDetail?.unAvailableDates[1]}</li>
-              <div className='flex'>
-                <li>{vendorDetail?.unAvailableDates[2]}</li>
-                <li onClick={setModal} className='text-sm hover:cursor-pointer'>...more</li>
-              </div>
-            </ul>
-          </div>
+         
        
    
           <h1 className='font-semibold font-montserrat p-4  text-cyan-800'>Our services</h1>
@@ -468,20 +526,48 @@ return ()=>{
           ))
           }
           </ul>
-        <div className='flex justify-around w-full mb-10'>
-          <div className='ms-16'>
-            <button onClick={()=>handlePay(vendorDetail?._id)} className='button  mt-6 h-10 rounded-full text-sm'>
-               <span >Pay now</span>
-            </button>
-          </div>
-          <div className='me-16'>
-            <button onClick={()=>bookNow(vendorDetail?._id)} className='button   mt-6 h-10 rounded-full text-sm'>
-            <span >Book now</span>
-            </button>
-          </div>
-        </div> 
+          <div className='flex flex-col justify-center md:flex-row md:justify-between  mb-10'>
+  <div className='m-3 w-full md:w-auto'>
+    <button onClick={() => handlePay(vendorDetail?._id)} className='button mt-6 h-10 rounded-full text-sm w-full md:w-auto'>
+      <span>Pay now</span>
+    </button>
+  </div>
+  <div className='m-3 w-full md:w-auto'>
+    <button onClick={() => bookNow(vendorDetail?._id)} className='button mt-6 h-10 rounded-full text-sm w-full md:w-auto'>
+      <span>Book now</span>
+    </button>
+  </div>
+  <div className='m-3 w-full md:w-auto'>
+    <button onClick={handleChatClick} className='button mt-6 h-10 rounded-full text-sm w-full md:w-auto'>
+      <span>Message</span>
+    </button>
+  </div>
+  <div className='ms-3 mt-3 w-full flex  md:w-auto'>
+  <i onClick={handleWishlist} className="fi fi-rr-circle-heart mt-1  text-xs font-montserrat hover:cursor-pointer"></i>
+  <span className='font-montserrat text-xs ms-2'>Add to wishlist</span>
+  </div>
+
+</div>
+
 
         </div>
+
+        {
+          editModal && userInfo != null &&  createPortal(
+            <div className='z-40 h-96 w-96 shadow-2xl border border-gray-500 border-opacity-50 rounded-xl overflow-y-auto ' style={{ color: 'black', backgroundColor: 'white', padding: '20px', borderRadius: '5px', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+            <p className='font-montserrat font-bold text-xl text-center drop-shadow-2xl text-cyan-800 p-5'>Edit Review</p>
+                <textarea onChange={(e)=>setReviewvalue(e.target.value)} value={reviewValue} className=' font-montserrat text-xs border border-gray-400 p-3 focus:outline-none w-full h-36'>
+
+                </textarea>
+                <div className='flex justify-around'>
+                <button className='rounded-full text-xs  text-center w-20 h-10  mt-3 bg-cyan-950 bg-opacity-90 text-white'  onClick={()=>submitEditedReview()}>Submit</button>
+                <button className='rounded-full text-xs  text-center w-20 h-10  mt-3 bg-cyan-950 bg-opacity-90 text-white'  onClick={()=>closeReviewModal()}>Close</button>
+                </div>
+                
+          </div>,
+          document.body
+        )
+        }
       
      
           
@@ -495,7 +581,7 @@ return ()=>{
                         ))
                       }
                   </div>
-                <button className='rounded-full text-xs  text-center w-20 h-10 ms-36 mt-3 bg-cyan-800 bg-opacity-90 text-white'  onClick={closeModal}>Close</button>
+                <button className='rounded-full text-xs  text-center w-20 h-10 ms-36 mt-3 bg-cyan-950 bg-opacity-90 text-white'  onClick={closeModal}>Close</button>
           </div>,
           document.body
         )}

@@ -371,14 +371,13 @@ code {
 
 /*  */
 .scrollbar-hide::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
+  display: none; 
 }
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
 }
-/* From Uiverse.io by OnlyCodeChannel */ 
-/*  */
+
 .notifications-container {
   width: 320px;
   height: auto;
@@ -434,46 +433,64 @@ code {
   margin-top: 0.25rem;
   list-style-type: disc;
 }
-.available {
-  background-color: green;
-  color: white;
-}
 
-.unavailable {
-  background-color: red;
-  color: white;
-}
+/* styles.css */
 .react-calendar {
-  border: none;
-  border-radius: 10px;
-  overflow: hidden;
+  border: none; 
+  width: 100%;
+  max-width: 400px; 
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif; 
+  background-color: #ffffff; 
+  border-radius: 10px; 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
 }
 
-.react-calendar__tile {
-  border-radius: 0; 
-  transition: background-color 0.2s ease; 
+.react-calendar__month-view__days__day {
+  padding: 10px; 
+  text-align: center; 
+  border-radius: 5px; 
+  transition: background-color 0.3s; 
 }
 
-.react-calendar__tile:enabled:hover {
-  background-color: #f0f0f0; 
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #b0b0b0; 
 }
 
-.react-calendar__tile--active {
-  background-color: #4caf50; /* Active date color */
-  color: white;
+.react-calendar__month-view__days__day--today {
+  background-color: #007bff; 
+  color: white; 
 }
 
-.react-calendar__tile--now {
-  background-color: #ffeb3b; /* Today's date color */
-  font-weight: bold;
+.react-calendar__month-view__days__day--selected {
+  background-color: #28a745; 
+  color: white; 
 }
 
-.available {
-  background-color: #4caf50; /* Available dates color */
-  color: white;
+.react-calendar__navigation {
+  background-color: #f7f7f7; 
+  border-bottom: 1px solid #e0e0e0; 
 }
+
+.react-calendar__navigation button {
+  color: #132f4c; 
+  font-weight: bold; 
+}
+
+.react-calendar__month-view__weekdays {
+  background-color: #f7f7f7; 
+  color: #333333; 
+  font-weight: bold; 
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  padding: 10px; 
+}
+
+
+
 
 .unavailable {
-  background-color: #f44336; /* Unavailable dates color */
+  background-color: #e01809; 
   color: white;
 }

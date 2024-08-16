@@ -94,7 +94,17 @@ export const addStoreDetails = async (formData:any)=>{
         const result = await Api.post(vendorEndPoints.submitStoreDetials,formData)
         return result
     } catch (error) {
-        
+        console.error(error)
+    }
+}
+
+export const EditStoreDetails = async (formData:any)=>{
+    try {
+        console.log(formData)
+        const result = await Api.post(vendorEndPoints.editStoredetials,{formData})
+        return result
+    } catch (error) {
+        console.error(error)
     }
 }
 

@@ -21,6 +21,8 @@ function Vendors() {
     const [isBlocked,setIsBlocked] = useState<boolean>(false)
     const [vendors,setVendors] = useState<Vendor[]>([])
     const [isLoading,setIsLodaing] = useState<boolean>(true)
+    const [pageRange,setPageRange] = useState<number[]>([1,2,3])
+    const [currentPage,setCurrentpage] = useState<number>(1)
       useEffect(   () => {
         const fetchData = async () =>{
           try {
@@ -59,6 +61,33 @@ function Vendors() {
       // if (isLoading) {
       //   return <div>Loading...</div>;
       // }
+
+      const vendorPerPage = 1
+      const indexOfLastReq = vendorPerPage * currentPage
+      const indexOfFirstReq = indexOfLastReq - vendorPerPage
+      const currvendors = vendors.slice(indexOfFirstReq,indexOfLastReq)
+    
+      const handlePageChange = (pageNumber:number) =>{
+        console.log(pageNumber)
+        console.log("gggg",Math.floor(vendors.length/vendorPerPage))
+        if(pageNumber > Math.ceil(vendors.length/vendorPerPage)){
+          console.log("inthisss")
+          return
+        }
+        setCurrentpage(pageNumber)
+        if(pageNumber > pageRange[0] && pageNumber < vendors.length){
+          setPageRange([pageRange[0]+1,pageRange[1]+1,pageRange[2]+1])
+    
+        }
+        if(pageNumber < pageRange[0] && pageNumber > 0){
+          setPageRange([pageRange[0]-1,pageRange[1]-1,pageRange[2]-1])
+    
+        }
+        else{
+          return 
+        }
+      }
+      
   return (
     <div className="overflow-x-auto p-4">
       <Toaster richColors />
@@ -98,7 +127,7 @@ function Vendors() {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {vendors && vendors.map((vendor) => (
+          {currvendors && currvendors.map((vendor) => (
             <tr key={vendor._id}>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
@@ -125,14 +154,14 @@ function Vendors() {
                 {vendor.isBlocked ? (
                   <button
                     onClick={() => unBlockvendor(vendor._id)}
-                    className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
+                    className="inline-block rounded bg-cyan-950 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out focus:outline-none"
                   >
                     Unblock
                   </button>
                 ) : (
                   <button
                     onClick={() => blockvendor(vendor._id)}
-                    className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700"
+                    className="inline-block rounded bg-cyan-950 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out focus:outline-none"
                   >
                     Block
                   </button>
@@ -142,6 +171,37 @@ function Vendors() {
           ))}
         </tbody>
       </table>
+      {
+    vendors.length > 0 && (
+      <div className="flex justify-center p-10 flex-wrap space-x-2">
+      <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="mx-1 h-8 md:h-10 px-2 md:px-4 py-1 md:py-2 text-xs md:text-sm border font-montserrat rounded-md text-white hover:cursor-pointer bg-cyan-950 hover:bg-cyan-950"
+      >
+          Previous
+      </button>
+
+      {pageRange.map((page) => (
+          <button
+          key={page}
+          onClick={() => handlePageChange(page)}
+          className={`mx-1 h-8 md:h-10 px-2 md:px-4 py-1 md:py-2 text-xs md:text-sm border rounded-full ${page === currentPage ? 'bg-cyan-950 text-white' : 'bg-white hover:bg-gray-100'} text-gray-600`}
+          >
+          {page}
+          </button>
+      ))}
+
+      <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === Math.ceil(vendors?.length / vendorPerPage)}
+          className="mx-1 h-8 md:h-10 px-2 md:px-4 py-1 md:py-2 text-xs md:text-sm border rounded-md text-white bg-cyan-950 hover:bg-cyan-950"
+      >
+          Next
+      </button>
+      </div>
+    )
+  }
     </div>
   )
 }

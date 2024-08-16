@@ -27,42 +27,34 @@ function AdminDashBoard() {
 
   return (
     <>
-  {/* <div className="border border-gray-500"></div> */}
-<div className="overflow-x-auto p-4 sm:p-10 ">
-  <div className='flex justify-between  '>
-  <h1 className='font-montserrat text-xl font-bold text-black '>ADMIN DASHBORAD</h1>
-  {/* <select onChange={(e)=>setDataprops(e.target.value)}  className='border rounded-xl shadow-md font-montserrat text-xs w-24  ps-2 me-2'>
-      <option value="" disabled selected>Month</option>
-      <option value="year">Year</option>
-      <option value="week">Week</option>
-  </select> */}
-  </div>
-<div className="flex justify-between p-10  rounded-lg  ">
-  <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
-    <h1 className="text-md font-bold font-montserrat text-black">Total Revenue</h1>
-    <p className="text-sm font-semibold font-montserrat rounded-full shadow-xl text-black p-3">Rs.{totalRevenue}</p> {/* Example data */}
-  </div>
-  
-  <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
-    <h1 className="text-md font-bold font-montserrat text-black">Total Vendors</h1>
-    <p className="text-sm font-semibold font-montserrat rounded-full shadow-xl text-black p-3">{vendorCount}</p> {/* Example data */}
-  </div>
-  
-  <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
-    <h1 className="text-md font-bold font-montserrat text-black">Total Users</h1>
-    <p className="text-sm font-semibold font-montserrat rounded-full shadow-xl text-black p-3">{userCount}</p> {/* Example data */}
-  </div>
-</div>
-    <div>
-      <div>
-        {/* <span className=' text-xl font-montserrat font-bold text-green-600'>
-          MONTHLY_DATAS
-        </span> */}
+  <div className="overflow-x-auto p-4 sm:p-10">
+    <div className='flex justify-between items-center ms-14 mb-4'>
+      <h1 className='font-montserrat text-xl font-bold text-cyan-900'>ADMIN DASHBOARD</h1>
+    </div>
+    
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-10 rounded-lg">
+      <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+        <h1 className="text-md font-bold font-montserrat text-cyan-800">Total Revenue</h1>
+        <p className="text-sm font-bold rounded-full shadow-xl text-black p-3">Rs. {totalRevenue}</p> 
       </div>
+      
+      <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+        <h1 className="text-md font-bold font-montserrat text-cyan-800">Total Vendors</h1>
+        <p className="text-sm font-bold  rounded-full shadow-xl text-black p-3">{vendorCount}</p> 
+      </div>
+      
+      <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+        <h1 className="text-md font-bold font-montserrat text-cyan-800">Total Users</h1>
+        <p className="text-sm font-bold rounded-full shadow-xl text-black p-3">{userCount}</p>
+      </div>
+    </div>
+    <div className="mt-6">
       <Chart />
     </div>
   </div>
 </>
+
+
   )
 }
 
