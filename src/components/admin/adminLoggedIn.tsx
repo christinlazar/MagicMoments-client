@@ -14,9 +14,9 @@ const AdminLoggedIn = () =>{
     return(
         <>
         {adminInfo ? (
-          <div className="flex">
+          <div className="md:flex">
             <AdminSidebar />
-            <div className="flex-grow ms-60 mt-10">
+            <div className="flex-grow md:ms-60 mt-10">
                   <Outlet />
             </div>
           </div>

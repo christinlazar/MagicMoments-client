@@ -37,7 +37,7 @@ function SideBar() {
         } bg-gray-50 dark:bg-gray-800 mx-6`}
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 py-6 overflow-y-auto mt-4 mx-4 ">
+        <div className="h-screen px-3 py-6 overflow-y-auto mt-4 mx-4 ">
           <ul className="space-y-2 font-medium">
           <li>
               <Link to='/bookingDetials'
@@ -45,7 +45,7 @@ function SideBar() {
                 className="flex items-center p-2 text-gray-900 hover:text-cyan-900  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-apps mt-3"></i>
-                <span className="ms-3 font-serif mt-2 font-bold text-sm">Booking Detials</span>
+                <span className="ms-3 font-montserrat mt-2 font-bold text-sm text-cyan-800">Booking Detials</span>
               </Link>
             </li>
 
@@ -55,7 +55,16 @@ function SideBar() {
                 className="flex items-center p-2 text-gray-900 hover:text-cyan-900  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-apps mt-3"></i>
-                <span className="ms-3 font-serif mt-2 font-bold text-sm">Booking Requests</span>
+                <span className="ms-3 font-montserrat mt-2 font-bold text-sm  text-cyan-800">Booking Requests</span>
+              </Link>
+            </li>
+            <li>
+              <Link to='/paymentDetials'
+          
+                className="flex items-center p-2 text-gray-900 hover:text-cyan-900  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <i className="fi fi-rr-apps mt-3"></i>
+                <span className="ms-3 font-montserrat mt-2 font-bold text-sm  text-cyan-800">Payment Detials</span>
               </Link>
             </li>
           </ul>

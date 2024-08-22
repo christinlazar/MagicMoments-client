@@ -11,8 +11,9 @@ const initialState = {
     messages:[],
     userNotifications:[],
     vendorNotifications:[],
-    videoCallRequest:false
-    // adminConversation
+    videoCallRequest:false,
+    isLoading:false,
+    wishlistDisplay:false
 }
 const authSlice = createSlice({
     name:'auth',
@@ -73,10 +74,24 @@ const authSlice = createSlice({
        },
        setVideCallRequest:(state,action)=>{
         state.videoCallRequest = true
+       },
+       setIsLoadingTrue:(state)=>{
+        state.isLoading = true
+       },
+       setIsLoadingFalse:(state)=>{
+        state.isLoading = false
+       },
+       setWishListDisplayTrue:(state)=>{
+        state.wishlistDisplay = true
+       },
+       setWishListDisplayfalse:(state)=>{
+        state.wishlistDisplay = false
        }
 
     }
 })
 
-export const {setUserCredentials,userLogOut,setAdminCredentials,adminLogOut,setVendorCredentials,vendorLogOut,setMessages,addMessages,setRealMessages,setOpenUserChat,setOpenVendorChat,setUserNotifications,setVendorNotifications,setVideCallRequest} = authSlice.actions
+export const {setUserCredentials,userLogOut,setAdminCredentials,adminLogOut,setVendorCredentials,
+    vendorLogOut,setMessages,addMessages,setRealMessages,setOpenUserChat,setOpenVendorChat,setUserNotifications,
+    setVendorNotifications,setVideCallRequest,setIsLoadingTrue,setIsLoadingFalse,setWishListDisplayTrue,setWishListDisplayfalse} = authSlice.actions
 export default authSlice.reducer

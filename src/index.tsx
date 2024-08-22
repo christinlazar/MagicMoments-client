@@ -6,7 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux'
 import store from './store/Store';
 import { SocketContextProvider } from './context/socketContext';
-
+import { LoadScript } from '@react-google-maps/api';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 // window.process = {
 //   env: {
 //     NODE_ENV: process.env.NODE_ENV as 'development' | 'production' || 'development', // Fallback to 'development'
@@ -18,12 +19,18 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+const clientid:any = process.env.REACT_APP_CLIENT_ID
 root.render(
   <Provider store={store}>
         <React.StrictMode>
-          <SocketContextProvider>
+        <LoadScript googleMapsApiKey={`${process.env.REACT_APP_MAPS_KEY}`} >
+  <SocketContextProvider>
+  <GoogleOAuthProvider clientId={clientid}>
              <App />
+  </GoogleOAuthProvider>
+
           </SocketContextProvider>
+        </LoadScript>
        </React.StrictMode>
    </Provider>
 );

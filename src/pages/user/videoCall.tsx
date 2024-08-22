@@ -11,18 +11,21 @@ import { SocketContext } from '../../context/socketContext';
 import { IconButton, TextField } from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 interface SocketContextValue {
     socket: Socket | null;
     onlineUsers: any[];
     me:any
   }
+  interface RootState{
+    auth:{
+        conversations:[]
+    }
+  }
 
 export const VideoCall = () => {
-    console.log("In vide calllllll component")
     const navigate = useNavigate()
-    // const [ me, setMe ] = useState("")
-    // console.log("me is",me)
 	const [ stream, setStream ] = useState<MediaStream | null | any>()
 	const [ receivingCall, setReceivingCall ] = useState(false)
 	const [ caller, setCaller ] = useState("")
@@ -37,33 +40,14 @@ export const VideoCall = () => {
 
     const socketContext = useContext(SocketContext); 
     const { socket,me } = socketContext as SocketContextValue; 
+    const {conversations} = useSelector((state:RootState)=>state.auth)
 
-    // useEffect(() => {
-	// 	navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
-	// 		setStream(stream)
-    //         if(myVideo.current){
-	// 			myVideo.current.srcObject = stream
-    //         }
-	// 	})
-
-	// socket?.on("me", (id) => {
-    //     console.log("id is iddddddd",id)
-	// 		setMe(id)
-	// 	})
-
-	// 	socket?.on("callUser", (data) => {
-	// 		setReceivingCall(true)
-	// 		setCaller(data.from)
-	// 		setName(data.name)
-	// 		setCallerSignal(data.signal)
-	// 	})
-	// }, [])
     useEffect(() => {
         navigator.mediaDevices.getUserMedia({ video: true, audio: true })
             .then((mediaStream: MediaStream) => {
                 setStream(mediaStream);
                 if (myVideo.current) {
-                    myVideo.current.srcObject = mediaStream; // Set the video source to the stream
+                    myVideo.current.srcObject = mediaStream; 
                 }
             })
             .catch((error) => {
@@ -119,7 +103,6 @@ export const VideoCall = () => {
     };
     
     const answerCall = () => {
-        console.log("Answering the call");
         if (!stream || !callerSignal) {
             console.error("Stream or callerSignal not available");
             return;
@@ -132,7 +115,6 @@ export const VideoCall = () => {
             stream:stream
         });
         
-        console.log("peer is",peer)
         peer.on("signal", (data: any) => {
             socket?.emit("answerCall", { signal: data, to: caller });
         });
@@ -148,142 +130,153 @@ export const VideoCall = () => {
     };
     
     const leaveCall = () => {
-        console.log("reached here")
         setCallEnded(true);
         if (connectionRef.current) {
             connectionRef.current = null;
           
         }
+        if(stream){
+            stream.getTracks().forEach((track:any )=>{
+                track.stop()
+                if(track.kind == "video"){
+                    track.enabled = false
+                }
+                if(track.kind == "audio"){
+                    track.enabled = false
+                }
+            })
+        }
     };
 
-    console.log("me is",me)
 
   return (
     <>
-    <style>
-                {`
-                    .container {
-	display: grid;
-	grid-template-columns: 10fr 4fr;
-}
+  <style>
+    {`
+      .container {
+        display: grid;
+        grid-template-columns: 1fr; /* Default to one column on small screens */
+      }
 
-.myId {
-	margin-right: 5rem;
-	border-radius: 10px;
-	background: #c9d6ff; /* fallback for old browsers */
-	background: -webkit-linear-gradient(to right, #e2e2e2, #c9d6ff); /* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(
-		to right,
-		#e2e2e2,
-		#c9d6ff
-	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      @media (min-width: 768px) {
+        .container {
+          grid-template-columns: 10fr 4fr; /* Two columns on medium and larger screens */
+        }
+      }
 
-	padding: 2rem;
-	display: grid;
-	justify-content: center;
-	align-content: center;
-}
+      .myId {
+        margin-right: 0; /* Remove margin on small screens */
+        border-radius: 10px;
+        background: #c9d6ff; /* Fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #e2e2e2, #c9d6ff); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #e2e2e2, #c9d6ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        padding: 2rem;
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        margin: 0 1rem; /* Add some margin for small screens */
+      }
 
-.call-button {
-	text-align: center;
-	margin-top: 2rem;
-}
+      .call-button {
+        text-align: center;
+        margin-top: 2rem;
+      }
 
-.video-container {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	justify-content: center;
-	align-content: center;
-	margin-top: 10rem;
-	margin-left: 10rem;
-}
+      .video-container {
+        display: grid;
+        grid-template-columns: 1fr; /* Default to one column on small screens */
+        justify-content: center;
+        align-content: center;
+        margin-top: 2rem; /* Adjust for small screens */
+      }
 
-.caller {
-	text-align: center;
-	color: #fff;
-}
+      @media (min-width: 768px) {
+        .video-container {
+          grid-template-columns: 1fr 1fr; /* Two columns on medium and larger screens */
+          margin-top: 10rem; /* Reset for larger screens */
+          margin-left: 10rem; /* Reset for larger screens */
+        }
+      }
 
-body {
-	background: #4776e6; /* fallback for old browsers */
-	background: -webkit-linear-gradient(to right, #8e54e9, #4776e6); /* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(
-		to right,
-		#8e54e9,
-		#4776e6
-	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
-                `}
-            </style>
-                        
+      .caller {
+        text-align: center;
+        color: #fff;
+      }
 
-    <div className='pt-24'>
-      
-			<h1 className='font-montserrat font-bold text-2xl' style={{ textAlign: "center", color: '#fff' }}>Let's talk</h1>
-           
-		<div className="container">
-			<div className="video-container">
-				<div className="video shadow-md">
-					{stream &&  <video playsInline muted ref={myVideo} autoPlay style={{ width: "400px" }} />}
-				</div>
-				<div className="video ps-2 shadow-md">
-					{callAccepted && !callEnded ?
-					<video playsInline ref={userVideo} autoPlay style={{ width: "400px"}} />:
-					null}
-				</div>
-			</div>
-			<div className="myId">
-                <div className='font-montserrat rounded-lg'>
-                <TextField
-					id="filled-basic"
-					label="Name"
-					variant="filled"
-					value={name}
-					onChange={(e) => setName(e.target.value)}
-					style={{ marginBottom: "20px" }}
-                    className='text-black font-montserrat'
-				/>
-                </div>
-                <div  style={{ marginBottom: "2rem" }}>
-				<CopyToClipboard text={me}>
-					<Button variant="contained" color="primary" startIcon={<AssignmentIcon fontSize="large" />}>
-						Copy ID
-					</Button>
-				</CopyToClipboard>
-                </div>
-				<TextField
-					id="filled-basic"
-					label="ID to call"
-					variant="filled"
-					value={idToCall}
-					onChange={(e) => setIdToCall(e.target.value)}
-				/>
-				<div className="call-button">
-					{callAccepted && !callEnded ? (
-						<Button variant="contained" color="secondary" onClick={leaveCall}>
-							End Call
-						</Button>
-					) : (
-						<IconButton aria-label="call" onClick={() => callUser(idToCall)}>
-                            <i className ="fi fi-rr-video-camera-alt text-blue-500"></i>
-						</IconButton>
-                        
-					)}
-					{idToCall}
-				</div>
-			</div>
-			<div>
-				{receivingCall && !callAccepted ? (
-						<div className="caller">
-						<h1 >{name} is calling...</h1>
-						<Button variant="contained" color="primary" onClick={answerCall}>
-							Answer
-						</Button>
-					</div>
-				) : null}
-			</div>
-		</div>
+      body {
+        background: #4776e6; /* Fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #8e54e9, #4776e6); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #8e54e9, #4776e6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      }
+    `}
+  </style>
+
+  <div className='pt-24'>
+    <h1 className='font-montserrat font-bold text-2xl text-center text-white'>Let's talk</h1>
+    <div className="container">
+      <div className="video-container">
+        <div className="video shadow-md">
+          {stream && <video playsInline muted ref={myVideo} autoPlay style={{ width: "100%", maxWidth: "400px" }} />}
         </div>
-		</>
+        <div className="video ps-2 shadow-md">
+          {callAccepted && !callEnded ? (
+            <video playsInline ref={userVideo} autoPlay style={{ width: "100%", maxWidth: "400px" }} />
+          ) : null}
+        </div>
+      </div>
+      <div className="myId">
+        <div className='font-montserrat rounded-lg'>
+          <TextField
+            id="filled-basic"
+            label="Name"
+            variant="filled"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            style={{ marginBottom: "20px" }}
+            className='text-black font-montserrat'
+          />
+        </div>
+        <div style={{ marginBottom: "2rem" }}>
+          <CopyToClipboard text={me}>
+            <Button variant="contained" color="primary" startIcon={<AssignmentIcon fontSize="large" />}>
+              Copy ID
+            </Button>
+          </CopyToClipboard>
+        </div>
+        <TextField
+          id="filled-basic"
+          label="ID to call"
+          variant="filled"
+          value={idToCall}
+          onChange={(e) => setIdToCall(e.target.value)}
+        />
+        <div className="call-button">
+          {callAccepted && !callEnded ? (
+            <Button variant="contained" color="secondary" onClick={leaveCall}>
+              End Call
+            </Button>
+          ) : (
+            <IconButton aria-label="call" onClick={() => callUser(idToCall)}>
+              <i className="fi fi-rr-video-camera-alt text-blue-500"></i>
+            </IconButton>
+          )}
+          {idToCall}
+        </div>
+      </div>
+      <div>
+        {receivingCall && !callAccepted ? (
+          <div className="caller">
+            <h1>{name} is calling...</h1>
+            <Button variant="contained" color="primary" onClick={answerCall}>
+              Answer
+            </Button>
+          </div>
+        ) : null}
+      </div>
+    </div>
+  </div>
+</>
+
 
   )
 }

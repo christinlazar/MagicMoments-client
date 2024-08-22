@@ -21,7 +21,21 @@ const userRoutes = {
     bringVideos:'/user/bringVideos',
     getVendorChat:'/chat/getvendorChat',
     sendMessage:'/chat/sendMessage',
-    sendVideoMessageReq:'/chat/videoChatRequest'
+    sendVideoMessageReq:'/chat/videoChatRequest',
+    sendReview:'/user/submitReview',
+    getreviews:'/user/getReviews',
+    searchForVendor:'/user/searchVendor',
+    fetchplaces:'/user/fetchplaces',
+    addToWishlist:'/user/addtoWishlist',
+    getUserdata:'/user/getuserData',
+    getWishListData:'/user/wishlist',
+    removeFromWishlist:'/user/removefromwishlist',
+    editreview:'/user/editReview',
+    searchByCompanyName:'/user/searchByCompany',
+    sortbydate:'/user/sortbydate',
+    filterbyprice:'/user/filterbyprice',
+    gSignup:'/user/gSignup',
+    cancelbooking:'/user/bookingCancel',
 }
 
 export default userRoutes 

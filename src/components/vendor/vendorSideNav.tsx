@@ -45,7 +45,7 @@ const VendorSidebar = () => {
           <ul className="space-y-2 font-medium">
           <li>
               <Link to='/vendor/vendorStore'
-                className="flex items-center p-2 text-gray-900 hover:text-purple-500  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 text-gray-900 hover:text-cyan-950  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-apps mt-3"></i>
                 <span className="ms-3 font-serif mt-2 font-bold text-sm">Business Details</span>
@@ -53,7 +53,7 @@ const VendorSidebar = () => {
           </li>
           <li>
               <Link to='/vendor/services'
-                className="flex items-center p-2 text-gray-900 hover:text-purple-500  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 text-gray-900 hover:text-cyan-950  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                <i className="fi fi-rr-mailbox mt-3"></i>
                 <span className="ms-3 font-serif mt-2 font-bold text-sm">Services</span>
@@ -62,16 +62,16 @@ const VendorSidebar = () => {
             <li>
               <Link to='/vendor/eventBookings'
           
-                className="flex items-center p-2 text-gray-900 hover:text-purple-500  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 text-gray-900 hover:text-cyan-950  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className ="fi fi-rr-calendar-day mt-3"></i>
                 <span className="ms-3 font-serif mt-2 font-bold text-sm">Event Bookings</span>
               </Link>
             </li>
             <li>
-              <Link to='/vendor/locationAndMap'
+              <Link to='/vendor/addlocation'
           
-                className="flex items-center p-2 text-gray-900 hover:text-purple-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 text-gray-900 hover:text-cyan-950 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-marker mt-3"></i>
                 <span className="ms-3 font-serif mt-2 font-bold text-sm ">Location & map</span>
@@ -80,7 +80,7 @@ const VendorSidebar = () => {
             <li>
               <Link
              to='/vendor/addPhotos'
-                className="flex items-center p-2 text-gray-900 hover:text-purple-500  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 text-gray-900 hover:text-cyan-950  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className ="fi fi-rr-images"></i>
                 <span className="flex-1 ms-3 whitespace-nowrap font-serif font-bold text-sm">Photos</span>
@@ -89,7 +89,7 @@ const VendorSidebar = () => {
             <li>
               <Link to='/vendor/addVideos'
            
-                className="flex items-center p-2 text-gray-900 hover:text-purple-500  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 text-gray-900 hover:text-cyan-950  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                <i className ="fi fi-rr-video-camera-alt"></i>
                 <span className="flex-1 ms-3 whitespace-nowrap font-serif font-bold text-sm">Videos</span>
@@ -98,7 +98,7 @@ const VendorSidebar = () => {
             <li>
               <Link
                 to="/vendor/dateAvailability"
-                className="flex items-center p-2 text-gray-900 hover:text-purple-500  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 text-gray-900 hover:text-cyan-950  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-calendar-days mt-1"></i>
                 <span className="flex-1 ms-3 whitespace-nowrap font-serif font-bold text-sm"> Add Availablity</span>
@@ -107,7 +107,7 @@ const VendorSidebar = () => {
             <li>
               <button
             //  to=""
-                className="flex items-center p-2 text-gray-900 hover:text-purple-500 font-bold  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 text-gray-900 hover:text-cyan-950 font-bold  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-sign-out-alt mt-1"></i>
                 <span onClick={()=>dispatch(vendorLogOut())} className="flex-1 ms-3 whitespace-nowrap font-serif text-sm">Logout</span>

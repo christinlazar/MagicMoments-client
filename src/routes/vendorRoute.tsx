@@ -20,6 +20,10 @@ import Services from "../pages/vendor/services";
 import VendorChat from "../pages/vendor/VendorChat";
 import SingleVendorChat from "../pages/vendor/singleVendorChat";
 import { VendorVideoCall } from "../pages/vendor/vendorVideoCall";
+import AddLocation from "../pages/vendor/addLocation";
+import PaymentDetialsVendor from "../pages/vendor/paymentDetials";
+import FourNotFourVendor from "../pages/vendor/404Vendor";
+import EditDetails from "../pages/vendor/EditDetails";
 const VendorRoutes = () =>{
     const dispatch = useDispatch()
     useEffect(()=>{
@@ -48,7 +52,11 @@ const VendorRoutes = () =>{
                     <Route path='/vendorChat' element={<VendorChat/>}/>
                     <Route path='/vendorSingleChat' element={<SingleVendorChat/>}/>
                     <Route path='/vendorVideoCall' element={<VendorVideoCall/>}/>
+                    <Route path='/addlocation' element={<AddLocation/>}/>
+                    <Route path='/paymentDetials' element={<PaymentDetialsVendor/>}/>
+                    <Route path='/editDetails' element={<EditDetails/>}/>
             </Route>
+            <Route path="*" element={<FourNotFourVendor/>}/>
         </Routes>
         </>
     )

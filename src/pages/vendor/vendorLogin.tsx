@@ -41,6 +41,9 @@ function VendorLogin() {
           setEmail("")
           setPassword("")
           const result = await vendorLogin(email,password)
+          if(result?.data.message2){
+            toast.error(result?.data.message2)
+          }
           if(result?.data.accepted  == false){
             console.log("came back here")
                 toast.error("The request has'nt been accepted yet")
@@ -51,8 +54,9 @@ function VendorLogin() {
              dispatch(setVendorCredentials(result.data.accessToken))
              navigate('/vendor/vendorStore',{state:{success:true}})
           }
-        } catch (error) {
-          console.log(error)
+        } catch (error:any) {
+          console.error(error.message)
+
         }
     }
 
@@ -71,32 +75,55 @@ function VendorLogin() {
     }
   return (
     <div className="flex h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style={{ backgroundImage: `url(${RegisterImage})` }}>
-    {/* <ToastContainer className='Toastify__toast-container--top-right'/> */}
   <Toaster richColors position="bottom-right" />
 
-  <div  style={{display:'block'}} className="rounded-xl bg-white bg-opacity-20 m-20 my-12 px-16 py-30 shadow-lg backdrop-blur-[2px] max-sm:px-4" >
-  <div className="text-white" >
-    <div className="mb-2 flex flex-col items-center">
-      <img className='my-4' src={logo} width="50" alt="Magic moments Logo"/>
-      <h1 className="mb-2 text-2xl">Magic Moments</h1>
+  <div className="rounded-xl  bg-white bg-opacity-20 m-4 sm:m-10 md:m-20 my-12 px-6 sm:px-16 py-10 shadow-xl backdrop-blur-[2px] max-w-md w-full">
+    <div className="text-white">
+      <div className="mb-2 flex flex-col items-center">
+        <img className='my-4' src={logo} width="50" alt="Magic Moments Logo" />
+        <h1 className="mb-2 text-2xl text-cyan-950 font-bold font-serif">Magic Moments</h1>
+      </div>
+      <form onSubmit={handleSubmit} id='form'>
+        <label className='font-serif text-cyan-950 font-bold'>Email</label>
+        <div className="mb-4 text-lg">
+          <input 
+            onBlur={showError1} 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)}  
+            className="bg-white bg-opacity-10 font-serif placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
+            type="text" 
+            name="email" 
+            placeholder="Enter your email" 
+          />
+        </div>
+        <label className='font-serif text-cyan-950 font-bold'>Password</label>
+        <div className="mb-4 text-lg">
+          <input 
+            onBlur={showError2} 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            className="bg-white  bg-opacity-10 font-serif placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
+            type="password" 
+            name="password" 
+            placeholder="Enter your password" 
+          />
+        </div>
+        <div className="mt-8 flex flex-col items-center text-lg text-black">
+          <button 
+            type="submit" 
+            className="rounded-3xl font-serif bg-cyan-950 bg-opacity-100 px-10 py-2 mb-4 text-white shadow-xl backdrop-blur-md transition-colors duration-300 transform hover:scale-105 hover:transition ease-out duration-300 "
+          >
+            Signin
+          </button>
+          <Link to='/vendor' className='mt-2 text-gray-900 font-serif text-sm hover:text-cyan-950'>
+            Register
+          </Link>  
+        </div>
+      </form>
     </div>
-    <form  onSubmit={handleSubmit} id='form' >
-      <label className='font-serif'>Email</label>
-      <div className="mb-4 text-lg">
-        <input onBlur={showError1} value={email} onChange={(e)=>setEmail(e.target.value)}  className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm" type="text" name="email"  />
-      </div>
-      <label className='font-serif'>Password</label>
-      <div className="mb-4 text-lg">
-        <input  onBlur={showError2}  value={password} onChange={(e)=>setPassword(e.target.value)} className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm" type="password" name="password" />
-      </div>
-      <div className="mt-8 flex justify-center text-lg text-black">
-        <button type="submit" className="rounded-3xl bg-red-600 bg-opacity-100 px-10 py-2 mb-10 text-white shadow-xl backdrop-blur-md transition-colors duration-300 transform hover:scale-105 hover:transition ease-out duration-300 font-serif">sign in</button>
-      <Link to='/vendor' className='mt-3 ms-2 text-gray-900 font-serif text-sm hover:text-red-500'>Register</Link>  
-      </div>
-    </form>
   </div>
 </div>
-</div>
+
   )
 }
 

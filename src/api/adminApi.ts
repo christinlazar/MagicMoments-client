@@ -11,26 +11,26 @@ interface RootState{
 }
 
 export const adminLogin = async (email:string,password:string) =>{
-    console.log("inside admin login client side")
+   
 try {
     const res = await Api.post(adminRoutes.adminlogin,{email,password})
     if(res.data.success){
         localStorage.setItem('adminAccessToken',JSON.stringify(res.data.accessToken))
     }
     return res
-} catch (error) {
-    console.log(error)
+} catch (error:any) {
+    console.error(error)
 }
 }
 
 export const bringUsers = async() =>{
     try {
-        console.log("getting in bringUsers")
+      
         const users = await Api.get(adminRoutes.bringUsers)
-        console.log("users is",users)
+       
         return users
-    } catch (error) {
-        
+    } catch (error:any) {
+        console.error(error)
     }
 }
 
@@ -42,30 +42,30 @@ export const BlockUser = async (userId:string) =>{
             localStorage.removeItem('accessToken')
             return blocked
         }
-    } catch (error) {
-        console.log(error)
+    } catch (error:any) {
+        console.error(error)
     }
 }
 
 export const unblockUser = async(userId:string) =>{
     try {
         const unblocked = await Api.post(adminRoutes.unblockUser,{userId})
-        console.log(unblocked)
+        
         if(unblocked.data.success){
             return unblocked
         }
-    } catch (error) {
-        console.log(error)
+    } catch (error:any) {
+        console.error(error)
     }
 }
 export const bringVendors = async () =>{
     try {
-        console.log("bring vendors");
+     
         
         const res = await Api.get(adminRoutes.bringVendors)
        return res
-    } catch (error) {
-        
+    } catch (error:any) {
+        console.error(error)
     }
 }
 
@@ -75,30 +75,30 @@ export const blockVendor = async(vendorId:string) =>{
         if(res.data.success){
             return res
         }
-        console.log(res)
+     
         return res
-    } catch (error) {
-        
+    } catch (error:any) {
+        console.error(error)
     }
 }
 
 export const unblockVendor = async(vendorId:string)=>{
     try {
         const res = await Api.post(adminRoutes.unblockvendor,{vendorId})
-        console.log(res)
+      
         return res
-    } catch (error) {
-        
+    } catch (error:any) {
+        console.error(error)
     }
 }
 
 export const acceptVendorReq = async(vendorId:string)=>{
     try {
-        console.log("going to accept req from client side")
+       
         const res = await Api.post(adminRoutes.acceptRequest,{vendorId})
         return res
-    } catch (error) {
-        
+    } catch (error:any) {
+        console.error(error)
     }
 }
 
@@ -106,7 +106,64 @@ export const rejectVendorReq = async(vendorId:string)=>{
         try {
             const res = Api.post(adminRoutes.rejectRequest,{vendorId})
             return res
-        } catch (error) {
+        } catch (error:any) {
             console.error(error)
         }
 }
+
+export const monthlyBooking = async () =>{
+    try {
+      
+        const result = await Api.get(adminRoutes.getMonthlyBooking)
+        return result
+    } catch (error:any) {
+        console.error(error)
+    }
+}
+
+export const  getUsersVendors = async () =>{
+    try {
+        const result = await Api.get(adminRoutes.getUsersVendors)
+        return result
+    } catch (error:any) {
+        console.error(error)
+    }
+}
+
+export const yearlyBooking = async () =>{
+    try {
+        const result = await Api.get(adminRoutes.getYearlyBooking)
+        return result
+    } catch (error:any) {
+        console.error(error)
+    }
+}
+
+export const weeklyBooking = async () =>{
+    try {
+        const result = await Api.get(adminRoutes.getWeeklyBooking)
+        return result
+    } catch (error:any) {
+        console.error(error)
+    }
+}
+
+export const fetchbookings = async () =>{
+    try {
+        const result = await Api.get(adminRoutes.getBookings)
+        return result
+    } catch (error:any) {
+        console.error(error)
+    }
+}
+
+export const bringFilteredData = async (startDate:string,endDate:string) =>{
+    try {
+        const result = await Api.post(adminRoutes.sortByDate,{startDate,endDate})
+        return result
+    } catch (error:any) {
+       console.error(error)
+    }
+}
+
+

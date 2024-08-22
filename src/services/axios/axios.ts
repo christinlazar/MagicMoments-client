@@ -42,6 +42,9 @@ Api.interceptors.response.use(
         console.log("org for",originalRequest._retry)
         console.log("error config",error.config)
         console.log("error is",error)
+        // if(error.response.data.refresh == false){
+        //     return
+        // }
         // console.log("originalRequestForVendor",originalRequestForVendor)
         if(error.response.status == 401 && error.response.data.role == 'user' && !originalRequest._retry){
             originalRequest._retry = true
@@ -52,7 +55,7 @@ Api.interceptors.response.use(
                 localStorage.setItem('accessToken',response.data.accessToken);
                 Api.defaults.headers.common['Authorization'] = `Bearer ` + response.data.accessToken
                 return Api(originalRequest)
-            }else if(!response.data.refresh && response.data.role == 'user'){
+            }else if(!response.data.refresh && response.data.role == 'user' ){
                  alert("Session has been expired, please login again")
                  localStorage.removeItem('userInfo')
                  localStorage.removeItem('accessToken')

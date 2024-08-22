@@ -8,6 +8,9 @@ import AdminSidebar from "../components/admin/adminSideNav"
 import AdminDashBoard from "../pages/admin/AdminDashBoard"
 import Vendors from "../pages/admin/Vendors"
 import Requests from "../pages/admin/Requests"
+import FourNotFourAdmin from "../pages/admin/404Admin"
+import Bookings from "../pages/admin/Bookings"
+
 const AdminRoute = () =>{
     return(
         <>
@@ -20,7 +23,9 @@ const AdminRoute = () =>{
                 <Route path='/dashboard' element={<AdminDashBoard/>}/>
                 <Route path='/vendors' element={<Vendors/>}/>
                 <Route path='/requests' element={<Requests/>}/>
+                <Route path='/bookings' element={<Bookings/>}/>
             </Route>
+            <Route path="*" element={<FourNotFourAdmin/>}/>
             </Routes>
         </>
     )

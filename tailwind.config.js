@@ -10,13 +10,15 @@ module.exports = {
         montserrat:['Montserrat', 'sans-serif'],
       },
       colors:{
-       'custom-green':'#b1d8d9'
+       'custom-green':'#b1d8d9',
       }
     },
+
   },
   plugins: [
     require('@tailwindcss/aspect-ratio'),
     require('daisyui'),
+    require('tailwind-scrollbar')({nocompatible:true},{ preferredStrategy: 'pseudoelements' }),
   ],
 }
 

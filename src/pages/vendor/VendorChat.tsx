@@ -12,15 +12,12 @@ const navigate = useNavigate()
         let isMounted = true
         async function bringChats(){
             const response = await bringchats()
-            console.log("r is",response?.data.result.conversations)
+         
             if(isMounted){
-              console.log("isMounted")
             setConversations(response?.data.result.conversations)
             setUsers(response?.data.result.users)
             const lm = messages?.map((m:any)=>m[m.length-1]?.message)
-              // if(lm[0] == undefined){
-              //   toast.warning("you haven't recived a message yet")
-              // }
+            
             }
            
         }
@@ -29,8 +26,6 @@ const navigate = useNavigate()
             isMounted = false
         }
     },[])
-
-    console.log("conversations",conversations)
     
     let messages = conversations.map((conv:any)=>conv?.messages)
 
@@ -70,9 +65,9 @@ const navigate = useNavigate()
                     </div>
                   </td>
                   <div className='border flex justify-between pe-10'>
-                  <td className="px-2  py-5 text-md font-montserrat text-sm text-gray-600">{latestMessages[index]}...</td>
-                  <div className='flex flex-col justify-center items-center'>
-                  <i className="fi fi-rr-messages  pt-5 text-md text-gray-700 hover:cursor-pointer"></i>
+                  <td className="px-2  mt-14 md:py-5 text-md font-montserrat text-sm text-gray-600">{latestMessages[index]}...</td>
+                  <div className='flex  flex-col justify-center items-center'>
+                  <i className="fi fi-rr-messages   pt-5 text-md text-gray-700 hover:cursor-pointer"></i>
                   <span onClick={()=>navigate('/vendor/vendorSingleChat',{state:{userId:u._id,userName:u.name}})} className='text-xs mb-2 hover:cursor-pointer'>Go to messages</span>
                   </div>
                   </div>
@@ -82,7 +77,6 @@ const navigate = useNavigate()
                 ):(
                   
                   <div className='flex justify-center'>
-                    {/* <span className='text-red-700 font-montserrat'>You havent'received a message yet</span> */}
                   </div>
                 )
                 }
