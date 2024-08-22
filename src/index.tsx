@@ -19,12 +19,13 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+const clientid:any = process.env.REACT_APP_CLIENT_ID
 root.render(
   <Provider store={store}>
         <React.StrictMode>
         <LoadScript googleMapsApiKey={`${process.env.REACT_APP_MAPS_KEY}`} >
   <SocketContextProvider>
-  <GoogleOAuthProvider clientId='497491388921-al3gve5htq5eud8mod07j6tol11mrcvg.apps.googleusercontent.com'>
+  <GoogleOAuthProvider clientId={clientid}>
              <App />
   </GoogleOAuthProvider>
 
