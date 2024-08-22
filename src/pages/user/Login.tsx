@@ -17,7 +17,6 @@ function Login() {
         // toast.success("User registration has been completed successfully")
       }
       return ()=> state
-      
     },[location])
     const [email,setEmail] = useState<string>('')
     const [password,setPassword] = useState<string>('')
@@ -65,6 +64,8 @@ function Login() {
         toast.error('Password field cant be empty')
       }
     }
+    console.log("hiiiii")
+
 
   return (
     <div className="flex h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style={{ backgroundImage: `url(${RegisterImage})` }}>
