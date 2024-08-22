@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { addLongLang } from '../../api/vendorApi';
 import { Toaster,toast } from 'sonner';
+import useListenMessages from '../../hooks/useListenMessages';
 
 function AddLocation() {
 
 
     const [markerLocation, setMarkerLocation] = useState<google.maps.LatLngLiteral | null>(null);
-
+    useListenMessages()
 
     const mapStyles = {
         height: "65vh",
@@ -42,7 +43,7 @@ function AddLocation() {
         }
     }
 
-    console.log("marker location is",markerLocation)
+  
     const gooleMapsApi_Key:string  = process.env.GOOGLE_MAP_API_KEY as string
     return (
         <form onSubmit={lanLonSubmit}>

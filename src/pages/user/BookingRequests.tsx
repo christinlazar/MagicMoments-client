@@ -28,7 +28,6 @@ function BookingRequests() {
     useEffect(()=>{
         const fetchBookingData = async () =>{
         const response =  await fetchBookingRequests()
-        console.log("bkngsssss is",response?.data.bookingReqs)
         if(response?.data.bookingReqs){
             setBookingReqs(response.data.bookingReqs)
         }
@@ -42,12 +41,9 @@ function BookingRequests() {
 
     const cancelRequest = async(bookingID:string)=>{
         const response = await cancelBookingRequest(bookingID)
-        console.log(response)
         if(response?.data.success){
             toast.success("Your booking request has been cancelled")
-            // setTimeout(()=>{
             setReload(true)
-            // },2000)
         }
     }
 
@@ -57,10 +53,7 @@ function BookingRequests() {
     const currRequests = bookingsReqs?.slice(indexOfFirstReq,indexOfLastReq)
 
     const handlePageChange = (pageNumber:number)=>{
-      console.log(pageNumber)
-      console.log("gggg",Math.floor(bookingsReqs.length/reqPerPage))
       if(pageNumber > Math.ceil(bookingsReqs.length/reqPerPage)){
-        console.log("inthisss")
         return
       }
       setCurrentpage(pageNumber)

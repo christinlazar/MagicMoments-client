@@ -34,9 +34,8 @@ const [pageRange, setPageRange] = useState([1,2,3])
         if(userData?.data.userData){
            await setUsers(userData?.data.userData)
         }
-        console.log("usd is",userData)
-      } catch (error) {
-        console.error('error during fetching data',error)
+      } catch (error:any) {
+        console.error(error)
       }finally{
         setIsLodaing(false)
       }
@@ -46,7 +45,6 @@ const [pageRange, setPageRange] = useState([1,2,3])
   const {userInfo} = useSelector((state:RootState)=>state.auth)
   const unBlockUser = async (userId:string | undefined) =>{
         const res = await unblockUser(userId as string)
-        console.log(res)
         if(res?.data.message){
           await setUsers(prevUsers => prevUsers.map(user=>user._id == userId ?{...user,isBlocked:false}:user))
           toast.success('User has been unblocked')
@@ -55,7 +53,6 @@ const [pageRange, setPageRange] = useState([1,2,3])
    
   const blockUser = async (userId:string | undefined) =>{
       const res = await BlockUser(userId as string)
-      console.log("result isssss",res)
       if(res?.data.success){
         localStorage.removeItem('userInfo')
          setUsers(prevUsers => prevUsers.map(user=>user._id == userId ?{...user,isBlocked:true}:user))
@@ -73,10 +70,7 @@ const [pageRange, setPageRange] = useState([1,2,3])
   const currUsers = users.slice(indexOfFirstReq,indexOfLastReq)
 
   const handlePageChange = (pageNumber:number) =>{
-    console.log(pageNumber)
-    console.log("gggg",Math.floor(users.length/userPerPage))
     if(pageNumber > Math.ceil(users.length/userPerPage)){
-      console.log("inthisss")
       return
     }
     setCurrentpage(pageNumber)

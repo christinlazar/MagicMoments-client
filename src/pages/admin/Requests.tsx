@@ -37,8 +37,8 @@ function Vendors() {
   
              setRequests(vendorReqs.filter((prevreq:any)=>prevreq.isAccepted == AcceptanceStatus.Requested))
             }
-            console.log("usd is",vendorData)
-          } catch (error) {
+           
+          } catch (error:any) {
             console.error('error during fetching data',error)
           }finally{
             setIsLodaing(false)
@@ -67,8 +67,9 @@ function Vendors() {
               toast.error("Request has been rejected")
             setRejectReq(true)
           }
-        } catch (error) {
-          console.error(error)
+        } catch (error:any) {
+          console.error(error.message)
+
         }
       }
 
@@ -78,10 +79,7 @@ function Vendors() {
       const currReqs = requests.slice(indexOfFirstReq,indexOfLastReq)
 
       const handlePageChange = (pageNumber:number) =>{
-        console.log(pageNumber)
-        console.log("gggg",Math.floor(requests.length/reqPerPage))
         if(pageNumber > Math.ceil(requests.length/reqPerPage)){
-          console.log("inthisss")
           return
         }
         setCurrentpage(pageNumber)

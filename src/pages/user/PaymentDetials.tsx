@@ -27,7 +27,6 @@ function PaymentDetials() {
     useEffect(()=>{
         const fetchBookingData = async () =>{
         const response =  await fetchBookingDetials()
-        console.log("bkngs is",response?.data.bookings)
         if(response?.data.bookings){
             setBookings(response.data.bookings)
         }
@@ -41,10 +40,7 @@ function PaymentDetials() {
     const currDetials = bookings?.slice(firstIndexOfdetials,lastIndexOfdetials)
 
     const handlePageChange = (pageNumber:number) =>{
-      console.log(pageNumber)
-      console.log("gggg",Math.floor(bookings?.length/detailsPerPage))
       if(pageNumber > Math.ceil(bookings.length/detailsPerPage)){
-        console.log("inthisss")
         return
       }
       setCurrentpage(pageNumber)
@@ -83,20 +79,15 @@ function PaymentDetials() {
     <tbody className="bg-white divide-y divide-gray-200">
       {currDetials && currDetials.map((booking:any, index) => (
         <tr key={index}>
-          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-montserrat">{booking._id.split('').reverse().join('')}</td>
+          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-montserrat">{booking.bookingId.split('-')[1]}</td>
           <td className="px-6 py-4 whitespace-nowrap">
             <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
               {booking.paymentStatus}
             </span>
           </td>
-          {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{booking.noOfDays}</td>
-          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{booking.startingDate}</td> */}
           <td className="px-6 py-4 whitespace-nowrap text-sm font-bold font-montserrat text-gray-500">{booking.vendorId.companyName}</td>
           <td className="px-6 py-4 whitespace-nowrap text-sm font-bold font-montserrat text-gray-500">Rs.{booking.amountPaid}</td>
           <td className="px-6 py-4 whitespace-nowrap">
-            {/* <button className="inline-block rounded bg-cyan-950 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700">
-              Cancel
-            </button> */}
           </td>
         </tr>
       ))}

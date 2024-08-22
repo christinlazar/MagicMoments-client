@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Toaster,toast } from 'sonner'
 import SideBar from '../../components/user/SideBar'
-import { fetchBookingDetials } from '../../api/userApi'
+import { cancelBooking, fetchBookingDetials, searchCompany, sortbyDate } from '../../api/userApi'
 import useListenMessages from '../../hooks/useListenMessages';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/Store';
+import { createPortal } from 'react-dom';
 export enum PaymentStatus {
     Pending = 'pending',
     Completed = 'completed'
@@ -24,27 +27,33 @@ function BookingDetials() {
     const [bookings,setBookings] = useState<bookingInt[] >([])
     const [pageRange,setPageRange] = useState<number[]>([1,2,3])
     const [currentPage,setCurrentpage] = useState<number>(1)
+    const [companyName,setCompanyName] = useState<string>('')
+    const [startDate,setStartDate] = useState<string>('')
+    const [endDate,setEndDate] = useState<string>('')
+    const [refresh,setRefresh] = useState(false)
+    const [isUploading,setIsUploading] = useState<boolean>(false)
+    const [isOverlayVisible,setIsOverlayVisisble] = useState<boolean>(false)
+    const userInfo = useSelector((state:RootState)=>state.auth.userInfo)
     useEffect(()=>{
         const fetchBookingData = async () =>{
         const response =  await fetchBookingDetials()
-        console.log("bkngs is",response?.data.bookings)
         if(response?.data.bookings){
             setBookings(response.data.bookings)
         }
         }
         fetchBookingData()
-    },[])
+        return () =>{
+            setRefresh(false)
+        }
+    },[refresh])
 
-    const bookingPerPage = 10
+    const bookingPerPage = 2
     const lastBooking = currentPage * bookingPerPage
     const firstBooking = lastBooking - bookingPerPage
     const currBookings = bookings?.slice(firstBooking,lastBooking)
 
     const handlePageChange = (pageNumber:number) =>{
-        console.log(pageNumber)
-        console.log("gggg",Math.floor(bookings.length/bookingPerPage))
         if(pageNumber > Math.ceil(bookings.length/bookingPerPage)){
-          console.log("inthisss")
           return
         }
         setCurrentpage(pageNumber)
@@ -60,13 +69,81 @@ function BookingDetials() {
           return 
         }
     }
+
+    const handleCompanySearch = async (e:React.FormEvent<HTMLFormElement>) =>{
+        e.preventDefault()
+        const response = await searchCompany(companyName)
+        if(response?.data.bookings.length > 0 ){
+                setBookings(response?.data.bookings)
+        }else{
+            return toast.error("No such booking exists")
+        }
+      
+    }
+
+    const handleDateSort = async (e:React.FormEvent<HTMLFormElement>) =>{
+        e.preventDefault()
+        const response = await sortbyDate(startDate,endDate)
+        if(response?.data.bookings){
+            setBookings(response.data.bookings)
+        }
+    }
+
+    const handleCancelBooking = async (bookingId:string) => {
+        console.log("in hanldeCancel")
+        setIsUploading(true)
+        setIsOverlayVisisble(true)
+        const response = await cancelBooking(bookingId)
+       
+        if(response?.data.cancelled){
+            setRefresh(true)
+            setIsUploading(false)
+            setIsOverlayVisisble(false)
+            toast.success("Booking has been cancelled successfully")
+        }
+    }
+
   return (
-    <div className="flex ps-12">
+<div className="flex flex-col md:flex-row ps-4 md:ps-12">
     <Toaster richColors position="bottom-right" />
-    <div className='mt-20 hidden md:block'>
-        <SideBar />
-    </div>
-    <div className="overflow-x-auto mt-5 pt-20 w-full">
+        <div className='mt-10 md:mt-20 hidden md:block'>
+            <SideBar />
+        </div>
+    {isOverlayVisible && (
+        <div className="absolute inset-0 bg-white opacity-80 z-20"></div>
+      )}
+    <div className="overflow-x-auto mt-5 pt-10 md:pt-20 w-full">
+        <div className='flex flex-col md:flex-row justify-between pe-4 md:pe-10'>
+            <div className='mb-4 md:mb-0'>
+                <form onSubmit={handleCompanySearch}>
+                    <div className='flex flex-col md:flex-row items-center h-24'>
+                        <div className='flex flex-col pb-4 md:pb-10'>
+                            <label className='text-sm font-bold text-cyan-950 pb-2'>Company name</label> 
+                            <input value={companyName} onChange={(e)=>setCompanyName(e.target.value)} type='text' placeholder='search the company' className='h-8 w-full md:w-56 focus:outline-none rounded-xl font-montserrat text-start ps-2 text-xs border border-gray-500'/>
+                        </div>
+                        <button type='submit' className='md:ms-4'>
+                            <i className="fi fi-rr-search text-2xl text-cyan-950 hover:cursor-pointer"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div className=''>
+                <form onSubmit={handleDateSort}>
+                    <div className='flex flex-col md:flex-row mb-4 md:mb-10 ms-0 md:ms-10'>
+                        <div className='flex flex-col items-center justify-center mb-4 md:mb-0'>
+                            <label className='text-sm font-bold font-montserrat p-2 text-cyan-950'>Start Date</label>
+                            <input onChange={(e)=>setStartDate(e.target.value)} value={startDate} type='date' className='border rounded-full text-center text-xs border-gray-400'/>
+                        </div>
+                        <div className='flex flex-col items-center justify-center md:ps-20'>
+                            <label className='text-sm font-bold font-montserrat p-2 text-cyan-950'>End Date</label>
+                            <input onChange={(e)=>setEndDate(e.target.value)} value={endDate} type='date' className='border rounded-full text-center text-xs border-gray-400'/>
+                        </div>
+                        <button type='submit' className='rounded-full h-8 md:w-24 font-montserrat bg-cyan-950 text-white text-xs mt-4  md:mt-9 md:ms-10'>Filter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div className='font-montserrat font-bold text-cyan-800 ps-4 pb-4'>Booking Details</div>
         <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200 hidden md:table">
@@ -78,12 +155,13 @@ function BookingDetials() {
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Starting Date</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company Name</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount Paid</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cancel Booking</th>
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                     {currBookings && currBookings.map((booking:any,index) => (
                         <tr key={index}>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-montserrat">{booking._id}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 font-montserrat">{booking?.bookingId.split('-')[0]}</td>
                             <td className="px-6 py-4 whitespace-nowrap">
                                 <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                     {booking.paymentStatus}
@@ -93,13 +171,22 @@ function BookingDetials() {
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{booking.startingDate}</td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-bold font-montserrat text-gray-500">{booking.vendorId.companyName}</td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-bold font-montserrat text-gray-500">Rs.{booking.amountPaid}</td>
+                            <td>
+                            <span
+                            onClick={()=>handleCancelBooking(booking._id)}
+                                className="rounded bg-cyan-950 px-6 py-2 mt-2 hover:cursor-pointer text-xs text-white shadow transition duration-150 ease-in-out hover:bg-cyan-950 focus:bg-cyan-950 focus:outline-none active:bg-cyan-950"
+                            >
+                                Cancel
+                            </span>
+                            </td>
+                         
                         </tr>
                     ))}
                 </tbody>
             </table>
 
             {/* Responsive Layout */}
-            <div className="md:hidden me-6 shadow-md shadow-slate-800 rounded-lg">
+            <div className="md:hidden me-4 shadow-md shadow-slate-800 rounded-lg">
                 {currBookings && currBookings.map((booking:any, index) => (
                     <div key={index} className="border border-gray-200 rounded-md mb-4 p-4">
                         <div className="flex flex-col p-2">
@@ -127,11 +214,15 @@ function BookingDetials() {
                                 <span className="font-bold w-32">Amount Paid:</span>
                                 <span className="text-gray-700 ms-5">Rs.{booking.amountPaid}</span>
                             </div>
-                            {/* <div className="mt-4 mb-10">
-                                <button className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none active:bg-primary-700">
-                                    Cancel
-                                </button>
-                            </div> */}
+                            <div className="flex items-center mb-2">
+                                <span className="font-bold w-32">Cancel</span>
+                                <button
+                                 onClick={()=>handleCancelBooking(booking._id)}
+                                className="rounded bg-cyan-950 px-6 py-2 mt-2 text-xs text-white shadow transition duration-150 ease-in-out hover:bg-cyan-950 focus:bg-cyan-950 focus:outline-none active:bg-cyan-950"
+                            >
+                                Cancel
+                            </button>
+                            </div>
                         </div>
                     </div>
                 ))}
@@ -169,7 +260,17 @@ function BookingDetials() {
             }
                        
         </div>
+        
     </div>
+    {isUploading && userInfo !== null && createPortal(
+          <div className='flex items-center justify-center z-40 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-5' style={{ color: 'black', borderRadius: '5px' }}>
+            <div className="loader">
+              <span className="loader-text text-2xl">cancelling..</span>
+              <span className="load"></span>
+            </div>
+          </div>,
+          document.body
+        )}
 </div>
 
   )

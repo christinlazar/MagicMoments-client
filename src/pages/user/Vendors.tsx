@@ -1,11 +1,12 @@
 
 
 import React,{useCallback, useEffect, useState} from 'react'
-import { fetchPlaces, getVendors, searchVendor } from '../../api/userApi'
+import { fetchPlaces, filterByPrice, getVendors, searchVendor } from '../../api/userApi'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsLoadingFalse, setIsLoadingTrue } from '../../store/slice/AuthSlice';
 import { RootState } from '../../store/Store';
+import { toast, Toaster } from 'sonner';
 
 
 enum AcceptanceStatus {
@@ -66,6 +67,7 @@ const  Vendors:React.FC = () => {
             }
           }
           fetchVendors()
+          return setRefresh(false)
     },[refresh])
 
     const goToSingleVendorView = (vendorId:string) =>{
@@ -84,7 +86,6 @@ const  Vendors:React.FC = () => {
           return
         }
         if(response?.data.success){
-          console.log("rrr",response.data)
           setSearchResults(response.data.vendors)
           if(response.data.vendors.length == 0){
             setSearchValue('')
@@ -94,9 +95,6 @@ const  Vendors:React.FC = () => {
           setVendors(response.data.vendors)
         }
     }
-
-    console.log("rrrr",searchResults)
-
     const debouncedFetchPlaces = useCallback(
       debounce(async (query: string) => {
        const response:any = await fetchPlaces(query);
@@ -117,10 +115,8 @@ const  Vendors:React.FC = () => {
     const currentVendors = vendors.slice(indexOfFirstVendor,indexOfLastVendor)
 
     const handlePageChange = (pageNumber:number) =>{
-        console.log(pageNumber)
-        console.log("gggg",Math.floor(vendors.length/vendorsPerPage))
         if(pageNumber > Math.ceil(vendors.length/vendorsPerPage)){
-          console.log("inthisss")
+         
           return
         }
         setCurrentpage(pageNumber)
@@ -136,7 +132,21 @@ const  Vendors:React.FC = () => {
           return 
         }
     }
-    console.log("vendlength",vendors?.length)
+
+    const handlePriceChange = async (e:React.ChangeEvent<HTMLSelectElement>) =>{
+      const newValue = e.target.value
+        if(newValue.trim() == ''){
+          setRefresh(true)
+        }
+        const response = await filterByPrice(newValue)
+        if(response?.data.vendors.length == 0){
+          return toast.error('Cant find a vendor')
+        }
+        if(response?.data.vendors){
+          setVendors(response.data.vendors)
+        }
+    }
+    
   return (
     <>
   <div className='border border-gray-100 mt-20'></div>
@@ -162,7 +172,9 @@ const  Vendors:React.FC = () => {
   {isOverlayVisible && (
     <div className="absolute inset-0 bg-white opacity-90 z-20"></div>
   )}
+
   <main className="p-3 mx-4 md:mx-12">
+    <Toaster richColors position='bottom-right'/>
     <form className="bg-white p-6 rounded-md">
       <div className="flex items-center border border-cyan-950 rounded-md">
         <div className='ms-2'>
@@ -194,6 +206,17 @@ const  Vendors:React.FC = () => {
       )}
     </form>
   </main>
+  <form >
+      <div className='flex justify-end mb-5 ms-10 pe-20'>
+        <select  onChange={handlePriceChange} className='border border-gray-500 text-xs font-montserrat rounded-full focus:outline-none'>
+        <option value="">Select an option</option>
+        <option value="10000-50000">10000 - 50000 </option>
+        <option value="50000-100000">50000 - 100000</option>
+        <option value="above-100000">100000 above</option>
+        </select>
+      </div>
+            </form>
+
   <div className="min-h-screen bg-white border">
     <div className="flex flex-wrap justify-center md:justify-start px-2 md:px-0">
       {currentVendors.map((vendor: any, index) => vendor.description && vendor.photos.length >= 4 &&   (

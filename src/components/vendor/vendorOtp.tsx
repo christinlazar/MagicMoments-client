@@ -34,7 +34,6 @@ function VendorVerifyOTPmodal() {
     }
     async function sendOtp(e:React.FormEvent<HTMLFormElement>){
       try {
-        console.log("getting in sendOtp")
         e.preventDefault()
         const res = await vendorVerifyOtp(otp)
         if(res){
@@ -57,7 +56,7 @@ function VendorVerifyOTPmodal() {
           }
         }
       } catch (error:Error | any) {
-        console.log(error)
+        console.error(error)
       }
     }
     const resendOtp = async () =>{
@@ -137,11 +136,11 @@ function VendorVerifyOTPmodal() {
                           <div>
                             <small> Time remaing:{timeLeft}</small>
                         </div>
-                          <button type='submit' style={{display:'block'}} ref={sendBtnRef} className="w-full text-white bg-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                          <button type='submit' style={{display:'block'}} ref={sendBtnRef} className="w-full text-white bg-cyan-950 hover:bg-cyan-950 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Verify otp
                           </button>
                         </form>
-                        <button onClick={resendOtp} style={{display:'none'}} ref={resendBtnRef} className="w-full text-white bg-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <button onClick={resendOtp} style={{display:'none'}} ref={resendBtnRef} className="w-full text-white bg-cyan-950 hover:bg-cyan-950 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Resend otp
                         </button>
                       </div>

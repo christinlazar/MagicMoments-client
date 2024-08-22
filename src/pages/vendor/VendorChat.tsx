@@ -12,15 +12,12 @@ const navigate = useNavigate()
         let isMounted = true
         async function bringChats(){
             const response = await bringchats()
-            console.log("r is",response?.data.result.conversations)
+         
             if(isMounted){
-              console.log("isMounted")
             setConversations(response?.data.result.conversations)
             setUsers(response?.data.result.users)
             const lm = messages?.map((m:any)=>m[m.length-1]?.message)
-              // if(lm[0] == undefined){
-              //   toast.warning("you haven't recived a message yet")
-              // }
+            
             }
            
         }
@@ -29,8 +26,6 @@ const navigate = useNavigate()
             isMounted = false
         }
     },[])
-
-    console.log("conversations",conversations)
     
     let messages = conversations.map((conv:any)=>conv?.messages)
 

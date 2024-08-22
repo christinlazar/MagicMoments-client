@@ -13,9 +13,9 @@ function EventBookings() {
     useEffect(()=>{
         async function fetchbookings(){
             const response = await fetchBookings()
-            console.log(response)
+        
             if(response?.data.bookings){
-                console.log(response.data.bookings)
+            
                 setBookings(response.data.bookings)
             }
         }
@@ -28,10 +28,9 @@ function EventBookings() {
     const currEvents = bookings?.slice(firstIndexOfreqs,lastIndexOfreqs)
 
     const handlePageChange = (pageNumber:number) =>{
-      console.log(pageNumber)
-      console.log("gggg",Math.floor(bookings?.length/eventsPerPage))
+    
       if(pageNumber > Math.ceil(bookings.length/eventsPerPage)){
-        console.log("inthisss")
+
         return
       }
       setCurrentpage(pageNumber)
@@ -129,7 +128,7 @@ function EventBookings() {
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{booking?.startingDate}</td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{booking?.noOfDays}</td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              <span className='font-montserrat font-semibold text-cyan-950'>Rs.{booking.amountPaid}</span>
+              <span className='font-montserrat font-semibold text-cyan-950'>Rs.{booking?.amountPaid}</span>
             </td>
           </tr>
         ))}

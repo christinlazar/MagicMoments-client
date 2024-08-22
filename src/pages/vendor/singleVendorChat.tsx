@@ -44,8 +44,7 @@ function SingleVendorChat() {
       dispatch(setOpenVendorChat(false))
     }
   },[setMessages])
-  console.log("conv is conv",conversations)
-  console.log("veddorcahttrueorfalse",)
+ 
   const sendMessage = async (e:React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault()
     setmessage('')
@@ -56,7 +55,7 @@ function SingleVendorChat() {
   }
   
 
-  console.log("convdata is convdata is",conversationData)
+ 
   const formatTime = (date:any) => {
     const dat = new Date(date)
     const hours = String(dat?.getHours()).padStart(2, '0');

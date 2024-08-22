@@ -59,11 +59,10 @@ const Chart = () =>{
 
     useEffect(()=>{
         const chartInstance2:any = chartRef2.current
-        console.log("fetch yearlyyy")
+ 
         async function fetchyearly(){
             const response = await yearlyBooking()
-            console.log("res is",response)
-            console.log(response?.data.yearlydata)
+        
             const yearlyData = response?.data.yearlydata
             const curryear = new Date().getFullYear()
             let yearArr:any = []
@@ -71,7 +70,7 @@ const Chart = () =>{
             for(let  i = 9;i>=0;i--){
                 yearArr.push(curryear - i)
             }
-            console.log("yA",yearArr)
+          
             yearlyData.forEach((yearly:any,index:number)=>{
                 if(index == yearArr.length-1){
                     return 
@@ -81,8 +80,7 @@ const Chart = () =>{
                     }
                 }
             })
-            console.log("label",yearArr)
-            console.log("data",yearlyDataArray)
+         
             setyearlyData({
                 labels:yearArr,
                 datasets:[{

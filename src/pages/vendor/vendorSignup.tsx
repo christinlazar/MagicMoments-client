@@ -63,7 +63,6 @@ function VendorSignup() {
   useEffect(()=>{
   const {state} = location
      if (state) {
-      console.log("state is",state)
       setIsModalOpen(false);
       if (formRef.current) {
         formRef.current.style.display = 'block';
@@ -72,7 +71,6 @@ function VendorSignup() {
   },[location])
 
   const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
-    console.log("get inside this")
     e.preventDefault();
       try {
         const emailRegex =  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -84,7 +82,6 @@ function VendorSignup() {
           toast.error("password must contain more than 6 letters")
           return 
         }
-        console.log("-",companyName,companyEmail,password,category,)
         setName("")
         setEmail("")
         setPassword("")
@@ -92,7 +89,7 @@ function VendorSignup() {
         setPlace("")
         if(companyName.trim() !== '' && companyEmail.trim() !== '' && password.trim() !== '' && place.trim() && category.trim()){
         const result = await vendorSignup(companyName,companyEmail,password,place,category)
-          console.log(result)
+       
           if(result?.data.success){
             setIsModalOpen(true)
             if(formRef.current){
@@ -106,8 +103,9 @@ function VendorSignup() {
         }else{
           toast.error('fields cant be empty')
         }   
-      } catch (error) {
-        console.log(error)
+      } catch (error:any) {
+        console.error(error)
+
       }
   }
   const showError1 = () =>{

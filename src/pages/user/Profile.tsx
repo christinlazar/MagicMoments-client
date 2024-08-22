@@ -29,7 +29,6 @@ function Profile() {
     }
     async function getUserInfo(){
     const response = await getUserData()
-    console.log(response?.data)
     setUserData(response?.data.user)
     }
     getUserInfo()
@@ -39,7 +38,7 @@ function Profile() {
    e.preventDefault()
     try {
       const res = await profileSubmission(content)
-    } catch (error) {
+    } catch (error:any) {
       console.error(error)
     }
   }

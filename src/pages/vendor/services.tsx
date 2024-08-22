@@ -29,11 +29,11 @@ function Services() {
     }
 
     const handleCheck = (e:React.ChangeEvent<HTMLInputElement>) =>{
-        console.log(e.target.checked)
+       
         const {value,checked} = e.target
          setServiceArr((prevState:any)=> checked ? [...prevState,value] : prevState.filter((serv:any)=>serv != value))
     }
-    console.log(serviceArr)
+   
   return (
     <div className="flex md:ps-12">
   <Toaster richColors position="bottom-right" />

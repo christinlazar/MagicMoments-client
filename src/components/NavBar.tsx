@@ -43,7 +43,7 @@ function NavBar() {
       }
       fetchUser()
     const currentPath = location.pathname
-    console.log(currentPath)
+   
     if(currentPath == '/register'){
       setText('Login')
       setLinkPath('/login')

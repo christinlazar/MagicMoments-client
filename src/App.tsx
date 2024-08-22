@@ -16,7 +16,7 @@ function App() {
   return (
     <Router>
     <div className="App">
-    <div className='content'>
+    <div className='content scrollbar-none'>
         <Routes>
           <Route path='/*' element={<UserRoute/>}/>
           <Route path='/admin*' element={<AdminRoute/>}/> 

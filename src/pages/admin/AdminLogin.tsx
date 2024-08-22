@@ -20,10 +20,17 @@ function AdminLogin() {
             e.preventDefault()
             setEmail('')
             setPassword('')
+            if(email.trim() == '' && password.trim() == ''){
+              return toast.error("Email & password cant be empty")
+            }
+            if(email.trim() == '' ){
+              return toast.error('Email cant be empty')
+            }
+            if(password.trim() == ''){
+              return toast.error("Password can't be empty")
+            }
         const result:AxiosResponse <any,any>| undefined =  await adminLogin(email,password)
         if(result?.data.success){
-          console.log(result.data.accessToken)
-          console.log(typeof(result.data.accessToken))
           dispatch(setAdminCredentials(result.data.accessToken))
             navigate('/admin/dashboard')
         }
@@ -57,7 +64,6 @@ function AdminLogin() {
               className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm"
               type="text"
               name="email"
-              required
             />
           </div>
           <label className='font-serif text-cyan-950 text-xs'>Password</label>
@@ -69,7 +75,6 @@ function AdminLogin() {
               className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm"
               type="password"
               name="password"
-              required
             />
           </div>
           <div className="mt-8 flex justify-center text-lg text-black">

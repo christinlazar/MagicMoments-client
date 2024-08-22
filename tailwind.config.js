@@ -18,6 +18,7 @@ module.exports = {
   plugins: [
     require('@tailwindcss/aspect-ratio'),
     require('daisyui'),
+    require('tailwind-scrollbar')({nocompatible:true},{ preferredStrategy: 'pseudoelements' }),
   ],
 }
 

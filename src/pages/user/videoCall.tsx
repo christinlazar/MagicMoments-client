@@ -25,10 +25,7 @@ interface SocketContextValue {
   }
 
 export const VideoCall = () => {
-    console.log("In vide calllllll component")
     const navigate = useNavigate()
-    // const [ me, setMe ] = useState("")
-    // console.log("me is",me)
 	const [ stream, setStream ] = useState<MediaStream | null | any>()
 	const [ receivingCall, setReceivingCall ] = useState(false)
 	const [ caller, setCaller ] = useState("")
@@ -106,7 +103,6 @@ export const VideoCall = () => {
     };
     
     const answerCall = () => {
-        console.log("Answering the call");
         if (!stream || !callerSignal) {
             console.error("Stream or callerSignal not available");
             return;
@@ -119,7 +115,6 @@ export const VideoCall = () => {
             stream:stream
         });
         
-        console.log("peer is",peer)
         peer.on("signal", (data: any) => {
             socket?.emit("answerCall", { signal: data, to: caller });
         });
@@ -135,7 +130,6 @@ export const VideoCall = () => {
     };
     
     const leaveCall = () => {
-        console.log("reached here")
         setCallEnded(true);
         if (connectionRef.current) {
             connectionRef.current = null;
@@ -154,7 +148,6 @@ export const VideoCall = () => {
         }
     };
 
-    console.log("me is",me)
 
   return (
     <>

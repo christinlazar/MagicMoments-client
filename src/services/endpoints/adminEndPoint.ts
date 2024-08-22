@@ -15,6 +15,8 @@ const adminRoutes = {
     getUsersVendors:'/admin/getusersvendors',
     getYearlyBooking:'/admin/yearlyBooking',
     getWeeklyBooking:'/admin/weeklybooking',
+    getBookings:'/admin/getBookings',
+    sortByDate:'/admin/sortbyDate'
 }
 
 export default adminRoutes

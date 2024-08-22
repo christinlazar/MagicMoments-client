@@ -12,9 +12,8 @@ function PaymentDetialsVendor() {
     useEffect(()=>{
         async function fetchbookings(){
             const response = await fetchBookings()
-            console.log(response)
             if(response?.data.bookings){
-                console.log(response.data.bookings)
+          
                 setBookings(response.data.bookings)
             }
         }
@@ -27,10 +26,10 @@ function PaymentDetialsVendor() {
     const currPayments = bookings?.slice(firstIndexOfreqs,lastIndexOfreqs)
 
     const handlePageChange = (pageNumber:number) =>{
-      console.log(pageNumber)
-      console.log("gggg",Math.floor(bookings?.length/paymentPerPage))
+     
+
       if(pageNumber > Math.ceil(bookings.length/paymentPerPage)){
-        console.log("inthisss")
+     
         return
       }
       setCurrentpage(pageNumber)

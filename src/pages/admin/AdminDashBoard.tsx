@@ -15,7 +15,6 @@ function AdminDashBoard() {
       async function getusersvendors(){
       const response = await getUsersVendors()
       if(response?.data.success){
-        console.log(response.data)
         setTotalRevenue(response?.data?.result.revenue)
         setVendorCount(response.data.result.vendors.length)
         setuserCount(response.data.result.users.length)

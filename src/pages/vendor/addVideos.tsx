@@ -18,19 +18,19 @@ function AddVideos() {
   const [isUploading,setIsUploading] = useState(false)
   const vendorInfo = useSelector((state:RootState)=>state.auth)
   const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
-    console.log("in handleChange")
-    console.log("e.target.flies",e.target.files)
+  
+   
      if(e.target.files){
       setVideos(e.target.files)
      }
   }
   const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
-    console.log("in handlesubmit")
+  
     e.preventDefault()
     if(!videos){
       return 
     }
-    console.log("videos are--",videos)
+   
     const formData = new FormData()
     for(let i = 0;i<videos.length;i++){
         if(!videos[i].type.startsWith('/video')){

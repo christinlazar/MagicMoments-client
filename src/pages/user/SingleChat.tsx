@@ -34,7 +34,6 @@ const SingleChat = () => {
     let isMounted = true;
     async function getchat(){
     const response = await getVendorChat(vendorId)
-    console.log("ressssss",response);
     
     if(response?.data.conversations){
       if(isMounted){
@@ -54,26 +53,18 @@ const SingleChat = () => {
     }
   },[])
 
-  // const {videoCallRequest} = useSelector((state:RootState2)=>state.auth)
-
-  // const sendVideoCallRequest = async () =>{
-  //   const response = await sendVideoCallReq()
-  //   console.log(response)
-  // }
+ 
 
   const sendMessage = async (e:React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault()
     const receiverId = conversationData?.participants.find((p:any) => p.participantModel == "Vendor")
     const response = await sendmessage(message,conversationData?._id,'User',receiverId,'Vendor')
     setmessage('')
-    console.log("res is",response)
     if(response?.data.success){
-      console.log(response.data.conversations)
        dispatch(setMessages(response.data.conversations))
        setConv(response.data.conversations)
     }
   }
-  console.log("convvv",conv)
   const formatTime = (date:any) => {
     const dat = new Date(date)
     const hours = String(dat?.getHours()).padStart(2, '0');
@@ -100,6 +91,7 @@ const SingleChat = () => {
       <i className="fi fi-rr-video-camera-alt text-gray-900 text-xl"></i>
       <p className='text-sm text-gray-900 ms-3'>Start a call</p>
     </div>
+
   </div>
 
   <div className="flex-1 flex flex-col">

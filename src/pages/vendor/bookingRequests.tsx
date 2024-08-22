@@ -19,10 +19,10 @@ function BookingRequests() {
         }
         fetchBookingReqData()
     },[acceptReq])
-    console.log("bk details",bookingDetails)
+  
     const acceptRequest = async (bookingId:string) =>{
         const result = await acceptBookingRequest(bookingId)
-        console.log("req is",result)
+   
         if(result?.data.success){
             toast.success("request has been accepted")
             setAcceptReq(true)
@@ -39,10 +39,10 @@ function BookingRequests() {
     const currReqs = bookingDetails?.slice(firstIndexOfreqs,lastIndexOfreqs)
 
     const handlePageChange = (pageNumber:number) =>{
-      console.log(pageNumber)
-      console.log("gggg",Math.floor(bookingDetails?.length/reqPerPage))
+    
+      
       if(pageNumber > Math.ceil(bookingDetails.length/reqPerPage)){
-        console.log("inthisss")
+       
         return
       }
       setCurrentpage(pageNumber)

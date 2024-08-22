@@ -30,7 +30,12 @@ const userRoutes = {
     getUserdata:'/user/getuserData',
     getWishListData:'/user/wishlist',
     removeFromWishlist:'/user/removefromwishlist',
-    editreview:'/user/editReview'
+    editreview:'/user/editReview',
+    searchByCompanyName:'/user/searchByCompany',
+    sortbydate:'/user/sortbydate',
+    filterbyprice:'/user/filterbyprice',
+    gSignup:'/user/gSignup',
+    cancelbooking:'/user/bookingCancel',
 }
 
 export default userRoutes 

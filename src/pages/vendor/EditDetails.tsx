@@ -19,7 +19,7 @@ function EditDetails() {
             useEffect(()=>{
                 const getvendorData = async () =>{
                 const vendorData = await getVendorData()
-                console.log("vendorData is",vendorData)
+              
                 if(vendorData){
                     setVendorData(vendorData.data.data)
                     setDescription(vendorData.data.data.description)
@@ -51,8 +51,8 @@ function EditDetails() {
                 }else{
                     toast.error("Something went wrong,try again")
                 }
-            } catch (error) {
-                console.error(error)
+            } catch (error:any) {
+              console.error(error)
             }
         }
 

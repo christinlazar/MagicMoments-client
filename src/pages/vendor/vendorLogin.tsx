@@ -54,8 +54,9 @@ function VendorLogin() {
              dispatch(setVendorCredentials(result.data.accessToken))
              navigate('/vendor/vendorStore',{state:{success:true}})
           }
-        } catch (error) {
-          console.log(error)
+        } catch (error:any) {
+          console.error(error.message)
+
         }
     }
 
@@ -76,7 +77,7 @@ function VendorLogin() {
     <div className="flex h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style={{ backgroundImage: `url(${RegisterImage})` }}>
   <Toaster richColors position="bottom-right" />
 
-  <div className="rounded-xl border border-cyan-950 bg-white bg-opacity-20 m-4 sm:m-10 md:m-20 my-12 px-6 sm:px-16 py-10 shadow-xl backdrop-blur-[2px] max-w-md w-full">
+  <div className="rounded-xl  bg-white bg-opacity-20 m-4 sm:m-10 md:m-20 my-12 px-6 sm:px-16 py-10 shadow-xl backdrop-blur-[2px] max-w-md w-full">
     <div className="text-white">
       <div className="mb-2 flex flex-col items-center">
         <img className='my-4' src={logo} width="50" alt="Magic Moments Logo" />
@@ -89,7 +90,7 @@ function VendorLogin() {
             onBlur={showError1} 
             value={email} 
             onChange={(e) => setEmail(e.target.value)}  
-            className="bg-white border-cyan-950 bg-opacity-10 font-serif placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
+            className="bg-white bg-opacity-10 font-serif placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
             type="text" 
             name="email" 
             placeholder="Enter your email" 
@@ -101,7 +102,7 @@ function VendorLogin() {
             onBlur={showError2} 
             value={password} 
             onChange={(e) => setPassword(e.target.value)} 
-            className="bg-white border-cyan-950 bg-opacity-10 font-serif placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
+            className="bg-white  bg-opacity-10 font-serif placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
             type="password" 
             name="password" 
             placeholder="Enter your password" 

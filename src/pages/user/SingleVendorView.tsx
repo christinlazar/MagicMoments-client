@@ -190,11 +190,14 @@ return ()=>{
           navigate('/login')
         }
         
-      } catch (error) {
+      } catch (error:any) {
         console.error(error)
+
       }
     }
     const closeBookingModal = () =>{
+      setDate('')
+      setNoOfDays('')
       setOpenBooking(false)
       setIsOverlayVisisble(false)
     }
@@ -210,6 +213,10 @@ return ()=>{
             setDate('');
             setNoOfDays('');
             return;
+        }
+
+        if(noOfDays == "0"){
+          return toast.error("Please add no of days")
         }
 
         const bookingData = {
@@ -260,6 +267,9 @@ return ()=>{
 
    const handleReviewSubmit =  async (e:React.FormEvent<HTMLFormElement>) =>{
       e.preventDefault()
+      if(review.trim() == ''){
+        return toast.error("Review cant be empty")
+      }
       const response = await submitReview(review,rating,vendorDetail?._id)
       setReview('')
       setRating(3)
@@ -307,7 +317,6 @@ return ()=>{
             if(reviewValue.trim() == ''){
               return toast.error("review cant be empty")
             }
-        console.log("reviewValue",reviewValue,editingReviewId)
         const response = await editReview(reviewValue,editingReviewId)
         if(response?.data.success){
           setReviewRefresh(true)
@@ -326,7 +335,7 @@ return ()=>{
         )}
     <div className='h-5/6 flex mt-32' ref={modalRef}>
     <Toaster richColors position='bottom-right'/>
-      <div className='w-screen overflow-x-hidden xl:w-1/2 xl:mx-20 scrollbar-hide'>
+      <div className='w-screen overflow-x-hidden xl:w-1/2 xl:mx-20 scrollbar-none'>
         <div className='xl:grid grid-rows-6 grid-flow-col gap-1 xl:h-[75%] rounded-md'>
           <div className='border row-span-6 col-span-2 text-center'>
             <img className="h-full object-cover" src={vendorDetail?.photos[0]} alt="Vendor photo" />
@@ -657,7 +666,7 @@ document.body
       
 
         <div className=' p-2'>
-          <h1 className='font-semibold font-montserrat text-cyan-800 mx'>Dates on which we have been booked</h1>
+          {/* <h1 className='font-semibold font-montserrat text-cyan-800 mx'>Dates on which we have been booked</h1>
           <div className='mt-3 p-2'>
             <ul className='text-xs'>
               <li>{vendorDetail?.unAvailableDates[0]}</li>
@@ -667,7 +676,7 @@ document.body
                 <li onClick={setModal} className='text-sm hover:cursor-pointer'>...more</li>
               </div>
             </ul>
-          </div>
+          </div> */}
           
           <h1 className='font-semibold font-montserrat pe-2 pt-2 pb-2 text-cyan-800'>Our services</h1>
           <ul>

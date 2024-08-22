@@ -17,7 +17,6 @@ function VendorStoreFront() {
             useEffect(()=>{
                 const getvendorData = async () =>{
                 const vendorData = await getVendorData()
-                console.log("vendorData is",vendorData)
                 if(vendorData){
                     setVendorData(vendorData.data.data)
                 }
@@ -42,8 +41,9 @@ function VendorStoreFront() {
                 }else{
                     toast.error("Something went wrong,try again")
                 }
-            } catch (error) {
-                console.error(error)
+            } catch (error:any) {
+              console.error(error)
+
             }
         }
         return(

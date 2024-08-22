@@ -17,9 +17,10 @@ function AddPhotos() {
   const [isUploading,setIsUploading] = useState(false)
   const [isOverlayVisible,setIsOverlayVisisble] = useState(false)
 
+
     const vendorInfo = useSelector((state:RootState)=>state.auth)
   const handleImageChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
-    console.log("files is",e.target.files)
+   
         setPhotos(e.target.files)
   }
   const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
@@ -27,7 +28,6 @@ function AddPhotos() {
     if(!photos){
       return 
     }
-    console.log("photos is",photos)
     const formData = new FormData()
     for (let i = 0; i < photos.length; i++) {
       if(!photos[i].type.startsWith('image/')){

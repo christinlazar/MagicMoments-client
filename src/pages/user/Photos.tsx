@@ -39,7 +39,7 @@ const [isOverlayVisible,setIsOverlayVisisble] = useState(false)
 
   return (
     <>
-  <div className='border border-gray-300 opacity-60'></div>
+  <div className='border  border-gray-300 opacity-60'></div>
   
   <div className='h-5/6 mt-20'>
     <Toaster richColors position='bottom-right' />

@@ -24,7 +24,7 @@ useListenMessages()
       let datesArray: string[] = [];
 
       dates.forEach((date) => datesArray.push(date.format()));
-      console.log(datesArray);
+    
   
       if (datesArray.length === 0) {
         return toast.error("Please select at least one date to add");
@@ -33,12 +33,12 @@ useListenMessages()
       const today = new Date();
       today.setHours(0, 0, 0, 0); 
       const todayTime = today.getTime();
-      console.log(todayTime);
+     
   
       for (let i = 0; i < datesArray.length; i++) {
         const dt = datesArray[i];
         let newdt = new Date(dt).getTime();
-        console.log(newdt);
+    
   
         if (isNaN(newdt)) {
           toast.error(`Invalid date: ${dt}`);
@@ -55,7 +55,7 @@ useListenMessages()
   
     
       const response = await addUnavailableDates(datesArray);
-      console.log(response);
+      
   
       if (response?.data.success) {
         toast.success("Dates have been added successfully");
@@ -66,8 +66,9 @@ useListenMessages()
         return;
       }
       
-  } catch (error) {
-    console.error(error);
+  } catch (error:any) {
+    console.error(error)
+
   }
 };
 

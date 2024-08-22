@@ -13,7 +13,7 @@ const AdminSidebar = () => {
 
  
   const handleLinkClick = (link:string) => {
-    console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",link)
+  
     setActiveLink(link); 
   };
   return (
@@ -86,6 +86,16 @@ const AdminSidebar = () => {
               >
                 <i className="fi fi-rr-user-headset mt-1 text-cyan-800"></i>
                 <span className="flex-1 text-cyan-800 ms-3 whitespace-nowrap font-serif">Vendors</span>
+              </Link>
+            </li>
+            <li className='ms-2'>
+              <Link
+                to="/admin/bookings"
+                onClick={() => handleLinkClick('/admin/bookings')}
+                className={`flex items-center ps-6 pb-6 ${activeLink === '/admin/bookings' ?  'border border-cyan-950 me-1' : ''} rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
+              >
+                <i className="fi fi-rr-user-headset mt-1 text-cyan-800"></i>
+                <span className="flex-1 text-cyan-800 ms-3 whitespace-nowrap font-serif">Bookings</span>
               </Link>
             </li>
             <li className='ms-2'>

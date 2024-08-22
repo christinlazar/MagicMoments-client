@@ -21,9 +21,7 @@ interface SocketContextValue {
 
 
 export const VendorVideoCall = () => {
-    console.log("In vide calllllll component")
-    // const [ me, setMe ] = useState("")
-    // console.log("me is",me)
+ 
 	const [ stream, setStream ] = useState<MediaStream | null | any>()
 	const [ receivingCall, setReceivingCall ] = useState(false)
 	const [ caller, setCaller ] = useState("")
@@ -54,7 +52,7 @@ export const VendorVideoCall = () => {
             });
     
         socket?.on("callUser", (data) => {
-            console.log("Receiving call from:", data);
+        
             setReceivingCall(true);
             setCaller(data.from);
             setName(data.name);
@@ -102,7 +100,6 @@ export const VendorVideoCall = () => {
     };
     
     const answerCall = () => {
-        console.log("Answering the call");
         if (!stream || !callerSignal) {
             console.error("Stream or callerSignal not available");
             return;
@@ -147,9 +144,6 @@ export const VendorVideoCall = () => {
             })
         }
     };
-
-    console.log("me is",me)
-
   return (
     <>
   <style>

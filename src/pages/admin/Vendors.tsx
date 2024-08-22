@@ -30,9 +30,9 @@ function Vendors() {
             if(vendorData?.data.vendors){
                await setVendors(vendorData?.data.vendors)
             }
-            console.log("usd is",vendorData)
-          } catch (error) {
-            console.error('error during fetching data',error)
+          } catch (error:any) {
+      
+            console.error(error.message || "error during fetching data")
           }finally{
             setIsLodaing(false)
           }
@@ -42,7 +42,6 @@ function Vendors() {
     
       const unBlockvendor = async (vendorId:string | undefined) =>{
             const res = await unblockVendor(vendorId as string)
-            console.log(res)
             if(res?.data.success){
               localStorage.removeItem('vendorInfo')
                setVendors(prevVendors => prevVendors.map(vendor=>vendor._id == vendorId ?{...vendor,isBlocked:false}:vendor))
@@ -68,10 +67,7 @@ function Vendors() {
       const currvendors = vendors.slice(indexOfFirstReq,indexOfLastReq)
     
       const handlePageChange = (pageNumber:number) =>{
-        console.log(pageNumber)
-        console.log("gggg",Math.floor(vendors.length/vendorPerPage))
         if(pageNumber > Math.ceil(vendors.length/vendorPerPage)){
-          console.log("inthisss")
           return
         }
         setCurrentpage(pageNumber)

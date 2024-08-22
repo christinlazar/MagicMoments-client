@@ -7,7 +7,7 @@ import {Provider} from 'react-redux'
 import store from './store/Store';
 import { SocketContextProvider } from './context/socketContext';
 import { LoadScript } from '@react-google-maps/api';
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 // window.process = {
 //   env: {
 //     NODE_ENV: process.env.NODE_ENV as 'development' | 'production' || 'development', // Fallback to 'development'
@@ -22,9 +22,12 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
         <React.StrictMode>
-        <LoadScript googleMapsApiKey ='AIzaSyCdRUMgE09rO2dkbmmZR_ZVJnS1yJL8oWY '>
-          <SocketContextProvider>
+        <LoadScript googleMapsApiKey={`${process.env.REACT_APP_MAPS_KEY}`} >
+  <SocketContextProvider>
+  <GoogleOAuthProvider clientId='497491388921-al3gve5htq5eud8mod07j6tol11mrcvg.apps.googleusercontent.com'>
              <App />
+  </GoogleOAuthProvider>
+
           </SocketContextProvider>
         </LoadScript>
        </React.StrictMode>
