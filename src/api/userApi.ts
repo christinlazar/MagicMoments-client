@@ -349,9 +349,8 @@ export const filterByPrice = async (criteria:string) =>{
 
 export const gsignUp = async (tokenResponse:any) => {
     try {
-        
+        console.log("")
         const result = await Api.post(userEndpoint.gSignup,{tokenResponse})
-     
         return result
     } catch (error:any) {
         console.error(error)

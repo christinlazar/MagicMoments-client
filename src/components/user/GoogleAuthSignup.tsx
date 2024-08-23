@@ -31,7 +31,6 @@ const GoogleAuthSignup = ({userlogin,user}:googleAuthProps) =>{
         onSuccess:async (tokenResponse) =>{
         if(user){
             if(!userlogin){
-             
                 const result = await gsignUp(tokenResponse)
             if(!result?.data.data){
                 toast.error("User already exists,please do the login")

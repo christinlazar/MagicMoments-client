@@ -64,16 +64,12 @@ function VendorNavBar() {
       </div> 
     </div>
   </nav>
-      <nav className="hidden  md:block  bg-black bg-gray  dark:bg-gray-900 dark:border-gray-700 h-20 border border-slate-400 border-opacity-45 w-screen">
+      <nav className="hidden ps-44 md:block  bg-black bg-gray  dark:bg-gray-900 dark:border-gray-700 h-20 border border-slate-400 border-opacity-45 w-screen">
     <div className="max-w-screen-xl flex flex-wrap items-center justify-start mx-0 py-6 ">
         {/* <div >
         <i className="fi fi-rr-home text-2xl mt-2"></i>
         <span className="flex-1 ms-3 whitespace-nowrap font-serif">Home</span>
         </div> */}
-        <div className='pl-20 pr-10'>
-        <i className="fi fi-rr-store-alt text-2xl text-white mt-2"></i>
-        <span className="flex-1 ms-3 whitespace-nowrap text-sm font-serif font-bold text-slate-200">Profile</span>
-        </div>
         <div className='px-10'>
         <i className="fi fi-rr-store-alt text-2xl text-white mt-2"></i>
         <span onClick={()=>navigate('/vendor/vendorStore')} className="flex-1 ms-3 whitespace-nowrap text-sm font-serif font-bold text-slate-200 hover:cursor-pointer">Store</span>
@@ -81,10 +77,6 @@ function VendorNavBar() {
         <div className='px-10'>
         <i className="fi fi-rr-messages text-2xl text-white mt-2"></i>
         <span onClick={()=>navigate('/vendor/vendorChat')} className="flex-1 ms-3 whitespace-nowrap text-sm font-serif font-bold text-slate-200 hover:cursor-pointer">Messages</span>
-        </div>
-        <div className='px-10'>
-        <i className="fi fi-rr-review text-2xl text-white mt-2"></i>
-        <span className="flex-1 ms-3 whitespace-nowrap text-sm font-serif font-bold text-slate-200">Reviews</span>
         </div>
         <Link to='/vendor/bookingRequests' className='px-10'>
         <i className="fi fi-rr-review text-2xl text-white mt-2"></i>

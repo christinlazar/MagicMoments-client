@@ -3,7 +3,7 @@ import {toast,Toaster} from 'sonner'
 import {useLocation ,Link} from 'react-router-dom'
 import logo from '../../assets/wedding (2).png'
 import VendorVerifyOTPmodal from '../../components/vendor/vendorOtp'
-import RegisterImage from '../../assets/pexels-summerstock-300957.jpggit '
+import RegisterImage from '../../assets/pexels-summerstock-300957.jpg'
 import { vendorSignup } from '../../api/vendorApi'
 // import { select } from '@material-tailwind/react'
 function VendorSignup() {

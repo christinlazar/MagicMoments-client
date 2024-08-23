@@ -8,7 +8,6 @@ const Api:AxiosInstance = axios.create({
 
 Api.interceptors.request.use(
     async config => {
-        console.log("inside api request interceptors")
         let accessToken = localStorage.getItem('accessToken')
         let adminAccessToken = localStorage.getItem('adminAccessToken')
         let userInfo = localStorage.getItem('userInfo')
@@ -17,7 +16,6 @@ Api.interceptors.request.use(
         let userOtp = localStorage.getItem('userOtp')
         let vendorOtp = localStorage.getItem('vendorOtp')
         let vendorAccessToken = localStorage.getItem('vendorAccessToken')
-        console.log(window.location.pathname,"pathname")
         if(accessToken && userInfo  && !userOtp && !vendorOtp && !window.location.pathname.includes('/admin') && !window.location.pathname.includes('/vendor') ){
             console.log("for user")
             config.headers.Authorization = `Bearer ${accessToken}`
@@ -45,7 +43,6 @@ Api.interceptors.response.use(
         // if(error.response.data.refresh == false){
         //     return
         // }
-        // console.log("originalRequestForVendor",originalRequestForVendor)
         if(error.response.status == 401 && error.response.data.role == 'user' && !originalRequest._retry){
             originalRequest._retry = true
             console.log("getting here reason:user err");
@@ -56,7 +53,7 @@ Api.interceptors.response.use(
                 Api.defaults.headers.common['Authorization'] = `Bearer ` + response.data.accessToken
                 return Api(originalRequest)
             }else if(!response.data.refresh && response.data.role == 'user' ){
-                 alert("Session has been expired, please login again")
+                 alert("USER Session has been expired, please login again")
                  localStorage.removeItem('userInfo')
                  localStorage.removeItem('accessToken')
                     window.location.href = '/login'
@@ -74,7 +71,7 @@ Api.interceptors.response.use(
                 console.log("going for original request")
                 return Api(originalRequest)
             }else if(!response.data.refresh && response.data.role == 'admin'){
-                alert("Session has been expired, please login again")
+                alert("Admin Session has been expired, please login again")
                 localStorage.removeItem('adminInfo')
                 localStorage.removeItem('adminAccessToken')
                    window.location.href = '/admin'
@@ -90,7 +87,7 @@ Api.interceptors.response.use(
                 Api.defaults.headers.common['Authorization'] = `Bearer ` + response.data.vendorAccessToken
                 return Api(originalRequest)
             }else if(!response.data.refresh && response.data.role == 'vendor'){
-                alert("Session has been expired, please login again")
+                alert("Vendor Session has been expired, please login again")
                 localStorage.removeItem('vendorInfo')
                 localStorage.removeItem('vendorAccessToken')
                    window.location.href = '/vendor/vendorLogin'
