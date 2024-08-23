@@ -26,7 +26,7 @@ function AddPhotos() {
   const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault()
     if(!photos){
-      return 
+      return toast.error("select photos to upload")
     }
     const formData = new FormData()
     for (let i = 0; i < photos.length; i++) {

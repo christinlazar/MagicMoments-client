@@ -58,7 +58,7 @@ function PaymentDetials() {
     }
 
   return (
-    <div className="flex ps-12">
+    <div className="flex">
         <Toaster richColors position="bottom-right" />
             <div className='mt-20 hidden md:block'>
                 <SideBar/>

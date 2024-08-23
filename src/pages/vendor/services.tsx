@@ -18,6 +18,9 @@ function Services() {
 
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault()
+        if(serviceArr.length == 0){
+          return toast.error("Please select atleast one service")
+        }
         const response = await addServices(serviceArr)
         if(response?.data.success){
             setServiceArr([])

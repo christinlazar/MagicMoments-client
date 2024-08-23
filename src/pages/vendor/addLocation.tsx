@@ -32,6 +32,9 @@ function AddLocation() {
 
     const lanLonSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault()
+        if(markerLocation == null){
+            return toast.error('please mark a location')
+        }
         const response = await addLongLang(markerLocation)
         if(response?.data.success){
           toast.success('Location has been added successfully')

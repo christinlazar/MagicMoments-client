@@ -43,6 +43,7 @@ function Home() {
 
   return (
     <>
+    
     <div className="min-h-screen pt-20 bg-white  scrollbar-none overflow-y-auto scroll-smooth">
       <Toaster richColors position='top-center'/>
       <div className="container mx-auto  px-4 py-4">

@@ -8,6 +8,7 @@ import store from './store/Store';
 import { SocketContextProvider } from './context/socketContext';
 import { LoadScript } from '@react-google-maps/api';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import LoadingComponent from './components/LoadingComponent';
 // window.process = {
 //   env: {
 //     NODE_ENV: process.env.NODE_ENV as 'development' | 'production' || 'development', // Fallback to 'development'
@@ -23,7 +24,7 @@ const clientid:any = process.env.REACT_APP_CLIENT_ID
 root.render(
   <Provider store={store}>
         <React.StrictMode>
-        <LoadScript googleMapsApiKey={`${process.env.REACT_APP_MAPS_KEY}`} >
+        <LoadScript googleMapsApiKey={`${process.env.REACT_APP_MAPS_KEY}`}  loadingElement={<LoadingComponent/>} >
   <SocketContextProvider>
   <GoogleOAuthProvider clientId={clientid}>
              <App />

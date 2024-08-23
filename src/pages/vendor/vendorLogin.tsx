@@ -8,10 +8,12 @@ import { setVendorCredentials } from '../../store/slice/AuthSlice'
 import { vendorLogin } from '../../api/vendorApi'
 import logo from '../../assets/license (1).png'
 import RegisterImage from '../../assets/pexels-edwardeyer-14106978.jpg'
+import LoadingComponent from '../../components/LoadingComponent'
 function VendorLogin() {
     const location = useLocation()
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [isLoading,setIsLoading] = useState(false)
     useEffect(()=>{
       const {state} = location
       if(state){
@@ -24,6 +26,7 @@ function VendorLogin() {
     const [password,setPassword] = useState<string>('')
     const handleSubmit  = async (e:React.FormEvent<HTMLFormElement>) => {
           e.preventDefault()
+
         try {
            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
@@ -40,23 +43,26 @@ function VendorLogin() {
           }
           setEmail("")
           setPassword("")
+          setIsLoading(true)
           const result = await vendorLogin(email,password)
           if(result?.data.message2){
+            setIsLoading(false)
             toast.error(result?.data.message2)
           }
           if(result?.data.accepted  == false){
             console.log("came back here")
+            setIsLoading(false)
                 toast.error("The request has'nt been accepted yet")
           }else if(result?.data.passwordIncorrect){
                 toast.error("Password is incorrect")
           }
           else if(result?.data.success == true){
+            setIsLoading(false)
              dispatch(setVendorCredentials(result.data.accessToken))
              navigate('/vendor/vendorStore',{state:{success:true}})
           }
         } catch (error:any) {
           console.error(error.message)
-
         }
     }
 
@@ -74,7 +80,13 @@ function VendorLogin() {
       }
     }
   return (
-    <div className="flex h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style={{ backgroundImage: `url(${RegisterImage})` }}>
+
+    <>
+    {
+      isLoading ? (
+        <LoadingComponent/>
+      ):(
+        <div className="flex h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style={{ backgroundImage: `url(${RegisterImage})` }}>
   <Toaster richColors position="bottom-right" />
 
   <div className="rounded-xl  bg-white bg-opacity-20 m-4 sm:m-10 md:m-20 my-12 px-6 sm:px-16 py-10 shadow-xl backdrop-blur-[2px] max-w-md w-full">
@@ -102,7 +114,7 @@ function VendorLogin() {
             onBlur={showError2} 
             value={password} 
             onChange={(e) => setPassword(e.target.value)} 
-            className="bg-white  bg-opacity-10 font-serif placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
+            className=" bg-opacity-10 font-serif placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
             type="password" 
             name="password" 
             placeholder="Enter your password" 
@@ -123,6 +135,11 @@ function VendorLogin() {
     </div>
   </div>
 </div>
+      )
+    }
+    
+    </>
+    
 
   )
 }

@@ -28,7 +28,7 @@ function AddVideos() {
   
     e.preventDefault()
     if(!videos){
-      return 
+      return toast.error("Select video to upload")
     }
    
     const formData = new FormData()

@@ -70,7 +70,7 @@ function BookingRequests() {
       }
     }
   return (
-    <div className="flex ">
+    <div className="flex">
         <Toaster richColors position="bottom-right" />
             <div className='mt-20 hidden md:block'>
                 <SideBar/>

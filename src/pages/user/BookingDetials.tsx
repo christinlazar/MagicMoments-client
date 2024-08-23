@@ -104,7 +104,7 @@ function BookingDetials() {
     }
 
   return (
-<div className="flex flex-col md:flex-row ps-4 md:ps-12">
+<div className="flex flex-col md:flex-row ps-4 md:ps-0">
     <Toaster richColors position="bottom-right" />
         <div className='mt-10 md:mt-20 hidden md:block'>
             <SideBar />
