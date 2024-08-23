@@ -146,51 +146,60 @@ function Home() {
 
 
 
-          <div className='bg-black h-60 p-4 flex flex-col items-center m-4'>
-              <div>
-                  <h1 className='font-montserrat text-gray-300 text-xl mt-10 mb-3'>JOIN OUR WEDDING COMMUNITY TODAY</h1>
-              </div>
-              <div className=''>
-                    <p className='font-montserrat text-gray-300 text-sm'>Be found by couples looking for their perfect wedding photographer, showcase your</p>
-                    <p className='ms-0 font-montserrat text-gray-300 text-sm sm:ms-40'>work, enter our awards and features.</p>
-              </div>
-              <div className='my-8'>
-                <button onClick={()=>navigate('/register')} className='border border-gray-300 rounded-md w-36 h-10 font-montserrat text-xs text-slate-300'>
-                      SIGN UP
-                </button>
-              </div>
-          </div>
-          <footer className="p-4 m-4 bg-black text-white md:p-8 lg:p-10 dark:bg-gray-800">
+<div className='bg-black h-auto p-4 flex flex-col items-center m-4 space-y-4'>
+  <div>
+    <h1 className='font-montserrat text-gray-300 text-xl mt-4 mb-2 text-center md:text-2xl'>
+      JOIN OUR WEDDING COMMUNITY TODAY
+    </h1>
+  </div>
+  <div className='text-center'>
+    <p className='font-montserrat text-gray-300 text-sm md:text-base'>
+      Be found by couples looking for their perfect wedding photographer, showcase your
+    </p>
+    <p className='font-montserrat text-gray-300 text-sm md:text-base mt-2'>
+      work, enter our awards and features.
+    </p>
+  </div>
+  <div className='my-6'>
+    <button 
+      onClick={() => navigate('/register')} 
+      className='border border-gray-300 rounded-md w-32 h-10 font-montserrat text-xs text-slate-300 
+                 hover:bg-gray-700 hover:text-white transition duration-300'
+    >
+      SIGN UP
+    </button>
+  </div>
+</div>
+
+<footer className="p-4 m-4 bg-black text-white md:p-8 lg:p-10 dark:bg-gray-800">
   <div className="mx-auto max-w-screen-xl text-center">
-      <a href="#" className="flex justify-center items-center text-xl  text-gray-900 dark:text-white">
-        
-          <div >
-            <img className='h-10' src={log}></img>
-          </div>
-          <span className='text-white font-montserrat ms-2'>
-               Magic Moments 
-          </span>
-      </a>
-      <div>
-   
-      </div>
-      <ul className="flex flex-wrap justify-center p-6 items-center font-montserrat text-sm mb-6 text-white dark:text-white">
-          <li>
-              <span  className="mr-4 hover:underline md:mr-6 ">About</span>
-          </li>
-          <li>
-              <Link to='/wishlist' className="mr-4 hover:underline md:mr-6">Wishlist</Link>
-          </li>
-          <li>
-              <a href="/servicers" className="mr-4 hover:underline md:mr-6">Vendors</a>
-          </li>
-          <li>
-              <span className="mr-4 hover:underline md:mr-6">Contact</span>
-          </li>
-      </ul>
-      <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2021-2022 <a href="" className="hover:underline">magic moments</a>. All Rights Reserved.</span>
+    <a href="#" className="flex flex-col sm:flex-row justify-center items-center text-xl text-gray-900 dark:text-white">
+      <img className='h-12 mb-2 sm:mb-0' src={log} alt="Magic Moments Logo" />
+      <span className='text-white font-montserrat ms-2 text-lg sm:text-xl'>
+        Magic Moments
+      </span>
+    </a>
+    <ul className="flex flex-wrap justify-center p-6 items-center font-montserrat text-sm mb-6 text-white dark:text-white space-x-4">
+      <li>
+        <a href="#" className="hover:underline">About</a>
+      </li>
+      <li>
+        <Link to='/wishlist' className="hover:underline">Wishlist</Link>
+      </li>
+      <li>
+        <a href="/servicers" className="hover:underline">Vendors</a>
+      </li>
+      <li>
+        <a href="#" className="hover:underline">Contact</a>
+      </li>
+    </ul>
+    <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+      © 2021-2022 <a href="#" className="hover:underline">Magic Moments</a>. All Rights Reserved.
+    </span>
   </div>
 </footer>
+
+
           
     </div>
     

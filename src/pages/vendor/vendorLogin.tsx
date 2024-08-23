@@ -6,7 +6,7 @@ import { useNavigate,Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setVendorCredentials } from '../../store/slice/AuthSlice'
 import { vendorLogin } from '../../api/vendorApi'
-import logo from '../../assets/license (1).png'
+import logo from '../../assets/wedding (2).png'
 import RegisterImage from '../../assets/pexels-edwardeyer-14106978.jpg'
 import LoadingComponent from '../../components/LoadingComponent'
 function VendorLogin() {
@@ -93,28 +93,28 @@ function VendorLogin() {
     <div className="text-white">
       <div className="mb-2 flex flex-col items-center">
         <img className='my-4' src={logo} width="50" alt="Magic Moments Logo" />
-        <h1 className="mb-2 text-2xl text-cyan-950 font-bold font-serif">Magic Moments</h1>
+        <h1 className="mb-2 text-2xl text-cyan-950 font-bold font-montserrat">Magic Moments</h1>
       </div>
       <form onSubmit={handleSubmit} id='form'>
-        <label className='font-serif text-cyan-950 font-bold'>Email</label>
+        <label className='font-montserrat text-cyan-950 font-bold'>Email</label>
         <div className="mb-4 text-lg">
           <input 
             onBlur={showError1} 
             value={email} 
             onChange={(e) => setEmail(e.target.value)}  
-            className="bg-white bg-opacity-10 font-serif placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
+            className="bg-opacity-10 font-serif placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
             type="text" 
             name="email" 
             placeholder="Enter your email" 
           />
         </div>
-        <label className='font-serif text-cyan-950 font-bold'>Password</label>
+        <label className='font-montserrat text-cyan-950 font-bold'>Password</label>
         <div className="mb-4 text-lg">
           <input 
             onBlur={showError2} 
             value={password} 
             onChange={(e) => setPassword(e.target.value)} 
-            className=" bg-opacity-10 font-serif placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
+            className=" bg-opacity-10 font-montserrat placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
             type="password" 
             name="password" 
             placeholder="Enter your password" 
@@ -123,11 +123,11 @@ function VendorLogin() {
         <div className="mt-8 flex flex-col items-center text-lg text-black">
           <button 
             type="submit" 
-            className="rounded-3xl font-serif bg-cyan-950 bg-opacity-100 px-10 py-2 mb-4 text-white shadow-xl backdrop-blur-md transition-colors duration-300 transform hover:scale-105 hover:transition ease-out duration-300 "
+            className="rounded-3xl font-montserrat text-sm bg-cyan-950 bg-opacity-100 px-10 py-2 mb-4 text-white shadow-xl backdrop-blur-md transition-colors transform hover:scale-105 hover:transition ease-out duration-300 "
           >
             Signin
           </button>
-          <Link to='/vendor' className='mt-2 text-gray-900 font-serif text-sm hover:text-cyan-950'>
+          <Link to='/vendor' className='mt-2 text-gray-900 font-montserrat text-sm hover:text-cyan-950'>
             Register
           </Link>  
         </div>
