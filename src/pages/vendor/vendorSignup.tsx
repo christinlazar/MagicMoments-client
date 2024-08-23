@@ -5,7 +5,6 @@ import logo from '../../assets/wedding (2).png'
 import VendorVerifyOTPmodal from '../../components/vendor/vendorOtp'
 import RegisterImage from '../../assets/pexels-summerstock-300957.jpg'
 import { vendorSignup } from '../../api/vendorApi'
-// import { select } from '@material-tailwind/react'
 function VendorSignup() {
     
   const [companyName,setName] = useState<string>("")

@@ -20,7 +20,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const clientid:any = process.env.REACT_APP_OAUTH_CLIENT_ID
+const clientid:any = process.env.REACT_APP_CLIENT_ID
 root.render(
   <Provider store={store}>
         <React.StrictMode>
