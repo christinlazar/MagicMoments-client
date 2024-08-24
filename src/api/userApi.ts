@@ -107,6 +107,10 @@ export const getVendors = async () =>{
     try {
         const result = await Api.get(userEndpoint.getAllVendors)
         console.log("dat",result.data)
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+          }
         return result
     } catch (error:any) {
         console.error(error)

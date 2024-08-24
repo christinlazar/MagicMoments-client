@@ -21,10 +21,7 @@ function Home() {
   useEffect(()=>{
     const fetchVendors = async () =>{
       const response = await getVendors()
-      if(response?.data.userBlocked == true){
-        localStorage.removeItem('userInfo')
-        localStorage.removeItem('accessToken')
-      }
+    
       if(response?.data.data){
         setVendors(response.data.data)
       }
