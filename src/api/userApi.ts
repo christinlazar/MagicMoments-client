@@ -106,6 +106,7 @@ export const changePassword = async(newPassword:string,newPasswordConfirm:string
 export const getVendors = async () =>{
     try {
         const result = await Api.get(userEndpoint.getAllVendors)
+        console.log("dat",result.data)
         return result
     } catch (error:any) {
         console.error(error)
