@@ -110,7 +110,7 @@ export const getVendors = async () =>{
         if(result?.data.userBlocked == true){
             localStorage.removeItem('userInfo')
             localStorage.removeItem('accessToken')
-          }
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -120,6 +120,10 @@ export const getVendors = async () =>{
 export const bringThatVendor = async (vendorId:string) =>{
     try {
         const result = await Api.post(userEndpoint.bringVendorDetail,{vendorId})
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -129,7 +133,10 @@ export const bringThatVendor = async (vendorId:string) =>{
 export const handleStripePayment = async (companyName:string | undefined,vendorId:string | undefined,amount:string | undefined,bookingData:any) =>{
     try {
         const result = await Api.post(userEndpoint.stripePayment,{companyName,vendorId,amount,bookingData})
-      
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -140,6 +147,10 @@ export const SendBookingRequest = async (bookingData:bookingDataInterface) =>{
     try {
        
         const result = await Api.post(userEndpoint.sendbookingrequest,{bookingData})
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -149,6 +160,7 @@ export const SendBookingRequest = async (bookingData:bookingDataInterface) =>{
 export const checkIsReqAccepted = async (vendorId:string | undefined) =>{
     try {
         const result = await Api.post(userEndpoint.checkIsBookingAccepted,{vendorId})
+       
         return result
     } catch (error:any) {
         console.error(error)
@@ -167,6 +179,10 @@ export const  isExistingBookingRequest = async (vendorId:string | undefined) =>{
 export const fetchBookingDetials = async () => {
     try{
         const result = await Api.post(userEndpoint.fetchBookingDetials)
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     }catch(error:any){
         console.error(error)
@@ -176,6 +192,10 @@ export const fetchBookingDetials = async () => {
 export const fetchBookingRequests = async () =>{
     try {
         const result = await Api.post(userEndpoint.fetchBookingRequests)
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -185,6 +205,10 @@ export const fetchBookingRequests = async () =>{
 export const cancelBookingRequest = async (bookingId:string) =>{
     try {
         const result = await Api.post(userEndpoint.cancelBooking,{bookingId})
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -194,6 +218,10 @@ export const cancelBookingRequest = async (bookingId:string) =>{
 export const showPhotosToUser = async (vendorId:string) =>{
     try {
         const result = await Api.post(userEndpoint.bringPhotos,{vendorId})
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -203,6 +231,10 @@ export const showPhotosToUser = async (vendorId:string) =>{
 export const showVideosToUser = async (vendorId:string) =>{
     try {
         const result = await Api.post(userEndpoint.bringVideos,{vendorId})
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -212,6 +244,10 @@ export const showVideosToUser = async (vendorId:string) =>{
 export const getVendorChat = async (vendorId:string | undefined)=>{
     try {
         const result = await Api.post(userEndpoint.getVendorChat,{vendorId})
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -220,6 +256,10 @@ export const getVendorChat = async (vendorId:string | undefined)=>{
 export const sendmessage = async (message:string,conversationId:string,senderModel:'User'|'Vendor',receiverId:string,receiverModel:'User' | 'Vendor') =>{
     try {
         const result = await Api.post(userEndpoint.sendMessage,{message,conversationId,senderModel,receiverId,receiverModel})
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -237,6 +277,10 @@ export const sendVideoCallReq = async () =>{
 export const submitReview = async (review:string,rating:number,vendorId:any) =>{
     try {
         const result = await Api.post(userEndpoint.sendReview,{review,rating,vendorId})
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -256,6 +300,10 @@ export const getReviews = async (vendorId:string | undefined) =>{
 export const searchVendor = async (searchValue:string) =>{
     try {
         const result = await Api.post(userEndpoint.searchForVendor,{searchValue})
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -266,7 +314,10 @@ export const fetchPlaces = async (place:string,radius = 500) => {
     try {
        
         const response = await Api.post(userEndpoint.fetchplaces,{place,radius})
-      
+        if(response?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return response 
     } catch (error:any) {
         console.error(error)
@@ -276,6 +327,10 @@ export const fetchPlaces = async (place:string,radius = 500) => {
 export const wishlist = async (vendorId:string | null | undefined)=>{
     try {
         const result = await Api.post(userEndpoint.addToWishlist,{vendorId})
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -285,6 +340,10 @@ export const wishlist = async (vendorId:string | null | undefined)=>{
 export const getUserData = async() =>{
     try {
         const result = await Api.get(userEndpoint.getUserdata)
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -294,6 +353,10 @@ export const getUserData = async() =>{
 export const getVendorsFromWishlist = async() =>{
     try {
         const result = await Api.get(userEndpoint.getWishListData)
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -303,6 +366,10 @@ export const getVendorsFromWishlist = async() =>{
 export const removeVendorWishlist = async (vendorId:string) =>{
     try {
         const result = await Api.post(userEndpoint.removeFromWishlist,{vendorId})
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -312,6 +379,10 @@ export const removeVendorWishlist = async (vendorId:string) =>{
 export const editReview = async (review:string,reviewId:string) =>{
     try{
         const result = await Api.post(userEndpoint.editreview,{review,reviewId})
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     }catch(error:any){
         console.error(error)
@@ -321,6 +392,10 @@ export const editReview = async (review:string,reviewId:string) =>{
 export const searchCompany = async (companyName:string) =>{
     try {
         const result = await Api.post(userEndpoint.searchByCompanyName,{companyName})
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -329,6 +404,10 @@ export const searchCompany = async (companyName:string) =>{
 export const sortbyDate = async (startDate:string,endDate:string) =>{
     try {
         const result = await Api.post(userEndpoint.sortbydate,{startDate,endDate})
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
@@ -337,6 +416,10 @@ export const sortbyDate = async (startDate:string,endDate:string) =>{
 export const cancelBooking = async(bookingId:string) =>{
     try {
         const result = await Api.post(userEndpoint.cancelbooking,{bookingId})
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error) {
         console.error(error)
@@ -346,6 +429,10 @@ export const cancelBooking = async(bookingId:string) =>{
 export const filterByPrice = async (criteria:string) =>{
     try {
         const result = await Api.post(userEndpoint.filterbyprice,{criteria})
+        if(result?.data.userBlocked == true){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+        }
         return result
     } catch (error:any) {
         console.error(error)
