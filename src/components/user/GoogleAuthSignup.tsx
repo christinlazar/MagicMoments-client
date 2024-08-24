@@ -24,6 +24,7 @@ interface googleAuthProps {
 }
 
 const GoogleAuthSignup = ({userlogin,user}:googleAuthProps) =>{
+    console.log("In Auth Signup")
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
