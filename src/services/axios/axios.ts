@@ -40,6 +40,7 @@ Api.interceptors.response.use(
         console.log("org for",originalRequest._retry)
         console.log("error config",error.config)
         console.log("error is",error)
+        console.log("response data is",error.response.data)
         // if(error.response.data.refresh == false){
         //     return
         // }
