@@ -48,7 +48,7 @@ function EventBookings() {
     }
 
   return (
-    <div className="md:flex ps-12">
+    <div className="flex flex-col md:flex-row ps-4 md:ps-12">
   <Toaster richColors position="bottom-right" />
   <div className='mt-5 hidden md:block'>
     <VendorSidebar />

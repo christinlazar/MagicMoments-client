@@ -48,9 +48,9 @@ function VendorStoreFront() {
         }
         return(
             <>
-            <div className="flex ps-4 md:ps-12">
+            <div className="flex flex-col md:flex-row ps-4 md:ps-12">
               <Toaster richColors position='bottom-right' />
-              <div className='hidden md:block'>
+              <div className='mt-5 hidden md:block'>
                 <VendorSidebar />
               </div>
               <div className="flex-grow ms-2 md:ms-6 mt-10">
