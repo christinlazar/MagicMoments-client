@@ -47,6 +47,9 @@ const UserRoute:React.FC = () => {
                <Routes>
                 <Route path='' element={<Home/>}/>
                 <Route path='/singleVendorView' element={<SingleVendorView/>}/>
+                <Route path='/photos' element={<Photos/>}/>
+                <Route path='/videos' element={<Videos/>}/>
+                <Route path='/servicers' element={<Vendors/>}/>
                 <Route path='' element={<UserLoggedOut/>}>
                         <Route path='login' element={<Login/>}/>
                         <Route path='register'element={<Register/>} />
@@ -59,12 +62,10 @@ const UserRoute:React.FC = () => {
                                 <Route path='/paymentSuccess' element={<PaymentSuccess/>}/>
                                 <Route path='/bookingDetials' element={<BookingDetials/>}/>
                                 <Route path='/bookingRequests' element={<BookingRequests/>}/>
-                                <Route path='/photos' element={<Photos/>}/>
-                                <Route path='/videos' element={<Videos/>}/>
+                                
                                 <Route path='/singleChat' element={<Chat/>}/>
                                 <Route path='/videoCall' element={<VideoCall/>}/>
                                 <Route path='/paymentDetials' element={<PaymentDetials/>}/>
-                                <Route path='/servicers' element={<Vendors/>}/>
                                 <Route path='/wishlist' element={<Wishlist/>}/>
                                 </Route>
                                 <Route path='*' element={<FourNotFourpage/>}/>
