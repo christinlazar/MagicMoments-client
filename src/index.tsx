@@ -24,7 +24,7 @@ const clientid:any = process.env.REACT_APP_CLIENT_ID
 root.render(
   <Provider store={store}>
         <React.StrictMode>
-        <LoadScript googleMapsApiKey='AIzaSyAJ9MZrJwdmWOa7U2e9eml7Ny5h6JYRWjY' loadingElement={<LoadingComponent/>} >
+        <LoadScript googleMapsApiKey={`${process.env.REACT_APP_MAPS_API_KEY}`}  loadingElement={<LoadingComponent/>} >
   <SocketContextProvider>
   <GoogleOAuthProvider clientId={clientid}>
              <App />
