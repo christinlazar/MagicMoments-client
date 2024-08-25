@@ -2,7 +2,7 @@ import axios,{AxiosInstance} from 'axios'
 
 
 const Api:AxiosInstance = axios.create({
-    baseURL:'https://magic-moments-client.vercel.app//api',
+    baseURL:'https://magic-moments-client.vercel.app/api',
     withCredentials:true
 }) 
 
