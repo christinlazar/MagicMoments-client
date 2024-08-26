@@ -34,7 +34,7 @@ function AddVideos() {
     const formData = new FormData()
     for(let i = 0;i<videos.length;i++){
       console.log("video type",videos[i].type)
-        if(!videos[i].type.startsWith('/video')){
+        if(!videos[i].type.startsWith('video')){
           return toast.error("Videos can only be added")
         }
       formData.append('videos',videos[i])
