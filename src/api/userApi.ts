@@ -67,7 +67,7 @@ export const ResendOtp = async () =>{
                 }
             })
             if(res){
-              localStorage.setItem('userOtp',res.data.resendedToken)
+              localStorage.setItem('userOtp',res.data.resendedToken )
               return res
             }
         } catch (error:any) {
