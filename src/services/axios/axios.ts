@@ -2,7 +2,7 @@ import axios,{AxiosInstance} from 'axios'
 
 
 const Api:AxiosInstance = axios.create({
-    baseURL:'http://43.205.227.83/api',
+    baseURL:'https://adorehome.site/api',
     withCredentials:true
 }) 
 
