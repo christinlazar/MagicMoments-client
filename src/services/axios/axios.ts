@@ -2,7 +2,7 @@ import axios,{AxiosInstance} from 'axios'
 
 
 const Api:AxiosInstance = axios.create({
-    baseURL:'http://localhost:5000/api',
+    baseURL:'http://43.205.227.83/api',
     withCredentials:true
 }) 
 
