@@ -102,7 +102,7 @@ function VendorLogin() {
             onBlur={showError1} 
             value={email} 
             onChange={(e) => setEmail(e.target.value)}  
-            className="bg-opacity-10 font-serif placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
+            className="bg-opacity-10 font-serif placeholder:font-montserrat  placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
             type="text" 
             name="email" 
             placeholder="Enter your email" 
@@ -114,10 +114,10 @@ function VendorLogin() {
             onBlur={showError2} 
             value={password} 
             onChange={(e) => setPassword(e.target.value)} 
-            className=" bg-opacity-10 font-montserrat placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
+            className=" bg-opacity-10 font-montserrat placeholder:font-montserrat  placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
             type="password" 
             name="password" 
-            placeholder="Enter your password" 
+            placeholder="Enter your password text" 
           />
         </div>
         <div className="mt-8 flex flex-col items-center text-lg text-black">
@@ -127,9 +127,14 @@ function VendorLogin() {
           >
             Signin
           </button>
-          <Link to='/vendor' className='mt-2 text-gray-900 font-montserrat text-sm hover:text-cyan-950'>
+          <div className='flex'>
+          <Link to='/vendor' className='mt-2 text-xs text-gray-900 font-montserrat  hover:text-cyan-950'>
             Register
-          </Link>  
+          </Link> 
+          <Link to='/vendor/forgotpassword?forgot=true' className='mt-2 ms-2 text-xs text-gray-900 font-montserrat  hover:text-cyan-950'>
+            forgot password?
+          </Link>
+          </div>
         </div>
       </form>
     </div>

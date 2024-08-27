@@ -23,7 +23,7 @@ function VerifyOTPmodal() {
         setTimeLeft(timeLeft - 1);
       }, 1000);
   
-      // Clean up the timer when the component unmounts or timeLeft changes
+
       return () => clearTimeout(timerId);
     }, [timeLeft,resend]);
 
@@ -40,7 +40,7 @@ function VerifyOTPmodal() {
           if(res.data.success){
               navigate('/login',{state:{success:true}})
           }else if(!res.data.success && !res.data.goback){
-            toast.error(res.data.message)
+            toast.error("Entered otp is incorrect")
             setOtp('')
           }else if(res.data.goback){
             toast.error(res.data.message)

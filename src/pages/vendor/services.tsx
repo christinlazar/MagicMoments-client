@@ -1,17 +1,27 @@
 import React,{ useEffect, useRef, useState } from 'react'
 import VendorSidebar from '../../components/vendor/vendorSideNav'
 import { Toaster,toast } from 'sonner'
-import { addServices } from '../../api/vendorApi'
+import { addServices, deleteTheService, getVendorData } from '../../api/vendorApi'
 import useListenMessages from '../../hooks/useListenMessages'
+import Vendor from '../../interfaces/interface'
 function Services() {
-
-    const [serviceArr,setServiceArr] = useState<any>([])
-    
+    const [serviceArr,setServiceArr] = useState<string[]>([])
+    const [vendorData,setvendordata] = useState<Vendor>()
+    const [refresh,setRefresh] = useState<boolean>(false)
   useListenMessages()
 
     useEffect(()=>{
+      const getvendorData = async() =>{
+          const response = await getVendorData()
+          console.log("vendor",vendorData)
+          setvendordata(response?.data.data)
+      }
+      getvendorData()
+      return ()=>{
+        setRefresh(false)
+      }
+    },[refresh])
 
-    },[])
     const services = [
         " Engagement Shoots","Full-Day Coverage","Drone Photography","Documentary Style","Photo Editing","Online gallery","Photo Albums","video services","Photo booth","custom packages"
        ]
@@ -24,6 +34,7 @@ function Services() {
         const response = await addServices(serviceArr)
         if(response?.data.success){
             setServiceArr([])
+            setRefresh(true)
             toast.success("Services has been added successfully")
         }else{
             setServiceArr([])
@@ -35,6 +46,13 @@ function Services() {
        
         const {value,checked} = e.target
          setServiceArr((prevState:any)=> checked ? [...prevState,value] : prevState.filter((serv:any)=>serv != value))
+    }
+
+    const deleteService = async(service:string) =>{
+      const response = await deleteTheService(service)
+      if(response?.data.deletedService){
+        setRefresh(true)
+      }
     }
    
   return (
@@ -76,6 +94,18 @@ function Services() {
           </button>
         </div>
       </form>
+      <div className='p-4'>
+  <span className='text-md font-montserrat font-bold p-2 block'>Currently providing services</span>
+  <ul className='list-disc'>
+    {vendorData?.services?.map((service: string) => (
+      <li key={service}  className='flex items-center justify-between text-xs p-2 border-b border-gray-200'>
+        <span>{service}</span>
+        <i onClick={()=>deleteService(service)} className="fi fi-rr-trash hover:cursor-pointer text-red-500 text-base"></i>
+      </li>
+    ))}
+  </ul>
+</div>
+
     </div>
   </div>
 </div>

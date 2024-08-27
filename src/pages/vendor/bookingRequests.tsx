@@ -189,7 +189,7 @@ function BookingRequests() {
         </tbody>
       </table>
       {
-        bookingDetails.length > 0 && (
+        bookingDetails && bookingDetails.length > 0 && (
           <div className="flex justify-center p-10 flex-wrap space-x-2">
           <button
               onClick={() => handlePageChange(currentPage - 1)}

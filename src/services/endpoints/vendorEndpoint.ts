@@ -18,7 +18,9 @@ const vendorEndPoints = {
     bringVendorUserchat:'/chat/bringVendorUserChat',
     sendMessageToUser:'/chat/sendMessageTouser',
     addlocation:'/vendor/addLongLang',
-  
+    deleteService:'/vendor/deleteService',
+    sendForgetEmailFromVendor:'/vendor/sendForgetMail',
+    verifyForgetMail:'/vendor/verifyForgetOtp',
 }
 
 export default vendorEndPoints

@@ -8,8 +8,6 @@ import VendorNavBar from "../components/vendor/vendorNavBar";
 import { vendorLogOut } from "../store/slice/AuthSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/Store";
 import VendorStoreFront from "../pages/vendor/vendorStoreFront";
 import AddPhotos from "../pages/vendor/addPhotos";
 import AddVideos from "../pages/vendor/addVideos";
@@ -24,6 +22,7 @@ import AddLocation from "../pages/vendor/addLocation";
 import PaymentDetialsVendor from "../pages/vendor/paymentDetials";
 import FourNotFourVendor from "../pages/vendor/404Vendor";
 import EditDetails from "../pages/vendor/EditDetails";
+import VendorForgotPassword from "../pages/vendor/vendorForgotPassword";
 const VendorRoutes = () =>{
     const dispatch = useDispatch()
     useEffect(()=>{
@@ -39,6 +38,7 @@ const VendorRoutes = () =>{
             <Route path="" element={<VendorLoggedOut/>}>
                  <Route path="/" element={<VendorSignup/>}/>
                  <Route path='/vendorLogin' element={<VendorLogin/>}/>
+                 <Route path='/forgotpassword' element={<VendorForgotPassword/>}/>
             </Route>
             <Route path="" element={<VendorLoggedIn/>}>
                     <Route path="/vendorHome" element={<VendorHome/>}/>
