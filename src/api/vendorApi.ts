@@ -6,9 +6,7 @@ import vendorEndPoints from "../services/endpoints/vendorEndpoint";
 
 export const vendorSignup = async(companyName:string,companyEmail:string,password:string,place:string,category:string)=>{
         try {
-           
             const result = await Api.post(vendorEndPoints.vendorsignUP,{companyName,companyEmail,password,companyLocation:place,category})
-         
             localStorage.setItem('vendorOtp',result.data.token)
             return result
         } catch (error) {
@@ -265,6 +263,15 @@ export const sendForgotMailFromVendor = async (email:string) =>{
 export const verifyForgetotp = async (otp:string) => {
     try {
         const result = await Api.post(vendorEndPoints.verifyForgetMail,{otp})
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const confirmChangingPassword = async (password:string,newPassword:string)=>{
+    try {
+        const result = await Api.post(vendorEndPoints.confirmChangingpassword,{password,newPassword})
         return result
     } catch (error) {
         console.error(error)

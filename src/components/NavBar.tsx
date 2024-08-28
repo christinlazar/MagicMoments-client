@@ -39,6 +39,11 @@ function NavBar() {
         const response = await getUserData()
         if(response?.data.success){
           setuserData(response.data.user)
+          if(userData?.isBlocked){
+            navigate('/login')
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+          }
         }
       }
       fetchUser()
@@ -62,9 +67,7 @@ function NavBar() {
     },[location,userInfo,linkPath,wishListDisplay])
 
 
-      const userNotifications = useSelector((state:RootState)=>state.auth.userNotifications)
-     
-
+      console.log("UD is",userData)
     const toggleDropdown = () => {
       setIsDropdownOpen(!isDropdownOpen);
     };

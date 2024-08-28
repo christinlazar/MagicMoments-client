@@ -43,21 +43,23 @@ function VendorLogin() {
           }
           setEmail("")
           setPassword("")
-          setIsLoading(true)
+          // setIsLoading(true)
           const result = await vendorLogin(email,password)
+          console.log("result is",result)
           if(result?.data.message2){
-            setIsLoading(false)
+            // setIsLoading(false)
             toast.error(result?.data.message2)
           }
           if(result?.data.accepted  == false){
             console.log("came back here")
-            setIsLoading(false)
+                setIsLoading(false)
                 toast.error("The request has'nt been accepted yet")
           }else if(result?.data.passwordIncorrect){
+                // setIsLoading(false)
                 toast.error("Password is incorrect")
           }
           else if(result?.data.success == true){
-            setIsLoading(false)
+            //  setIsLoading(false)
              dispatch(setVendorCredentials(result.data.accessToken))
              navigate('/vendor/vendorStore',{state:{success:true}})
           }
@@ -102,7 +104,7 @@ function VendorLogin() {
             onBlur={showError1} 
             value={email} 
             onChange={(e) => setEmail(e.target.value)}  
-            className="bg-opacity-10 font-serif placeholder:font-montserrat  placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
+            className="bg-opacity-10 font-montserrat text-cyan-950 placeholder:font-montserrat  placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
             type="text" 
             name="email" 
             placeholder="Enter your email" 
@@ -114,7 +116,7 @@ function VendorLogin() {
             onBlur={showError2} 
             value={password} 
             onChange={(e) => setPassword(e.target.value)} 
-            className=" bg-opacity-10 font-montserrat placeholder:font-montserrat  placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
+            className=" bg-opacity-10 font-montserrat text-cyan-950placeholder:font-montserrat  placeholder:text-cyan-950 block bg-white w-full border rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm" 
             type="password" 
             name="password" 
             placeholder="Enter your password text" 

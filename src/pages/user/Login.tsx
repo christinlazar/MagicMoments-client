@@ -104,7 +104,7 @@ function Login() {
         </div>
         
         <div className="mt-8 flex flex-col justify-center text-lg text-black">
-          <button type="submit" className="rounded-3xl bg-cyan-950 bg-opacity-100 px-10 py-2 mb-2 text-white shadow-xl backdrop-blur-md transition-colors text-md  transform hover:scale-105 hover:transition ease-out duration-300 font-montserrat">Sign In</button>
+          <button type="submit" className="rounded-3xl text-sm bg-cyan-950 bg-opacity-100 px-10 py-2 mb-2 text-white shadow-xl backdrop-blur-md transition-colors text-md  transform hover:scale-105 hover:transition ease-out duration-300 font-montserrat">Sign In</button>
           <div className='text-center'>
             <Link to='/forgotpassword?forgot=true' className='font-montserrat text-xs text-slate-900 hover:text-black'>Forgot password?</Link>
           </div>

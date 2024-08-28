@@ -20,12 +20,19 @@ function UserForgotPassword() {
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
         try {
             e.preventDefault()
+            if(email.trim() == ''){
+              return toast.error("email cant be empty")
+            }
             const res = await sendForgotMail(email)
+            console.log("resssss",res)
             if(res?.data.success){
                 setIsModalOpen(true)
                 if(formRef.current){
                     formRef.current.style.display = 'none'
                 }
+            }else{
+              setEmail('')
+              return toast.error("email is not correct")
             }
         } catch (error:any) {
           console.error(error)

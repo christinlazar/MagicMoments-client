@@ -86,6 +86,8 @@ function SingleVendorView() {
     const [userID,setUserID] = useState('')
     const dispatch = useDispatch()
 
+    const userData = useSelector((state:RootState)=>state.auth.userInfo)
+
     useEffect(()=>{
       const bringVendorDetial = async () =>{
           const response = await bringThatVendor(userId)
@@ -205,7 +207,6 @@ return ()=>{
     const handleBookingSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault()
 
-
         const currentDate = new Date();
         const bookingDate = new Date(date);
         if (bookingDate < currentDate) {
@@ -217,6 +218,9 @@ return ()=>{
 
         if(noOfDays == "0"){
           return toast.error("Please add no of days")
+        }
+        if(parseInt(noOfDays) <0){
+          return toast.error("No of days cant be a negative number")
         }
 
         const bookingData = {
@@ -284,6 +288,9 @@ return ()=>{
 
    const handleWishlist = async ()=>{
     const response = await wishlist(vendorDetail?._id)
+    if(!userData){
+      return toast.error("Please login to add  a vendor to wishlist")
+    }
     if(response?.data.success){
       dispatch(setWishListDisplayTrue())
       toast.success("added to wishlist")

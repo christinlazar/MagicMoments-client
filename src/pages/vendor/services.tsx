@@ -3,10 +3,10 @@ import VendorSidebar from '../../components/vendor/vendorSideNav'
 import { Toaster,toast } from 'sonner'
 import { addServices, deleteTheService, getVendorData } from '../../api/vendorApi'
 import useListenMessages from '../../hooks/useListenMessages'
-// import {Vendor} from '../../interfaces/interface'
+import { VendorInterface } from '../../interfaces/TypesAndInterfaces'
 function Services() {
     const [serviceArr,setServiceArr] = useState<string[]>([])
-    const [vendorData,setvendordata] = useState<any>()
+    const [vendorData,setvendordata] = useState<VendorInterface>()
     const [refresh,setRefresh] = useState<boolean>(false)
   useListenMessages()
 
@@ -51,7 +51,6 @@ function Services() {
     const deleteService = async(service:string) =>{
       const response = await deleteTheService(service)
       if(response?.data.deletedService){
-        setRefresh(true)
       }
     }
    
@@ -97,7 +96,7 @@ function Services() {
       <div className='p-4'>
   <span className='text-md font-montserrat font-bold p-2 block'>Currently providing services</span>
   <ul className='list-disc'>
-    {vendorData?.services?.map((service: string) => (
+    {vendorData?.services?.map((service:string) => (
       <li key={service}  className='flex items-center justify-between text-xs p-2 border-b border-gray-200'>
         <span>{service}</span>
         <i onClick={()=>deleteService(service)} className="fi fi-rr-trash hover:cursor-pointer text-red-500 text-base"></i>

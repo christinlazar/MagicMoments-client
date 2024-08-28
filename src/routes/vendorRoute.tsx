@@ -23,6 +23,7 @@ import PaymentDetialsVendor from "../pages/vendor/paymentDetials";
 import FourNotFourVendor from "../pages/vendor/404Vendor";
 import EditDetails from "../pages/vendor/EditDetails";
 import VendorForgotPassword from "../pages/vendor/vendorForgotPassword";
+import ChangeVendorPassword from "../pages/vendor/changeVendorPassword";
 const VendorRoutes = () =>{
     const dispatch = useDispatch()
     useEffect(()=>{
@@ -39,6 +40,7 @@ const VendorRoutes = () =>{
                  <Route path="/" element={<VendorSignup/>}/>
                  <Route path='/vendorLogin' element={<VendorLogin/>}/>
                  <Route path='/forgotpassword' element={<VendorForgotPassword/>}/>
+                 <Route path='/changePassword' element={<ChangeVendorPassword/>}/>
             </Route>
             <Route path="" element={<VendorLoggedIn/>}>
                     <Route path="/vendorHome" element={<VendorHome/>}/>

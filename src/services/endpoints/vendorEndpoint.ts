@@ -21,6 +21,7 @@ const vendorEndPoints = {
     deleteService:'/vendor/deleteService',
     sendForgetEmailFromVendor:'/vendor/sendForgetMail',
     verifyForgetMail:'/vendor/verifyForgetOtp',
+    confirmChangingpassword:'/vendor/changePassword'
 }
 
 export default vendorEndPoints

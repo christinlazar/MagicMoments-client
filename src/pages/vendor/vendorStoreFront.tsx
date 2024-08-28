@@ -116,11 +116,7 @@ function VendorStoreFront() {
                             <input value={startingPrice} onChange={(e) => setStartingPrice(e.target.value)} className='placeholder:text-sm w-full max-w-xs h-10 text-sm focus:outline-none border border-cyan-950 rounded ms-2' />
                           </div>
                           <div className='flex flex-col mx-1'>
-                            <label className='text text-sm mt-3 ms-3 text-cyan-950 font-bold' htmlFor='services'>Services</label>
-                            {/* Add services input here if needed */}
-                          </div>
-                          <div className='flex flex-col mx-1'>
-                            <button className="px-10 mt-4 py-4 rounded-full cursor-pointer text-white border-0 bg-cyan-950 shadow-md tracking-wider uppercase text-sm transition-all duration-500 ease-linear hover:tracking-widest hover:bg-cyan-950 hover:text-white hover:shadow-lg hover:shadow-[rgba(20,24,54,0.93)] active:translate-y-2 active:tracking-widest active:bg-cyan-950 active:text-white active:shadow-none active:transition-none">Add Details</button>
+                            <button className="px-6 mt-7 py-3 ms-6 rounded-full cursor-pointer text-white border-0 bg-cyan-950 shadow-md tracking-wider uppercase text-sm transition-all duration-500 ease-linear hover:tracking-widest hover:bg-cyan-950 hover:text-white hover:shadow-lg hover:shadow-[rgba(20,24,54,0.93)] active:translate-y-2 active:tracking-widest active:bg-cyan-950 active:text-white active:shadow-none active:transition-none">Add Details</button>
                           </div>
                         </div>
                       </form>

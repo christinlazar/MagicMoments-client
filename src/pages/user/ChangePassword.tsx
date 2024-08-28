@@ -48,11 +48,11 @@ function ChangePassword() {
               <form  onSubmit={handleSubmit} id='form' className='p-6' >
                 <label className='font-serif'>Enter new Password</label>
                 <div className="mb-4 text-lg">
-                  <input type='password'  value={newPassword} onChange={(e)=>setNewPassword(e.target.value)}  className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm"  name="newPassword"  />
+                  <input type='password'  value={newPassword} onChange={(e)=>setNewPassword(e.target.value)}  className="bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm"  name="newPassword"  />
                 </div>
                 <label className='font-serif'>Confirm the password</label>
                 <div className="mb-4 text-lg">
-                  <input type='password'  value={newPasswordConfirm} onChange={(e)=>setNewPasswordConfirm(e.target.value)}  className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm"  name="newPasswordConfirm"  />
+                  <input type='password'  value={newPasswordConfirm} onChange={(e)=>setNewPasswordConfirm(e.target.value)}  className="bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm"  name="newPasswordConfirm"  />
                 </div>
                 <div className="mt-8 flex justify-center text-lg text-black">
                         <button type="submit" className="rounded-3xl bg-cyan-950 bg-opacity-100 px-10 py-2 mb-10 text-white shadow-xl backdrop-blur-md transition-colors duration-300 transform hover:scale-105 hover:transition ease-out duration-300 font-serif">Confirm</button>

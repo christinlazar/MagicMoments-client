@@ -1,7 +1,5 @@
 import axios,{AxiosInstance} from 'axios'
-// import { Role } from '../../interfaces/interface';
-// import { Role } from '../../interfaces/interface';
-
+import { Role } from '../../interfaces/TypesAndInterfaces';
 const Api:AxiosInstance = axios.create({
     // baseURL:'https://adorehome.site/api',
     baseURL:'http://localhost:5000/api',
@@ -18,6 +16,7 @@ Api.interceptors.request.use(
         const userOtp = localStorage.getItem('userOtp')
         const vendorOtp = localStorage.getItem('vendorOtp')
         const vendorAccessToken = localStorage.getItem('vendorAccessToken')
+        
         if(accessToken && userInfo  && !userOtp && !vendorOtp && !window.location.pathname.includes('/admin') && !window.location.pathname.includes('/vendor') ){
             console.log("for user")
             config.headers.Authorization = `Bearer ${accessToken}`
@@ -43,7 +42,17 @@ Api.interceptors.response.use(
         console.log("error config",error.config)
         console.log("error is",error)
         console.log("response data is",error.response.data)
-        if(error.response.status == 401 && error.response.data.role == 'user' && !originalRequest._retry){
+        if(error.response.status == 401 && error.response.data.userBlocked){
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('accessToken')
+             window.location.href = "/login"
+        }
+        if(error.response.status == 401 && error.response.data.vendorBlocked){
+            localStorage.removeItem('vendorInfo')
+            localStorage.removeItem('accessToken')
+             window.location.href = "/vendor/vendorLogin"
+        }
+        if(error.response.status == 401 && error.response.data.role == Role.User && !originalRequest._retry){
             originalRequest._retry = true
             console.log("getting here reason:user err");
             const response = await Api.post('user/refresh-token',{},{withCredentials:true})
@@ -52,14 +61,14 @@ Api.interceptors.response.use(
                 localStorage.setItem('accessToken',response.data.accessToken);
                 Api.defaults.headers.common['Authorization'] = `Bearer ` + response.data.accessToken
                 return Api(originalRequest)
-            }else if(!response.data.refresh && response.data.role == 'user' ){
+            }else if(!response.data.refresh && response.data.role == Role.User ){
                  alert("USER Session has been expired, please login again")
                  localStorage.removeItem('userInfo')
                  localStorage.removeItem('accessToken')
                     window.location.href = '/login'
                 
             }
-        }else if(error.response.status == 401 && error.response.data.role == 'admin' &&  !originalRequestForAdmin._retry ){
+        }else if(error.response.status == 401 && error.response.data.role == Role.Admin &&  !originalRequestForAdmin._retry ){
             originalRequestForAdmin._retry = true
             console.log("from here we can go for a request")
             const response = await Api.post('admin/refresh-token',{},{withCredentials:true})
@@ -70,13 +79,13 @@ Api.interceptors.response.use(
                 Api.defaults.headers.common['Authorization'] = `Bearer ` + response.data.accessToken
                 console.log("going for original request")
                 return Api(originalRequest)
-            }else if(!response.data.refresh && response.data.role == 'admin'){
+            }else if(!response.data.refresh && response.data.role == Role.Admin){
                 alert("Admin Session has been expired, please login again")
                 localStorage.removeItem('adminInfo')
                 localStorage.removeItem('adminAccessToken')
                    window.location.href = '/admin'
             }
-        }else if(error.response.status == 401 && error.response.data.role == 'vendor'  &&  !originalRequestForVendor._retry ){
+        }else if(error.response.status == 401 && error.response.data.role == Role.Vendor  &&  !originalRequestForVendor._retry ){
             originalRequestForVendor._retry = true
             console.log("going to refresh vendor token");
             const response = await Api.post('vendor/refresh-token',{},{withCredentials:true})
@@ -86,15 +95,13 @@ Api.interceptors.response.use(
                 localStorage.setItem('vendorAccessToken',response.data.vendorAccessToken)
                 Api.defaults.headers.common['Authorization'] = `Bearer ` + response.data.vendorAccessToken
                 return Api(originalRequest)
-            }else if(!response.data.refresh && response.data.role == 'vendor'){
+            }else if(!response.data.refresh && response.data.role == Role.Vendor){
                 alert("Vendor Session has been expired, please login again")
                 localStorage.removeItem('vendorInfo')
                 localStorage.removeItem('vendorAccessToken')
-                window.location.href = '/vendor/vendorLogin'
-               
+                window.location.href = '/vendor/vendorLogin' 
            }  
         }
-      
         return Promise.reject(error)
     }
 )

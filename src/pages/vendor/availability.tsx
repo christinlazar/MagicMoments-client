@@ -10,6 +10,7 @@ const Availabilty: React.FC = () => {
 useListenMessages()
   const [dates, setDates] = useState<DateObject[]>([]);
   const [errorFound,setError] = useState(false)
+  const TODAY = new DateObject().toDate()
   const handleDateChange = (selectedDates: DateObject[]) => {
     setDates(selectedDates);
   };
@@ -22,35 +23,11 @@ useListenMessages()
     e.preventDefault();
     try {
       let datesArray: string[] = [];
-
       dates.forEach((date) => datesArray.push(date.format()));
-    
-  
       if (datesArray.length === 0) {
         return toast.error("Please select at least one date to add");
       }
-  
-      const today = new Date();
-      today.setHours(0, 0, 0, 0); 
-      const todayTime = today.getTime();
-     
-  
-      for (let i = 0; i < datesArray.length; i++) {
-        const dt = datesArray[i];
-        let newdt = new Date(dt).getTime();
-    
-  
-        if (newdt < todayTime) {
-          setDates([]);
-          toast.error("Can't add the past dates");
-          return;
-        }
-      }
-  
-    
       const response = await addUnavailableDates(datesArray);
-      
-  
       if (response?.data.success) {
         toast.success("Dates have been added successfully");
         setDates([]);
@@ -80,6 +57,7 @@ useListenMessages()
           <h1 className="text-xl font-bold mb-4 text-center text-md font-montserrat">Add Unavailable Dates</h1>
           <div className="flex items-center justify-center mb-8">
             <DatePicker
+            minDate={TODAY}
               multiple
               value={dates}
               onChange={handleDateChange}
