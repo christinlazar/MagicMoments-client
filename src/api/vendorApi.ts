@@ -1,4 +1,4 @@
-import { toast } from "sonner";
+
 import Api from "../services/axios/axios";
 import vendorEndPoints from "../services/endpoints/vendorEndpoint";
 
