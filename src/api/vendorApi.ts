@@ -50,6 +50,10 @@ export const VendorResendOtp = async() =>{
                 'authorization': `Bearer ${token}`
             }
         })
+
+        if(result?.data.token){
+            localStorage.setItem('vendorOtp',result.data.token)
+        }
         return result
     } catch (error) {
        if(error instanceof Error){
