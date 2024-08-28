@@ -3,7 +3,7 @@ import VendorSidebar from '../../components/vendor/vendorSideNav'
 import { Toaster,toast } from 'sonner'
 import { addServices, deleteTheService, getVendorData } from '../../api/vendorApi'
 import useListenMessages from '../../hooks/useListenMessages'
-import Vendor from '../../interfaces/interface'
+import {Vendor} from '../../interfaces/interface'
 function Services() {
     const [serviceArr,setServiceArr] = useState<string[]>([])
     const [vendorData,setvendordata] = useState<Vendor>()

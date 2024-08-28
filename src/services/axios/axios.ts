@@ -1,4 +1,5 @@
 import axios,{AxiosInstance} from 'axios'
+// import { Role } from '../../interfaces/interface';
 import { Role } from '../../interfaces/interface';
 
 const Api:AxiosInstance = axios.create({

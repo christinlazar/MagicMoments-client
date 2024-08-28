@@ -1,4 +1,4 @@
-interface Vendor{
+export interface Vendor{
     _id?:string;
     companyName:string;
     companyEmail:string;
@@ -29,4 +29,3 @@ export enum Role {
     Vendor = 'vendor'
 }
 
-export default Vendor
