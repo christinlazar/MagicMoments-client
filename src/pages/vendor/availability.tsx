@@ -40,12 +40,6 @@ useListenMessages()
         let newdt = new Date(dt).getTime();
     
   
-        if (isNaN(newdt)) {
-          toast.error(`Invalid date: ${dt}`);
-          setDates([]);
-          return;
-        }
-  
         if (newdt < todayTime) {
           setDates([]);
           toast.error("Can't add the past dates");

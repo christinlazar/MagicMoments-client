@@ -1,11 +1,10 @@
 
 import React, { useState ,useRef, useEffect} from 'react'
 import { Toaster, toast } from 'sonner'
-import logo from '../../assets/license (1).png'
+import logo from '../../assets/wedding (2).png'
 import RegisterImage from '../../assets/pexels-imagestudio-1488312.jpg'
 import { sendForgotMail } from '../../api/userApi'
 import ForgotPasswordOtp from './ForgotPasswordOtp'
-import { request } from 'http'
 import { useLocation } from 'react-router-dom'
 function UserForgotPassword() {
   const [email,setEmail] = useState<string>('')
@@ -42,15 +41,15 @@ function UserForgotPassword() {
       <div className="text-white" >
         <div className=" flex flex-col items-center">
           <img className='my-4' src={logo} width="50" alt="Magic moments Logo"/>
-          <h1 className=" text-2xl">Magic Moments</h1>
+          <h1 className=" font-montserrat text-cyan-950 text-xl font-bold">Magic Moments</h1>
         </div>
         <form  onSubmit={handleSubmit} id='form' className='p-6' >
-          <label className='font-serif'>Enter the email</label>
+          <label className='font-montserrat text-sm text-gray-100'>Enter the email</label>
           <div className="mb-4 text-lg">
-            <input  value={email} onChange={(e)=>setEmail(e.target.value)}  className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm" type="text" name="email"  />
+            <input  value={email} onChange={(e)=>setEmail(e.target.value)}  className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block  w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none  sm:text-sm" type="text" name="email"  />
           </div>
           <div className="mt-8 flex justify-center text-lg text-black">
-                  <button type="submit" className="rounded-3xl bg-cyan-950 bg-opacity-100 px-10 py-2 mb-10 text-white shadow-xl backdrop-blur-md transition-colors duration-300 transform hover:scale-105 hover:transition ease-out duration-300 font-serif">send mail</button>
+                  <button type="submit" className="rounded-3xl  bg-cyan-950 bg-opacity-100 px-10 py-2 mb-10 text-white shadow-xl backdrop-blur-md transition-colors  text-xs  transform hover:scale-105 hover:transition ease-out duration-300 font-montserrat">send mail</button>
                 </div>
         </form>
       </div>
@@ -62,7 +61,6 @@ function UserForgotPassword() {
         <ForgotPasswordOtp/>
      )   
     }
-    {/* <ToastContainer className='Toastify__toast-container--top-right'/> */}
   <Toaster richColors position="bottom-right" />
 
 </div>

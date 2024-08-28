@@ -18,8 +18,6 @@ function AddVideos() {
   const [isUploading,setIsUploading] = useState(false)
   const vendorInfo = useSelector((state:RootState)=>state.auth)
   const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
-  
-   
      if(e.target.files){
       setVideos(e.target.files)
      }
@@ -27,10 +25,11 @@ function AddVideos() {
   const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
   
     e.preventDefault()
+
     if(!videos){
       return toast.error("Select video to upload")
     }
-   
+    
     const formData = new FormData()
     for(let i = 0;i<videos.length;i++){
       console.log("video type",videos[i].type)
@@ -43,9 +42,15 @@ function AddVideos() {
     setIsOverlayVisisble(true)
     const response = await addVideos(formData)
     if(response?.data.success){
+      setVideos(null)
       setIsUploading(false)
       setIsOverlayVisisble(false)
       toast.success('Videos has been added successfully')
+    }else{
+      setVideos(null)
+      setIsUploading(false)
+      setIsOverlayVisisble(false)
+      toast.error("Something went wrong")
     }
   }
   return (
@@ -83,7 +88,7 @@ function AddVideos() {
         {isUploading && vendorInfo !== null && createPortal(
           <div className='flex items-center justify-center z-40 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-5' style={{ color: 'black', borderRadius: '5px' }}>
             <div className="loader">
-              <span className="loader-text text-2xl">Uploading</span>
+              <span className="loader-text text-sm">Uploading</span>
               <span className="load"></span>
             </div>
           </div>,

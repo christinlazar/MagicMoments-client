@@ -665,19 +665,7 @@ document.body
         </div>
       
 
-        <div className=' p-2'>
-          {/* <h1 className='font-semibold font-montserrat text-cyan-800 mx'>Dates on which we have been booked</h1>
-          <div className='mt-3 p-2'>
-            <ul className='text-xs'>
-              <li>{vendorDetail?.unAvailableDates[0]}</li>
-              <li>{vendorDetail?.unAvailableDates[1]}</li>
-              <div className='flex'>
-                <li>{vendorDetail?.unAvailableDates[2]}</li>
-                <li onClick={setModal} className='text-sm hover:cursor-pointer'>...more</li>
-              </div>
-            </ul>
-          </div> */}
-          
+        <div className=' p-2'>   
           <h1 className='font-semibold font-montserrat pe-2 pt-2 pb-2 text-cyan-800'>Our services</h1>
           <ul>
           {

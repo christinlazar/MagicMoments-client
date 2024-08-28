@@ -1,9 +1,7 @@
 
 import Api from '../services/axios/axios'
 import userEndpoint from '../services/endpoints/userEndpoint'
-import { userLogOut } from '../store/slice/AuthSlice'
 import { bookingDataInterface } from '../pages/user/SingleVendorView'
-import { jwtDecode } from 'jwt-decode'
 import axios from 'axios'
 export const signup = async(name:string,email:string,phone:number,password:string,confirmPassword:string) =>{
     try {
@@ -14,8 +12,10 @@ export const signup = async(name:string,email:string,phone:number,password:strin
    
          localStorage.setItem('userOtp',token)
         return res
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+        if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 export const verifyOtp = async(otp:string):Promise<any | undefined> =>{
@@ -32,8 +32,10 @@ export const verifyOtp = async(otp:string):Promise<any | undefined> =>{
             localStorage.removeItem('userOtp')
         }
         return res
-    } catch (error:any){
-        console.error(error)
+    } catch (error){
+        if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 export const userLogin = async(email:string,password:string) =>{
@@ -45,16 +47,20 @@ export const userLogin = async(email:string,password:string) =>{
             localStorage.setItem('accessToken',JSON.stringify(res.data.accessToken))
         }
         return res
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+        if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
 export const profileSubmission = async(content:string) =>{
         try {
             const res = await Api.post(userEndpoint.profileSubmit,{content})
-        } catch (error:any) {
-            console.error(error)
+        } catch (error) {
+            if(error instanceof Error){
+                console.error(error)
+           }
         }
 }
 
@@ -67,11 +73,13 @@ export const ResendOtp = async () =>{
                 }
             })
             if(res){
-              localStorage.setItem('userOtp',res.data.resendedToken)
+              localStorage.setItem('userOtp',res.data.resendedToken )
               return res
             }
-        } catch (error:any) {
-            console.error(error)
+        } catch (error) {
+            if(error instanceof Error){
+                console.error(error)
+           }
         }
 }
 
@@ -79,9 +87,10 @@ export const sendForgotMail = async (email:string) =>{
     try{
         const res = await Api.post(userEndpoint.forgotPassword,{email})
         return res
-    }catch(error:any){
-        console.error(error)
-
+    }catch(error){
+        if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -89,8 +98,10 @@ export const verifyForgotOtp = async(otp:string) =>{
 try {
     const res = await Api.post(userEndpoint.verifyForgotOtp,{otp})
     return res
-} catch (error:any) {
-    console.error(error)
+} catch (error) {
+    if(error instanceof Error){
+        console.error(error)
+   }
 }
 }
 
@@ -98,8 +109,10 @@ export const changePassword = async(newPassword:string,newPasswordConfirm:string
     try {
         const res = await Api.post(userEndpoint.changepassword,{newPassword,newPasswordConfirm})
         return res
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -107,8 +120,10 @@ export const getVendors = async () =>{
     try {
         const result = await Api.get(userEndpoint.getAllVendors)
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -116,8 +131,10 @@ export const bringThatVendor = async (vendorId:string) =>{
     try {
         const result = await Api.post(userEndpoint.bringVendorDetail,{vendorId})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -126,8 +143,10 @@ export const handleStripePayment = async (companyName:string | undefined,vendorI
         const result = await Api.post(userEndpoint.stripePayment,{companyName,vendorId,amount,bookingData})
       
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -136,8 +155,10 @@ export const SendBookingRequest = async (bookingData:bookingDataInterface) =>{
        
         const result = await Api.post(userEndpoint.sendbookingrequest,{bookingData})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -145,8 +166,10 @@ export const checkIsReqAccepted = async (vendorId:string | undefined) =>{
     try {
         const result = await Api.post(userEndpoint.checkIsBookingAccepted,{vendorId})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -154,8 +177,10 @@ export const  isExistingBookingRequest = async (vendorId:string | undefined) =>{
     try {
         const result = await Api.post(userEndpoint.checkIsBookingExisting,{vendorId})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -163,8 +188,10 @@ export const fetchBookingDetials = async () => {
     try{
         const result = await Api.post(userEndpoint.fetchBookingDetials)
         return result
-    }catch(error:any){
-        console.error(error)
+    }catch(error){
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -172,8 +199,10 @@ export const fetchBookingRequests = async () =>{
     try {
         const result = await Api.post(userEndpoint.fetchBookingRequests)
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -181,8 +210,10 @@ export const cancelBookingRequest = async (bookingId:string) =>{
     try {
         const result = await Api.post(userEndpoint.cancelBooking,{bookingId})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -190,8 +221,10 @@ export const showPhotosToUser = async (vendorId:string) =>{
     try {
         const result = await Api.post(userEndpoint.bringPhotos,{vendorId})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -199,8 +232,10 @@ export const showVideosToUser = async (vendorId:string) =>{
     try {
         const result = await Api.post(userEndpoint.bringVideos,{vendorId})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -208,16 +243,20 @@ export const getVendorChat = async (vendorId:string | undefined)=>{
     try {
         const result = await Api.post(userEndpoint.getVendorChat,{vendorId})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 export const sendmessage = async (message:string,conversationId:string,senderModel:'User'|'Vendor',receiverId:string,receiverModel:'User' | 'Vendor') =>{
     try {
         const result = await Api.post(userEndpoint.sendMessage,{message,conversationId,senderModel,receiverId,receiverModel})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -225,16 +264,20 @@ export const sendVideoCallReq = async () =>{
     try {
         const result = await Api.post(userEndpoint.sendVideoMessageReq)
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 export const submitReview = async (review:string,rating:number,vendorId:any) =>{
     try {
         const result = await Api.post(userEndpoint.sendReview,{review,rating,vendorId})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -243,8 +286,10 @@ export const getReviews = async (vendorId:string | undefined) =>{
        
         const result = await Api.post(userEndpoint.getreviews,{vendorId})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -252,8 +297,10 @@ export const searchVendor = async (searchValue:string) =>{
     try {
         const result = await Api.post(userEndpoint.searchForVendor,{searchValue})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -263,8 +310,10 @@ export const fetchPlaces = async (place:string,radius = 500) => {
         const response = await Api.post(userEndpoint.fetchplaces,{place,radius})
       
         return response 
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -272,8 +321,10 @@ export const wishlist = async (vendorId:string | null | undefined)=>{
     try {
         const result = await Api.post(userEndpoint.addToWishlist,{vendorId})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -281,8 +332,10 @@ export const getUserData = async() =>{
     try {
         const result = await Api.get(userEndpoint.getUserdata)
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -290,8 +343,10 @@ export const getVendorsFromWishlist = async() =>{
     try {
         const result = await Api.get(userEndpoint.getWishListData)
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -299,8 +354,10 @@ export const removeVendorWishlist = async (vendorId:string) =>{
     try {
         const result = await Api.post(userEndpoint.removeFromWishlist,{vendorId})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -308,8 +365,10 @@ export const editReview = async (review:string,reviewId:string) =>{
     try{
         const result = await Api.post(userEndpoint.editreview,{review,reviewId})
         return result
-    }catch(error:any){
-        console.error(error)
+    }catch(error){
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -317,16 +376,20 @@ export const searchCompany = async (companyName:string) =>{
     try {
         const result = await Api.post(userEndpoint.searchByCompanyName,{companyName})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 export const sortbyDate = async (startDate:string,endDate:string) =>{
     try {
         const result = await Api.post(userEndpoint.sortbydate,{startDate,endDate})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 export const cancelBooking = async(bookingId:string) =>{
@@ -334,7 +397,9 @@ export const cancelBooking = async(bookingId:string) =>{
         const result = await Api.post(userEndpoint.cancelbooking,{bookingId})
         return result
     } catch (error) {
-        console.error(error)
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -342,8 +407,10 @@ export const filterByPrice = async (criteria:string) =>{
     try {
         const result = await Api.post(userEndpoint.filterbyprice,{criteria})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -352,8 +419,10 @@ export const gsignUp = async (tokenResponse:any) => {
         console.log("")
         const result = await Api.post(userEndpoint.gSignup,{tokenResponse})
         return result
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 
@@ -366,8 +435,10 @@ export const glogin = async (tokenResponse:any) => {
         })
       
         return result.data
-    } catch (error:any) {
-        console.error(error)
+    } catch (error) {
+         if(error instanceof Error){
+            console.error(error)
+       }
     }
 }
 

@@ -50,7 +50,6 @@ function AddPhotos() {
     <>
     <div className="flex flex-col md:flex-row ps-4 md:ps-12">
       <Toaster richColors position="bottom-right" />
-      {/** VendorSidebar only shown on medium screens and up */}
       <div className="mt-5 hidden md:block">
         <VendorSidebar />
       </div>
@@ -81,7 +80,7 @@ function AddPhotos() {
         {isUploading && vendorInfo !== null && createPortal(
           <div className='flex items-center justify-center z-40 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-5' style={{ color: 'black', borderRadius: '5px' }}>
             <div className="loader">
-              <span className="loader-text text-2xl">Uploading</span>
+              <span className="loader-text text-sm">Uploading</span>
               <span className="load"></span>
             </div>
           </div>,

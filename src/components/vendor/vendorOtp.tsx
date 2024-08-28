@@ -24,7 +24,6 @@ function VendorVerifyOTPmodal() {
         setTimeLeft(timeLeft - 1);
       }, 1000);
   
-      // Clean up the timer when the component unmounts or timeLeft changes
       return () => clearTimeout(timerId);
     }, [timeLeft,resend]);
 
@@ -40,7 +39,7 @@ function VendorVerifyOTPmodal() {
           if(res.data.success){
               navigate('/vendor/vendorLogin',{state:{success:true}})
           }else if(!res.data.success && !res.data.goback){
-            toast.error(res.data.message)
+            toast.error("Entered otp is incorrect")
             setOtp('')
           }else if(res.data.goback){
             toast.error(res.data.message)
@@ -60,7 +59,9 @@ function VendorVerifyOTPmodal() {
       }
     }
     const resendOtp = async () =>{
-      const res = await VendorResendOtp(otp)
+      console.log("resendOtp")
+      const res = await VendorResendOtp()
+      console.log(res)
       if(res?.data.success){
         toast.success("otp sended successully")
           setResend(true)
@@ -69,6 +70,12 @@ function VendorVerifyOTPmodal() {
             resendBtnRef.current.style.display = 'none'
             sendBtnRef.current.style.display = 'block'
         }
+      }else if(res?.data.expired){
+        localStorage.removeItem('vendorOtp')
+        toast.error("session has expired,go back and register again")
+        setTimeout(()=>{
+        navigate('/vendor',{state:{toregister:true}})
+        },3000)
       }
     }
   return (

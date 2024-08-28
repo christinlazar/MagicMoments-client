@@ -6,27 +6,9 @@ import { verifyForgotOtp } from '../../api/userApi'
 function ForgotPasswordOtp() {
     const [modalOn,setModal] = useState<boolean>(true)
     const [otp,setOtp] = useState<string>('')
-    // const [timeLeft,setTimeLeft] = useState<number>(60)
+
     const[resend,setResend] = useState<boolean>(false)
     const navigate = useNavigate()
-    // const resendBtnRef = useRef<HTMLButtonElement>(null)
-    // const sendBtnRef = useRef<HTMLButtonElement>(null)
-
-    // useEffect(() => {
-    //   if (timeLeft <= 0){
-    //     if(resendBtnRef.current && sendBtnRef.current){
-    //         resendBtnRef.current.style.display = 'block'
-    //         sendBtnRef.current.style.display = 'none'
-    //     }
-    //     return;
-    //   } 
-    //   const timerId = setTimeout(() => {
-    //     setTimeLeft(timeLeft - 1);
-    //   }, 1000);
-  
-    //   // Clean up the timer when the component unmounts or timeLeft changes
-    //   return () => clearTimeout(timerId);
-    // }, [timeLeft,resend]);
 
     function closeModal(){
         setModal(false)
@@ -43,18 +25,7 @@ function ForgotPasswordOtp() {
       console.error(error)
       }
     }
-    // const resendOtp = async () =>{
-    //   const res = await ResendOtp()
-    //   if(res?.data.success){
-    //     toast.success("otp sended successully")
-    //       setResend(true)
-    //       setTimeLeft(60)
-    //       if(resendBtnRef.current && sendBtnRef.current){
-    //         resendBtnRef.current.style.display = 'none'
-    //         sendBtnRef.current.style.display = 'block'
-    //     }
-    //   }
-    // }
+
   return (
     <>
     {
@@ -118,15 +89,11 @@ function ForgotPasswordOtp() {
                     />
                   </div>
                   <div>
-                    {/* <small> Time remaing:{timeLeft}</small> */}
                 </div>
                   <button type='submit' style={{display:'block'}} className="w-full text-white bg-cyan-950 hover:bg-cyan-950 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     confirm
                   </button>
                 </form>
-                {/* <button onClick={resendOtp} style={{display:'none'}} ref={resendBtnRef} className="w-full text-white bg-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"> */}
-                    {/* Resend otp */}
-                {/* </button> */}
               </div>
             </div>
           </div>
