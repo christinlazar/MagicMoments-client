@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Toaster,toast } from 'sonner'
+import { Toaster } from 'sonner'
 import VendorSidebar from '../../components/vendor/vendorSideNav'
 import { fetchBookings } from '../../api/vendorApi'
 import useListenMessages from '../../hooks/useListenMessages'

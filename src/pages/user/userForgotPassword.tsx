@@ -24,7 +24,6 @@ function UserForgotPassword() {
               return toast.error("email cant be empty")
             }
             const res = await sendForgotMail(email)
-            console.log("resssss",res)
             if(res?.data.success){
                 setIsModalOpen(true)
                 if(formRef.current){

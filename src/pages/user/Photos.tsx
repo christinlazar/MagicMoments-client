@@ -9,7 +9,6 @@ function Photos() {
 
 const location = useLocation()
 const vendorId = location.state
-console.log(vendorId)
 const [photos,setPhotos] = useState([])
 const [modalOpen,setModalOpen] = useState(false)
 const [img,setImg] = useState('')

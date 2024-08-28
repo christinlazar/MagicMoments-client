@@ -4,12 +4,11 @@ import closeLogo from '../../assets/circle-xmark (1).png'
 import { toast, Toaster } from 'sonner';
 function PaymentFailed() {
 
-  // const [paymentDone,setPaymentDone] = useState(false)
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search);
   const otherUserBooked = queryParams.get('otherUserBooked')
     if(otherUserBooked != null || otherUserBooked != undefined){
-        // setPaymentDone(true)
+       
         toast.error("Somebody else has done the payment first")
     }
 

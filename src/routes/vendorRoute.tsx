@@ -3,8 +3,6 @@ import VendorSignup from "../pages/vendor/vendorSignup";
 import VendorLoggedOut from "../components/vendor/vendorLoggedOut";
 import VendorLogin from "../pages/vendor/vendorLogin";
 import VendorLoggedIn from "../components/vendor/vendorLoggedIn";
-import VendorHome from "../pages/vendor/vendorHome";
-import VendorNavBar from "../components/vendor/vendorNavBar";
 import { vendorLogOut } from "../store/slice/AuthSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -43,7 +41,6 @@ const VendorRoutes = () =>{
                  <Route path='/changePassword' element={<ChangeVendorPassword/>}/>
             </Route>
             <Route path="" element={<VendorLoggedIn/>}>
-                    <Route path="/vendorHome" element={<VendorHome/>}/>
                     <Route path="/vendorStore" element={<VendorStoreFront/>}/>
                     <Route path='/addPhotos' element={<AddPhotos/>}/>
                     <Route path='/addVideos' element={<AddVideos/>}/>

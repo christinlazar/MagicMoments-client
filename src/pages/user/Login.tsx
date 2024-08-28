@@ -6,7 +6,6 @@ import { userLogin } from '../../api/userApi'
 import { useDispatch } from 'react-redux'
 import { setUserCredentials } from '../../store/slice/AuthSlice'
 import {Toaster,toast} from 'sonner'
-import Carousel from '../../carousel/Caraousel'
 import GoogleAuthSignup from '../../components/user/GoogleAuthSignup'
 function Login() {
   const location = useLocation()
@@ -65,8 +64,6 @@ function Login() {
         toast.error('Password field cant be empty')
       }
     }
-    console.log("hiiiii  ")
-
 
   return (
     <div className="flex h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style={{ backgroundImage: `url(${RegisterImage})` }}>

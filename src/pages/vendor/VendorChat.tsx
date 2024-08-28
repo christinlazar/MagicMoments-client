@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { bringchats } from '../../api/vendorApi';
 import userImg from '../../assets/user (1).png'
 import { useNavigate } from 'react-router-dom';
-import { toast, Toaster } from 'sonner';
+import {  Toaster } from 'sonner';
 const VendorChat = () => {
 const [conversations,setConversations] = useState<any>([])
 const [users,setUsers] = useState<[]>([])

@@ -55,7 +55,6 @@ export const VideoCall = () => {
             });
     
         socket?.on("callUser", (data) => {
-            console.log("Receiving call from:", data);
             setReceivingCall(true);
             setCaller(data.from);
             setName(data.name);

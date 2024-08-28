@@ -90,7 +90,6 @@ function BookingDetials() {
     }
 
     const handleCancelBooking = async (bookingId:string) => {
-        console.log("in hanldeCancel")
         setIsUploading(true)
         setIsOverlayVisisble(true)
         const response = await cancelBooking(bookingId)

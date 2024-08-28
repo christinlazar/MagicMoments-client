@@ -4,7 +4,6 @@ import logo from '../../assets/wedding (2).png'
 import { useLocation } from 'react-router-dom'
 import { signup } from '../../api/userApi';
 import VerifyOTPmodal from '../../components/VerifyOTPmodal';
-// import {ToastContainer,toast} from 'react-toastify'
 import {Toaster,toast} from 'sonner'
 import 'react-toastify/dist/ReactToastify.css'
 import GoogleAuthSignup from '../../components/user/GoogleAuthSignup';

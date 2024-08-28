@@ -43,23 +43,17 @@ function VendorLogin() {
           }
           setEmail("")
           setPassword("")
-          // setIsLoading(true)
           const result = await vendorLogin(email,password)
-          console.log("result is",result)
           if(result?.data.message2){
-            // setIsLoading(false)
             toast.error(result?.data.message2)
           }
           if(result?.data.accepted  == false){
-            console.log("came back here")
                 setIsLoading(false)
                 toast.error("The request has'nt been accepted yet")
           }else if(result?.data.passwordIncorrect){
-                // setIsLoading(false)
                 toast.error("Password is incorrect")
           }
           else if(result?.data.success == true){
-            //  setIsLoading(false)
              dispatch(setVendorCredentials(result.data.accessToken))
              navigate('/vendor/vendorStore',{state:{success:true}})
           }

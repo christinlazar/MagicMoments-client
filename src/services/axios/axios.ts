@@ -1,8 +1,7 @@
 import axios,{AxiosInstance} from 'axios'
 import { Role } from '../../interfaces/TypesAndInterfaces';
 const Api:AxiosInstance = axios.create({
-    // baseURL:'https://adorehome.site/api',
-    baseURL:'http://localhost:5000/api',
+    baseURL:'https://adorehome.site/api',
     withCredentials:true
 }) 
 
@@ -38,8 +37,6 @@ Api.interceptors.response.use(
         const originalRequest = error.config;
         const originalRequestForAdmin = error.config
         const originalRequestForVendor = error.config
-        console.log("org for",originalRequest._retry)
-        console.log("error config",error.config)
         console.log("error is",error)
         console.log("response data is",error.response.data)
         if(error.response.status == 401 && error.response.data.userBlocked){

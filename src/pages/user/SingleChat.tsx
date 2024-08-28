@@ -2,9 +2,8 @@ import React, { useEffect, useState,useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getVendorChat, sendmessage, sendVideoCallReq } from '../../api/userApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { addMessages, setMessages } from '../../store/slice/AuthSlice';
+import {  setMessages } from '../../store/slice/AuthSlice';
 import useListenMessages from '../../hooks/useListenMessages';
-import bgImg from '../../assets/d93b9cd13a14f56aca18a42ec13d9981.jpg'
 import { setOpenUserChat } from '../../store/slice/AuthSlice';
 import { Toaster } from 'sonner';
 import { useNavigate } from 'react-router-dom';

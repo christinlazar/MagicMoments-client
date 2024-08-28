@@ -1,8 +1,6 @@
 import React, { useState ,useEffect} from 'react'
 import { getUserData, profileSubmission } from '../../api/userApi'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../store/Store'
-import { useNavigate } from 'react-router-dom'
 import { userLogOut } from '../../store/slice/AuthSlice'
 import { Toaster,toast } from 'sonner'
 import SideBar from '../../components/user/SideBar'

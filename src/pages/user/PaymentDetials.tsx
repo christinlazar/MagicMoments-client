@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { Toaster,toast } from 'sonner'
 import SideBar from '../../components/user/SideBar'
 import { fetchBookingDetials } from '../../api/userApi'

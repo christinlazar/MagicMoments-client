@@ -13,7 +13,6 @@ function Services() {
     useEffect(()=>{
       const getvendorData = async() =>{
           const response = await getVendorData()
-          console.log("vendor",vendorData)
           setvendordata(response?.data.data)
       }
       getvendorData()
@@ -51,6 +50,7 @@ function Services() {
     const deleteService = async(service:string) =>{
       const response = await deleteTheService(service)
       if(response?.data.deletedService){
+        setRefresh(true)
       }
     }
    

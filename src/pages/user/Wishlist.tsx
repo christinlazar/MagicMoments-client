@@ -1,10 +1,10 @@
 
 
-import React,{useCallback, useEffect, useState} from 'react'
-import { fetchPlaces, getVendors, getVendorsFromWishlist, removeVendorWishlist, searchVendor } from '../../api/userApi'
+import React,{useEffect, useState} from 'react'
+import {  getVendorsFromWishlist, removeVendorWishlist, searchVendor } from '../../api/userApi'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsLoadingFalse, setIsLoadingTrue, setWishListDisplayfalse, setWishListDisplayTrue } from '../../store/slice/AuthSlice';
+import { setWishListDisplayfalse, setWishListDisplayTrue } from '../../store/slice/AuthSlice';
 import { RootState } from '../../store/Store';
 
 
