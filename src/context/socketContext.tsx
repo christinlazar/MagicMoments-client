@@ -51,14 +51,12 @@ export const SocketContextProvider: React.FC<SocketContextProviderProps> = ({ ch
          verifiedVendorInfo = jwtDecode(vendorInfo as string )
 
       }
-        console.log("verifieduser",verifiedUserInfo)
-        console.log("verifiedVendor",verifiedVendorInfo)
+
         const usersId = verifiedUserInfo?.id
         const vendorsId = verifiedVendorInfo?.id
 
         const sendingId = usersId != null ? usersId : vendorsId
-      console.log("sendingId is",sendingId)
-      const socket: Socket = io("http://localhost:5000",{
+      const socket: Socket = io("https://adorehome.site/api",{
         query:{
             userId:sendingId
         }

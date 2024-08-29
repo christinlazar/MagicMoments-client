@@ -33,7 +33,7 @@ function BookingDetials() {
     const [refresh,setRefresh] = useState(false)
     const [isUploading,setIsUploading] = useState<boolean>(false)
     const [isOverlayVisible,setIsOverlayVisisble] = useState<boolean>(false)
-    const userInfo = useSelector((state:RootState)=>state.auth.userInfo)
+    const userInfo = useSelector((state:RootState)=>state?.auth.userInfo)
     useEffect(()=>{
         const fetchBookingData = async () =>{
         const response =  await fetchBookingDetials()

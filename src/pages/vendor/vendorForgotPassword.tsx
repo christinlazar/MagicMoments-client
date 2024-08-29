@@ -24,7 +24,6 @@ function VendorForgotPassword() {
 
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
         try {
-            
            e.preventDefault()
            if(email.trim() == ''){
             return toast.error("Field can't be empty")
@@ -35,6 +34,8 @@ function VendorForgotPassword() {
                 if(formRef.current){
                     formRef.current.style.display = "none"
                 }
+            }else{
+              toast.error("Email is incorrect")
             }
         } catch (error:unknown) {
           console.error(error)
@@ -51,7 +52,7 @@ function VendorForgotPassword() {
     const sendOtp = async (e:React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault()
         const response = await verifyForgetotp(otp)
-        console.log(response?.data)
+        console.log("response.data?",response?.data)
         if(response?.data.success){
         navigate('/vendor/changePassword',{state:{show:true}})
         }else if(response?.data.success == false){
@@ -72,6 +73,7 @@ function VendorForgotPassword() {
   return (
     
 <div className="flex h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style={{ backgroundImage: `url(${RegisterImage})` }}>
+<Toaster richColors position='bottom-right' />
   {
     query && (
       <div  style={{display:'block'}} className="rounded-xl bg-white bg-opacity-20 m-20 my-12 px-16 py-30 shadow-lg backdrop-blur-[2px] max-sm:px-4" ref={formRef} >
