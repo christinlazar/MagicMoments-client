@@ -1,9 +1,11 @@
 import axios,{AxiosInstance} from 'axios'
 import { Role } from '../../interfaces/TypesAndInterfaces';
 const Api:AxiosInstance = axios.create({
-    baseURL:'https://adorehome.site/api',
+    // baseURL:'https://adorehome.site/api',
+    baseURL:'http://localhost:5000/api',
     withCredentials:true
 }) 
+localStorage.debug = '*';
 
 Api.interceptors.request.use(
     async config => {
