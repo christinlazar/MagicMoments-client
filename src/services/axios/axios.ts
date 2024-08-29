@@ -9,7 +9,7 @@ localStorage.debug = '*';
 Api.interceptors.request.use(
     async config => {
         const accessToken = JSON.parse(localStorage.getItem('accessToken') as string)
-        const adminAccessToken = JSON.parse(localStorage.getItem('adminAccessToken') as string )
+        const adminAccessToken = localStorage.getItem('adminAccessToken') 
         const userInfo = JSON.parse(localStorage.getItem('userInfo')as string)
         const adminInfo = JSON.parse(localStorage.getItem('adminInfo') as string) 
         const vendorInfo = JSON.parse(localStorage.getItem('vendorInfo') as string) 
