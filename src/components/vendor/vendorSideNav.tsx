@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom'
 import { adminLogOut, userLogOut, vendorLogOut } from '../../store/slice/AuthSlice';
 import {  useDispatch } from 'react-redux';
@@ -9,10 +9,12 @@ const VendorSidebar = () => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
-//   const logOut = async () =>{
-//     dispatch(vendorLogOut())
-//      navigate('/vendor/vendorLogin')
-// }
+  useEffect(()=>{
+
+  },[])
+
+
+
   return (
     <>
     <button
@@ -45,6 +47,7 @@ const VendorSidebar = () => {
           <ul className="space-y-2 font-medium">
           <li>
               <Link to='/vendor/vendorStore'
+              onClick={()=>setIsOpen(false)}
                 className="flex items-center p-2 text-gray-900 hover:text-cyan-950  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-apps mt-3"></i>
@@ -53,6 +56,7 @@ const VendorSidebar = () => {
           </li>
           <li>
               <Link to='/vendor/services'
+               onClick={()=>setIsOpen(false)}
                 className="flex items-center p-2 text-gray-900 hover:text-cyan-950  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                <i className="fi fi-rr-mailbox mt-3"></i>
@@ -61,7 +65,7 @@ const VendorSidebar = () => {
           </li>
             <li>
               <Link to='/vendor/eventBookings'
-          
+             onClick={()=>setIsOpen(false)}
                 className="flex items-center p-2 text-gray-900 hover:text-cyan-950  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className ="fi fi-rr-calendar-day mt-3"></i>
@@ -70,7 +74,8 @@ const VendorSidebar = () => {
             </li>
             <li>
               <Link to='/vendor/addlocation'
-          
+             onClick={()=>setIsOpen(false)}
+
                 className="flex items-center p-2 text-gray-900 hover:text-cyan-950 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-marker mt-3"></i>
@@ -80,6 +85,8 @@ const VendorSidebar = () => {
             <li>
               <Link
              to='/vendor/addPhotos'
+             onClick={()=>setIsOpen(false)}
+
                 className="flex items-center p-2 text-gray-900 hover:text-cyan-950  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className ="fi fi-rr-images"></i>
@@ -88,6 +95,7 @@ const VendorSidebar = () => {
             </li>
             <li>
               <Link to='/vendor/addVideos'
+             onClick={()=>setIsOpen(false)}
            
                 className="flex items-center p-2 text-gray-900 hover:text-cyan-950  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
@@ -98,6 +106,8 @@ const VendorSidebar = () => {
             <li>
               <Link
                 to="/vendor/dateAvailability"
+             onClick={()=>setIsOpen(false)}
+
                 className="flex items-center p-2 text-gray-900 hover:text-cyan-950  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fi fi-rr-calendar-days mt-1"></i>
