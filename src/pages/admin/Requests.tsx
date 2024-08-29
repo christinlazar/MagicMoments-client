@@ -20,7 +20,6 @@ interface Vendor{
 }
 
 function Vendors() {
-    const [isBlocked,setIsBlocked] = useState<boolean>(false)
     const [requests,setRequests] = useState<Vendor[]>([])
     const [isLoading,setIsLodaing] = useState<boolean>(true)
     const [acceptReq,setAcceptReq] = useState<boolean>(false)
@@ -45,6 +44,11 @@ function Vendors() {
           }
        }
           fetchData()
+          return()=>{
+            setAcceptReq(false)
+            setRejectReq(false)
+
+          }
       },[isLoading,acceptReq,rejectReq])
       const acceptRequest = async (requestId:string) =>{
         try {

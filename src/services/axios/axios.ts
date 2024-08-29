@@ -15,7 +15,7 @@ Api.interceptors.request.use(
         const vendorInfo = JSON.parse(localStorage.getItem('vendorInfo') as string) 
         const userOtp = localStorage.getItem('userOtp') 
         const vendorOtp = localStorage.getItem('vendorOtp') as string
-        const vendorAccessToken = JSON.parse(localStorage.getItem('vendorAccessToken') as string) 
+        const vendorAccessToken = localStorage.getItem('vendorAccessToken')  
         
         if(accessToken && userInfo  && !userOtp && !vendorOtp && !window.location.pathname.includes('/admin') && !window.location.pathname.includes('/vendor') ){
             console.log("for user")
