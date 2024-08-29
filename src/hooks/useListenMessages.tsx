@@ -4,9 +4,7 @@ import { Socket } from 'socket.io-client';
 import { setMessages } from '../store/slice/AuthSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { Toaster,toast } from 'sonner';
-import { setUserNotifications,setVendorNotifications } from '../store/slice/AuthSlice';
-import CustomToast from '../customToasts/CustomToast';
+import {toast } from 'sonner';
 //@ts-ignore
 import notificationSound from '../assets/sounds/mixkit-positive-notification-951.wav'
 interface SocketContextValue {
