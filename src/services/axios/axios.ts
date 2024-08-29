@@ -13,8 +13,8 @@ Api.interceptors.request.use(
         const userInfo = JSON.parse(localStorage.getItem('userInfo')as string)
         const adminInfo = JSON.parse(localStorage.getItem('adminInfo') as string) 
         const vendorInfo = JSON.parse(localStorage.getItem('vendorInfo') as string) 
-        const userOtp = JSON.parse(localStorage.getItem('userOtp') as string) 
-        const vendorOtp = JSON.parse(localStorage.getItem('vendorOtp') as string) 
+        const userOtp = localStorage.getItem('userOtp') 
+        const vendorOtp = localStorage.getItem('vendorOtp') as string
         const vendorAccessToken = JSON.parse(localStorage.getItem('vendorAccessToken') as string) 
         
         if(accessToken && userInfo  && !userOtp && !vendorOtp && !window.location.pathname.includes('/admin') && !window.location.pathname.includes('/vendor') ){
