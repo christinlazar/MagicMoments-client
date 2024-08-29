@@ -30,7 +30,9 @@ const GoogleAuthSignup = ({userlogin,user}:googleAuthProps) =>{
 
     const handleGoogleAuth:any = useGoogleLogin({
         onSuccess:async (tokenResponse) =>{
+            console.log("In handle googleauth")
         if(user){
+            console.log("In if",user,"userlogin",userlogin)
             if(!userlogin){
                 const result = await gsignUp(tokenResponse)
             if(!result?.data.data){
@@ -42,8 +44,8 @@ const GoogleAuthSignup = ({userlogin,user}:googleAuthProps) =>{
                 },2000)
             }
             }else{
+            console.log("In else")
                 const result = await glogin(tokenResponse)
-            
                 const password = '@magicmoments'
                 const res = await userLogin(result.email,password)
               
