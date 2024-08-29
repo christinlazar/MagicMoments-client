@@ -45,16 +45,16 @@ const GoogleAuthSignup = ({userlogin,user}:googleAuthProps) =>{
             }
             }else{
             console.log("In else")
-                const result = await glogin(tokenResponse)
-                const password = '@magicmoments'
-                const res = await userLogin(result.email,password)
+                // const result = await glogin(tokenResponse)
+                // const password = '@magicmoments'
+                // const res = await userLogin(result.email,password)
               
-                if(res?.data.success){
-                    dispatch(setUserCredentials(res.data.accessToken))
-                    navigate('/',{state:{success:true}})
-                }else{
-                    toast.error("This user havent been signed up through google signup")
-                }
+                // if(res?.data.success){
+                //     dispatch(setUserCredentials(res.data.accessToken))
+                //     navigate('/',{state:{success:true}})
+                // }else{
+                //     toast.error("This user havent been signed up through google signup")
+                // }
             }
         }
         }
