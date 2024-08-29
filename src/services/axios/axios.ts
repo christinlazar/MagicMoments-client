@@ -8,14 +8,14 @@ localStorage.debug = '*';
 
 Api.interceptors.request.use(
     async config => {
-        const accessToken = localStorage.getItem('accessToken')
-        const adminAccessToken = localStorage.getItem('adminAccessToken')
-        const userInfo = localStorage.getItem('userInfo')
-        const adminInfo = localStorage.getItem('adminInfo')
-        const vendorInfo = localStorage.getItem('vendorInfo')
-        const userOtp = localStorage.getItem('userOtp')
-        const vendorOtp = localStorage.getItem('vendorOtp')
-        const vendorAccessToken = localStorage.getItem('vendorAccessToken')
+        const accessToken = JSON.parse(localStorage.getItem('accessToken') as string)
+        const adminAccessToken = JSON.parse(localStorage.getItem('adminAccessToken') as string )
+        const userInfo = JSON.parse(localStorage.getItem('userInfo')as string)
+        const adminInfo = JSON.parse(localStorage.getItem('adminInfo') as string) 
+        const vendorInfo = JSON.parse(localStorage.getItem('vendorInfo') as string) 
+        const userOtp = JSON.parse(localStorage.getItem('userOtp') as string) 
+        const vendorOtp = JSON.parse(localStorage.getItem('vendorOtp') as string) 
+        const vendorAccessToken = JSON.parse(localStorage.getItem('vendorAccessToken') as string) 
         
         if(accessToken && userInfo  && !userOtp && !vendorOtp && !window.location.pathname.includes('/admin') && !window.location.pathname.includes('/vendor') ){
             console.log("for user")
