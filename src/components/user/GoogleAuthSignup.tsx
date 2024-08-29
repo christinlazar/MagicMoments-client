@@ -48,7 +48,9 @@ const GoogleAuthSignup = ({userlogin,user}:googleAuthProps) =>{
                 const result = await glogin(tokenResponse)
                 const password = '@magicmoments'
                 const res = await userLogin(result.email,password)
-              
+                if(res?.data.gAuthFailed){
+                    return toast.error("Can't find such User")
+                }
                 if(res?.data.success){
                     dispatch(setUserCredentials(res.data.accessToken))
                     navigate('/',{state:{success:true}})

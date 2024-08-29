@@ -40,9 +40,7 @@ export const verifyOtp = async(otp:string):Promise<any | undefined> =>{
 }
 export const userLogin = async(email:string,password:string) =>{
     try {
-     
         const res = await Api.post(userEndpoint.Login,{email,password})
-     
         if(res.data.success){
             localStorage.setItem('accessToken',JSON.stringify(res.data.accessToken))
         }
