@@ -6,10 +6,11 @@ import { verifyForgotOtp } from '../../api/userApi'
 function ForgotPasswordOtp() {
     const [modalOn,setModal] = useState<boolean>(true)
     const [otp,setOtp] = useState<string>('')
-
+    const [count,setCount] = useState<number>(1)
     const[resend,setResend] = useState<boolean>(false)
     const navigate = useNavigate()
 
+  
     function closeModal(){
         setModal(false)
         navigate('/login',{state:{toLogin:true}})
@@ -20,6 +21,17 @@ function ForgotPasswordOtp() {
         const res = await verifyForgotOtp(otp)
         if(res?.data.success){
             navigate('/changePassword',{state:{show:true}})
+        }else{
+          if(res?.data.success == false){
+            toast.error("Entered password is incorrect")
+            setCount(count+1)
+            if(count == 3){
+              toast.error("3 attempts has been failed,please go back and try again")
+              setTimeout(()=>{
+                navigate('/login')
+              },3000)
+            }
+          }
         }
       } catch (error:Error | any) {
       console.error(error)

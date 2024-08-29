@@ -10,7 +10,7 @@ function VerifyOTPmodal() {
     const navigate = useNavigate()
     const resendBtnRef = useRef<HTMLButtonElement>(null)
     const sendBtnRef = useRef<HTMLButtonElement>(null)
-    const [count,setCount] = useState(1)
+    
     useEffect(() => {
       if (timeLeft <= 0){
         if(resendBtnRef.current && sendBtnRef.current){
@@ -66,13 +66,6 @@ function VerifyOTPmodal() {
         }
       }else{
          toast.error("Enterd otp is incorrect")
-         setCount(count+1)
-         if(count == 3){
-          toast.error("3 attempts has been failed,please go back and try again")
-          setTimeout(()=>{
-            navigate('/login')
-          },3000)
-         }
       }
     }
   return (
