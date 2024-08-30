@@ -42,7 +42,7 @@ export const userLogin = async(email:string,password:string) =>{
     try {
         const res = await Api.post(userEndpoint.Login,{email,password})
         if(res.data.success){
-            localStorage.setItem('accessToken',JSON.stringify(res.data.accessToken))
+            localStorage.setItem('accessToken',res.data.accessToken)
         }
         return res
     } catch (error) {

@@ -37,12 +37,7 @@ function AdminLogin() {
             
         }
     }
-    const showError1 = () =>{
-
-    }
-    const showError2 = () =>{
-
-    }
+ 
   return (
     <div className="flex h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style={{ backgroundImage: `url(${RegisterImage})` }}>
     <Toaster richColors position="bottom-right" />
@@ -57,7 +52,7 @@ function AdminLogin() {
           <label className='font-serif text-cyan-950 text-xs'>Email</label>
           <div className="mb-4 text-lg">
             <input
-              onBlur={showError1}
+
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm"
@@ -68,7 +63,7 @@ function AdminLogin() {
           <label className='font-serif text-cyan-950 text-xs'>Password</label>
           <div className="mb-4 text-lg">
             <input
-              onBlur={showError2}
+  
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="bg-white bg-opacity-10 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none sm:text-sm"
