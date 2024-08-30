@@ -46,10 +46,11 @@ export const SocketContextProvider: React.FC<SocketContextProviderProps> = ({ ch
       let verifiedVendorInfo:any
       if(userInfo != null){
          verifiedUserInfo = jwtDecode(userInfo as string)
+         console.log("verideidUser",verifiedUserInfo)
       }
       if(vendorInfo != null){
          verifiedVendorInfo = jwtDecode(vendorInfo as string )
-
+         console.log("verideidVendor",verifiedVendorInfo)
       }
 
         const usersId = verifiedUserInfo?.id
