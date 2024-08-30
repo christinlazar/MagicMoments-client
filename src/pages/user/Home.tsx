@@ -75,7 +75,7 @@ function Home() {
       <p  className='font-montserrat font-bold text-xs m-2 text-center hover:cursor-pointer'>SEE ALL VENDORS</p>
     </div>
     <div className='flex items-center justify-center'>
-      <p className='font-montserrat text-xs m-0 w-full sm:w-1/2 sm:ms-16 text-center sm:text-left'>See All Photographers matching your Style & Budget</p>
+      <p className='font-montserrat text-xs m-0 w-full sm:w-1/2 sm:ms-8 text-center sm:text-left'>See All Photographers matching your Style & Budget</p>
     </div>
   </div>
 </div>
