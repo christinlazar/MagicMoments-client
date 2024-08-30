@@ -75,7 +75,12 @@ export const VideoCall = () => {
         const peer = new Peer({
             initiator: true,
             trickle: false,
-            stream: stream
+            stream: stream,
+            config: {
+              iceServers: [
+                  { urls: 'stun:stun.l.google.com:19302' },
+              ]
+          }
         });
     
         peer.on("signal", (data: any) => {
@@ -86,6 +91,11 @@ export const VideoCall = () => {
                 name: name
             });
         });
+        
+        peer.on('iceStateChange', (state) => {
+          console.log('ICE State Change:', state);
+        });
+        
     
         peer.on("stream", (incomingStream: MediaStream) => {
             if (userVideo.current) {
