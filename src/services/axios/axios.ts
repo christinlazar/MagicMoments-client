@@ -5,7 +5,6 @@ const Api:AxiosInstance = axios.create({
     withCredentials:true
 }) 
 localStorage.debug = '*';
-
 Api.interceptors.request.use(
     async config => {
         const accessToken = localStorage.getItem('accessToken') 
@@ -16,15 +15,11 @@ Api.interceptors.request.use(
         const userOtp = localStorage.getItem('userOtp') as string
         const vendorOtp = localStorage.getItem('vendorOtp') as string
         const vendorAccessToken = localStorage.getItem('vendorAccessToken')  
-        
         if(accessToken && userInfo  && !userOtp && !vendorOtp && !window.location.pathname.includes('/admin') && !window.location.pathname.includes('/vendor') ){
-            console.log("for user")
             config.headers.Authorization = `Bearer ${accessToken}`
         }else if(adminAccessToken && adminInfo && !userOtp && !vendorOtp && window.location.pathname.includes('/admin') ){
-            console.log("for admin")
             config.headers.Authorization = `Bearer ${adminAccessToken}`
         }else if( vendorAccessToken && vendorInfo && !userOtp && !vendorOtp ){
-            console.log("for vendor")
                  config.headers.Authorization = `Bearer ${vendorAccessToken}`
         }
         return config
@@ -38,8 +33,6 @@ Api.interceptors.response.use(
         const originalRequest = error.config;
         const originalRequestForAdmin = error.config
         const originalRequestForVendor = error.config
-        console.log("error is",error)
-        console.log("response data is",error.response.data)
         if(error.response.status == 401 && error.response.data.userBlocked){
             localStorage.removeItem('userInfo')
             localStorage.removeItem('accessToken')
@@ -52,9 +45,7 @@ Api.interceptors.response.use(
         }
         if(error.response.status == 401 && error.response.data.role == Role.User && !originalRequest._retry){
             originalRequest._retry = true
-            console.log("getting here reason:user err");
             const response = await Api.post('user/refresh-token',{},{withCredentials:true})
-            console.log("response is",response)
             if(response.status == 200 && response.data.refresh){
                 localStorage.setItem('accessToken',response.data.accessToken);
                 Api.defaults.headers.common['Authorization'] = `Bearer ` + response.data.accessToken
@@ -68,14 +59,10 @@ Api.interceptors.response.use(
             }
         }else if(error.response.status == 401 && error.response.data.role == Role.Admin &&  !originalRequestForAdmin._retry ){
             originalRequestForAdmin._retry = true
-            console.log("from here we can go for a request")
             const response = await Api.post('admin/refresh-token',{},{withCredentials:true})
-            console.log("res is",response)
             if(response.status == 200 && response.data.refresh){
-                console.log("setting admin access")
                 localStorage.setItem('adminAccessToken',response.data.accessToken);
                 Api.defaults.headers.common['Authorization'] = `Bearer ` + response.data.accessToken
-                console.log("going for original request")
                 return Api(originalRequest)
             }else if(!response.data.refresh && response.data.role == Role.Admin){
                 alert("Admin Session has been expired, please login again")
@@ -85,11 +72,8 @@ Api.interceptors.response.use(
             }
         }else if(error.response.status == 401 && error.response.data.role == Role.Vendor  &&  !originalRequestForVendor._retry ){
             originalRequestForVendor._retry = true
-            console.log("going to refresh vendor token");
             const response = await Api.post('vendor/refresh-token',{},{withCredentials:true})
-            console.log(response)
             if(response.status == 200 && response.data.refresh){
-                console.log("ivde vannatundarnnu")
                 localStorage.setItem('vendorAccessToken',response.data.vendorAccessToken)
                 Api.defaults.headers.common['Authorization'] = `Bearer ` + response.data.vendorAccessToken
                 return Api(originalRequest)

@@ -19,6 +19,13 @@ function ForgotPasswordOtp() {
       try {
         e.preventDefault()
         const res = await verifyForgotOtp(otp)
+        console.log("resdata",res?.data)
+        if(res?.data.sessionExpired){
+          toast.error("Session has been expired please go back an try again")
+          setTimeout(()=>{
+            navigate('/login')
+          },3000)
+        }
         if(res?.data.success){
             navigate('/changePassword',{state:{show:true}})
         }else{
