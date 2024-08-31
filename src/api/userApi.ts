@@ -3,6 +3,7 @@ import Api from '../services/axios/axios'
 import userEndpoint from '../services/endpoints/userEndpoint'
 import { bookingDataInterface } from '../pages/user/SingleVendorView'
 import axios from 'axios'
+import { jwtDecode } from 'jwt-decode'
 export const signup = async(name:string,email:string,phone:number,password:string,confirmPassword:string) =>{
     try {
       
@@ -22,12 +23,14 @@ export const verifyOtp = async(otp:string):Promise<any | undefined> =>{
     try {
        
         let token = localStorage.getItem('userOtp')
-      
+        const decoded =  jwtDecode(token as string)
+        console.log("decoded in frontend",decoded)
         const res = await Api.post(userEndpoint.verifyOtp,{otp},{
             headers:{
                 'authorization':`Bearer ${token}`
             }
         });
+        console.log(" in verifying otp",res)
         if(res.data.success){
             localStorage.removeItem('userOtp')
         }

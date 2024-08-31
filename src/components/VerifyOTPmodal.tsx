@@ -36,6 +36,7 @@ function VerifyOTPmodal() {
         console.log("getting in sendOtp")
         e.preventDefault()
         const res = await verifyOtp(otp)
+        console.log("ressss",res)
         if(res){
           if(res.data.success){
               navigate('/login',{state:{success:true}})
