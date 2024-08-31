@@ -13,7 +13,7 @@ Api.interceptors.request.use(
         const userInfo = JSON.parse(localStorage.getItem('userInfo')as string)
         const adminInfo = JSON.parse(localStorage.getItem('adminInfo') as string) 
         const vendorInfo = JSON.parse(localStorage.getItem('vendorInfo') as string) 
-        const userOtp = localStorage.getItem('userOtp') 
+        const userOtp = localStorage.getItem('userOtp') as string
         const vendorOtp = localStorage.getItem('vendorOtp') as string
         const vendorAccessToken = localStorage.getItem('vendorAccessToken')  
         
