@@ -12,7 +12,7 @@ export const adminLogin = async (email:string,password:string) =>{
 try {
     const res = await Api.post(adminRoutes.adminlogin,{email,password})
     if(res?.data?.success){
-        localStorage.setItem('adminAccessToken',JSON.stringify(res.data.accessToken))
+        localStorage.setItem('adminAccessToken',res.data.accessToken)
     }
     return res
 } catch (error) {
