@@ -113,7 +113,7 @@ const  Vendors:React.FC = () => {
     const indexOfLastVendor = currentPage * vendorsPerPage
     const indexOfFirstVendor = indexOfLastVendor - vendorsPerPage 
     const currentVendors = vendors.slice(indexOfFirstVendor,indexOfLastVendor)
-
+    console.log("curr vendors",currentVendors)
     const handlePageChange = (pageNumber:number) =>{
         if(pageNumber > Math.ceil(vendors.length/vendorsPerPage)){
          

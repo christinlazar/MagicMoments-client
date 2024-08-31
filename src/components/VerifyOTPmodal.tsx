@@ -33,7 +33,6 @@ function VerifyOTPmodal() {
     }
     async function sendOtp(e:React.FormEvent<HTMLFormElement>){
       try {
-        console.log("getting in sendOtp")
         e.preventDefault()
         const res = await verifyOtp(otp)
         console.log("ressss",res)
