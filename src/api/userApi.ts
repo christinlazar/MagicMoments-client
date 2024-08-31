@@ -10,7 +10,7 @@ export const signup = async(name:string,email:string,phone:number,password:strin
      
         const token = res.data.token
    
-         localStorage.setItem('userOtp',JSON.stringify(token))
+         localStorage.setItem('userOtp',token)
         return res
     } catch (error) {
         if(error instanceof Error){

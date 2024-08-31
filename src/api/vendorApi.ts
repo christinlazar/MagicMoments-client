@@ -7,7 +7,7 @@ import vendorEndPoints from "../services/endpoints/vendorEndpoint";
 export const vendorSignup = async(companyName:string,companyEmail:string,password:string,place:string,category:string)=>{
         try {
             const result = await Api.post(vendorEndPoints.vendorsignUP,{companyName,companyEmail,password,companyLocation:place,category})
-            localStorage.setItem('vendorOtp',JSON.stringify(result.data.token))
+            localStorage.setItem('vendorOtp',result.data.token)
             return result
         } catch (error) {
            if(error instanceof Error){
