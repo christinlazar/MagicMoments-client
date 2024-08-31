@@ -37,18 +37,23 @@ function VerifyOTPmodal() {
         e.preventDefault()
         const res = await verifyOtp(otp)
         console.log("ressss",res)
-        if(res){
-          if(res.data.success){
-              navigate('/login',{state:{success:true}})
-          }else if(!res.data.success && !res.data.goback){
-            toast.error("Entered otp is incorrect")
-            setOtp('')
-          }else if(res.data.goback){
-            toast.error(res.data.message)
-            setTimeout(()=>{
-              setModal(false)
-              navigate('/register',{state:{toregister:true}})
-            },2000)
+        if(res == false){
+           toast.error("Entered otp is not correct")
+           setOtp('')
+        }else{
+          if(res){
+            if(res.data.success){
+                navigate('/login',{state:{success:true}})
+            }else if(!res.data.success && !res.data.goback){
+              toast.error("Entered otp is incorrect")
+              setOtp('')
+            }else if(res.data.goback){
+              toast.error(res.data.message)
+              setTimeout(()=>{
+                setModal(false)
+                navigate('/register',{state:{toregister:true}})
+              },2000)
+            }
           }
         }
       } catch (error:Error | any) {
