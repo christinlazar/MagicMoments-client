@@ -1,11 +1,7 @@
 
 import Api from "../services/axios/axios";
 import adminRoutes from "../services/endpoints/adminEndPoint";
-interface RootState{
-    auth:{
-        userInfo:string
-    }
-}
+
 
 export const adminLogin = async (email:string,password:string) =>{
    
