@@ -25,6 +25,7 @@ export const verifyOtp = async(otp:string):Promise<any | undefined> =>{
         let token = localStorage.getItem('userOtp')
         const decoded:any =  jwtDecode(token as string)
         console.log("decoded in frontend",decoded)
+        console.log("decoede otp =",decoded.otp)
         if(decoded.otp != otp){
             return false
         }
