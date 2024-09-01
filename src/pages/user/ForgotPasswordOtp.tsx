@@ -30,7 +30,7 @@ function ForgotPasswordOtp() {
             navigate('/changePassword',{state:{show:true}})
         }else{
           if(res?.data.success == false){
-            toast.error("Entered password is incorrect")
+            toast.error("Entered otp is incorrect")
             setCount(count+1)
             if(count == 3){
               toast.error("3 attempts has been failed,please go back and try again")

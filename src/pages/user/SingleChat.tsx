@@ -12,11 +12,7 @@ interface RootState{
       conversations:[]
   }
 }
-interface RootState2{
-  auth:{
-    videoCallRequest:boolean
-  }
-}
+
 const SingleChat = () => {
   const [conv,setConv] = useState<any>([])
   const [message,setmessage] = useState<string>('')
@@ -27,7 +23,7 @@ const SingleChat = () => {
   useListenMessages();
   const conversationData:any = useSelector((state:RootState)=>state.auth.conversations)
 
-  let {conversations,companyName,phoneNumber,dp,routeis,vendorId }= location.state
+  let {companyName,phoneNumber,dp,vendorId} = location.state
 
   useEffect(()=>{
     let isMounted = true;
