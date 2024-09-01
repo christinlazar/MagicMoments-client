@@ -1,6 +1,6 @@
 import React, { useEffect, useState,useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getVendorChat, sendmessage, sendVideoCallReq } from '../../api/userApi';
+import { getVendorChat, sendmessage } from '../../api/userApi';
 import { useDispatch, useSelector } from 'react-redux';
 import {  setMessages } from '../../store/slice/AuthSlice';
 import useListenMessages from '../../hooks/useListenMessages';

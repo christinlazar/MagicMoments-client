@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { Toaster } from 'sonner'
 import VendorSidebar from '../../components/vendor/vendorSideNav'
 import { fetchBookings } from '../../api/vendorApi'

@@ -1,15 +1,11 @@
-import React,{useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import navLogo from '../assets/wedding (2).png'
 import {Link, useLocation,useNavigate} from 'react-router-dom'
 import { useSelector,useDispatch } from 'react-redux';
 import { RootState } from '../store/Store';
 import { userLogOut } from '../store/slice/AuthSlice';
 import { getUserData } from '../api/userApi';
-// interface RootState{
-//   auth:{
-//     userNotifcations:any
-//   }
-// }
+
 interface User{
   _id?:string,
   name:string,

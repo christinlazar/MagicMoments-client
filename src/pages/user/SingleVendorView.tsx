@@ -1,9 +1,8 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { bringThatVendor, editReview, fetchPlaces, getReviews, getUserData, getVendorChat, isExistingBookingRequest, SendBookingRequest, submitReview, wishlist } from '../../api/userApi'
+import { bringThatVendor, editReview, getReviews, getUserData, getVendorChat, isExistingBookingRequest, SendBookingRequest, submitReview, wishlist } from '../../api/userApi'
 import { createPortal } from 'react-dom'
-import { addUnavailableDates } from '../../api/vendorApi'
 import { handleStripePayment,checkIsReqAccepted } from '../../api/userApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast, Toaster } from 'sonner'

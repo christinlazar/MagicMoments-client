@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Toaster,toast } from 'sonner'
 import SideBar from '../../components/user/SideBar'
-import { cancelBookingRequest, fetchBookingDetials, fetchBookingRequests } from '../../api/userApi'
+import { cancelBookingRequest,  fetchBookingRequests } from '../../api/userApi'
 import useListenMessages from '../../hooks/useListenMessages';
 export enum PaymentStatus {
     Pending = 'pending',

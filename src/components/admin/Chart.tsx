@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import  { useEffect, useRef, useState } from 'react'
 import {Line} from 'react-chartjs-2'
 import {Chart as ChartJS,LinearScale,PointElement,LineElement,Filler,Tooltip,Legend,CategoryScale} from 'chart.js'
 import { monthlyBooking, yearlyBooking } from '../../api/adminApi'

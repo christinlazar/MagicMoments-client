@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import {useEffect,useState} from 'react'
 import { Toaster,toast } from 'sonner'
 import { bringVendors ,blockVendor,unblockVendor,acceptVendorReq,rejectVendorReq} from '../../api/adminApi';
 import { useNavigate } from 'react-router-dom';

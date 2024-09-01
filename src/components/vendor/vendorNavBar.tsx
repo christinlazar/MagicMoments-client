@@ -1,30 +1,20 @@
-import React,{useEffect, useState} from 'react'
+import { useState} from 'react'
 import navLogo from '../../assets/wedding (2).png'
-import {Link, useLocation,useNavigate} from 'react-router-dom'
-import { useSelector,useDispatch } from 'react-redux';
-import { RootState } from '../../store/Store';
+import {Link, useNavigate} from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+
 import { vendorLogOut } from '../../store/slice/AuthSlice';
 function VendorNavBar() {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const[linkText,setText] = useState('')
-    const [linkPath,setLinkPath] = useState('')
-    const location = useLocation()
-    const {userInfo} = useSelector((state:RootState)=> state.auth)
-    const {vendorInfo} = useSelector((state:RootState)=>state.auth)
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const toggleDropdown = () => {
-      setIsDropdownOpen(!isDropdownOpen);
-    };
+    
   
     const toggleMobileMenu = () => {
       setIsMobileMenuOpen(!isMobileMenuOpen);
     };
-    const logOut = async () =>{
-           dispatch(vendorLogOut())
-            navigate('/vendor/vendorLogin')
-    }
+   
   return (
     <>
     <nav className="border-gray-200 dark:bg-gray-900 dark:border-gray-700 h-20 border  border-opacity-45 w-screen">
@@ -48,7 +38,7 @@ function VendorNavBar() {
         <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
 
           <li>
-          {/* <Link to='/VendorProfile' className="block py-2 px-3 text-slate-500 rounded hover:bg-purple-500 md:hover:bg-transparent md:border-0 md:hover:text-purple-500 md:p-0 dark:text-white md:dark:hover:text-purple-500 dark:hover:bg-gray-700 dark:hover:text-purple-500 md:dark:hover:bg-transparent font-serif">Profile</Link> */}
+        
           <Link to='/vendor/vendorStore' className="block py-2 px-3 text-slate-500 rounded hover:text-white hover:bg-cyan-950 md:hover:bg-transparent md:border-0 md:hover:text-cyan-950 md:p-0 dark:text-white md:dark:hover:text-cyan-950 dark:hover:bg-gray-700 dark:hover:text-cyan-950 md:dark:hover:bg-transparent font-serif">Store</Link>
           <Link to='/vendor/vendorChat' className="block py-2 px-3 text-slate-500 rounded hover:text-white hover:bg-cyan-950 md:hover:bg-transparent md:border-0 md:hover:text-cyan-950 md:p-0 dark:text-white md:dark:hover:text-cyan-950 dark:hover:bg-gray-700 dark:hover:text-cyan-950 md:dark:hover:bg-transparent font-serif">Message</Link>
           <Link to='/vendor/eventBookings' className="block py-2 px-3 text-slate-950 rounded hover:text-white hover:bg-cyan-950 md:hover:bg-transparent md:border-0 md:hover:text-cyan-950 md:p-0 dark:text-white md:dark:hover:text-cyan-950 dark:hover:bg-gray-700 dark:hover:text-cyan-950 md:dark:hover:bg-transparent font-serif">Bookings</Link>
@@ -66,10 +56,7 @@ function VendorNavBar() {
   </nav>
       <nav className="hidden ps-44 md:block  bg-black bg-gray  dark:bg-gray-900 dark:border-gray-700 h-20 border border-slate-400 border-opacity-45 w-screen">
     <div className="max-w-screen-xl flex flex-wrap items-center justify-start mx-0 py-6 ">
-        {/* <div >
-        <i className="fi fi-rr-home text-2xl mt-2"></i>
-        <span className="flex-1 ms-3 whitespace-nowrap font-serif">Home</span>
-        </div> */}
+       
         <div className='px-10'>
         <i className="fi fi-rr-store-alt text-2xl text-white mt-2"></i>
         <span onClick={()=>navigate('/vendor/vendorStore')} className="flex-1 ms-3 whitespace-nowrap text-sm font-serif font-bold text-slate-200 hover:cursor-pointer">Store</span>

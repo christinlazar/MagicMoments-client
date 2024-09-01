@@ -1,8 +1,6 @@
 
 import { useSelector} from 'react-redux'
 import {Navigate,Outlet} from 'react-router-dom'
-import VendorStoreFront from '../../pages/vendor/vendorStoreFront'
-import VendorSidebar from './vendorSideNav'
 import VendorNavBar from './vendorNavBar'
 
 interface RootState{

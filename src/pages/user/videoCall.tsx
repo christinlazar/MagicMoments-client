@@ -10,7 +10,7 @@ import Peer from 'simple-peer'
 import { SocketContext } from '../../context/socketContext';
 import { IconButton, TextField } from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/Assignment'
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 interface SocketContextValue {

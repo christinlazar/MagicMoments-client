@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react'
-
-import React  from 'react'
 import Chart from '../../components/admin/Chart'
 import { getUsersVendors, weeklyBooking, yearlyBooking } from '../../api/adminApi'
 

@@ -1,6 +1,5 @@
 import React, { useEffect, useState ,useRef} from 'react'
 import {useNavigate} from 'react-router-dom'
-// import { ResendOtp, verifyOtp } from '../api/userApi'
 import { vendorVerifyOtp,VendorResendOtp } from '../../api/vendorApi'
 import { Toaster, toast } from 'sonner'
 function VendorVerifyOTPmodal() {

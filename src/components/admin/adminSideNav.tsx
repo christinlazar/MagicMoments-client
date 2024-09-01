@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import {Link, useNavigate} from 'react-router-dom'
-import { adminLogOut, userLogOut } from '../../store/slice/AuthSlice';
+import {Link} from 'react-router-dom'
+import { adminLogOut } from '../../store/slice/AuthSlice';
 import {  useDispatch } from 'react-redux';
 const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const [activeLink,setActiveLink] = useState('/admin/dashboard')
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -19,7 +18,7 @@ const AdminSidebar = () => {
   return (
     <>
     <button
-        onBlur={() => isOpen && toggleSidebar()} // Close sidebar on blur
+        onBlur={() => isOpen && toggleSidebar()} 
         onClick={toggleSidebar}
         type="button"
         className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"

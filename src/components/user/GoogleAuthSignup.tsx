@@ -1,22 +1,15 @@
 
-import {GoogleLogin,CredentialResponse, useGoogleLogin} from '@react-oauth/google'
-import { jwtDecode } from 'jwt-decode'
+import {useGoogleLogin} from '@react-oauth/google'
 import { glogin, gsignUp,userLogin } from '../../api/userApi'
-import { toast, Toaster } from 'sonner'
+import { toast } from 'sonner'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { setUserCredentials } from '../../store/slice/AuthSlice'
 import { useDispatch } from 'react-redux'
-import React from 'react'
-import {FaGoogle} from 'react-icons/fa'
 
 
 
-interface decodeJWT {
-    name: string,
-    email: string,
-    password: string
-}
+
+
 
 interface googleAuthProps {
     userlogin:boolean,
@@ -84,12 +77,7 @@ const GoogleAuthSignup = ({userlogin,user}:googleAuthProps) =>{
   Continue with Google
 </button>
         </>
-        // <GoogleLogin
-        // // onSuccess={(credentialsResponse)=>{
-        // //     gSignUp(credentialsResponse)
-        // // }}
-        // />
-     
+      
     )
 }
 

@@ -3,7 +3,7 @@ import Api from '../services/axios/axios'
 import userEndpoint from '../services/endpoints/userEndpoint'
 import { bookingDataInterface } from '../pages/user/SingleVendorView'
 import axios from 'axios'
-import { jwtDecode, JwtPayload } from 'jwt-decode'
+import { jwtDecode} from 'jwt-decode'
 export const signup = async(name:string,email:string,phone:number,password:string,confirmPassword:string) =>{
     try {
       
@@ -76,7 +76,7 @@ export const ResendOtp = async () =>{
                 }
             })
             if(res){
-              localStorage.setItem('userOtp',res.data.resendedToken )
+              localStorage.setItem('userOtp',res.data.resendedToken)
               return res
             }
         } catch (error) {

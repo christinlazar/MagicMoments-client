@@ -1,10 +1,7 @@
 import React, { useState,useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../store/Store'
 import VendorSidebar from '../../components/vendor/vendorSideNav'
-import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom'
-import VendorNavBar from '../../components/vendor/vendorNavBar'
-import { addStoreDetails, EditStoreDetails, getVendorData } from '../../api/vendorApi'
+import { useLocation, useNavigate } from 'react-router-dom'
+import {  EditStoreDetails, getVendorData } from '../../api/vendorApi'
 import {toast,Toaster} from 'sonner'
 import useListenMessages from '../../hooks/useListenMessages'
 function EditDetails() {

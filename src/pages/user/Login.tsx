@@ -14,7 +14,7 @@ function Login() {
     useEffect(()=>{
       const {state} = location
       if(state){
-        // toast.success("User registration has been completed successfully")
+      
       }
       return ()=> state
     },[location])

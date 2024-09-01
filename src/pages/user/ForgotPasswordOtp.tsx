@@ -1,5 +1,5 @@
 
-import React,{useState,useRef,useEffect} from 'react'
+import React,{useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Toaster,toast } from 'sonner'
 import { verifyForgotOtp } from '../../api/userApi'
@@ -7,7 +7,6 @@ function ForgotPasswordOtp() {
     const [modalOn,setModal] = useState<boolean>(true)
     const [otp,setOtp] = useState<string>('')
     const [count,setCount] = useState<number>(1)
-    const[resend,setResend] = useState<boolean>(false)
     const navigate = useNavigate()
 
   

@@ -2,7 +2,6 @@
 import Api from "../services/axios/axios";
 import adminRoutes from "../services/endpoints/adminEndPoint";
 
-
 export const adminLogin = async (email:string,password:string) =>{
    
 try {
