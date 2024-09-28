@@ -22,7 +22,7 @@ root.render(
         {/* <React.StrictMode> */}
         <LoadScript googleMapsApiKey={`AIzaSyDa_HbPdvHTt8uyThrunic0VZM8OwPeZko`}  loadingElement={<LoadingComponent/>} >
   <SocketContextProvider>
-  <GoogleOAuthProvider clientId={clientid}>
+  <GoogleOAuthProvider clientId={`312526383538-mrj7a9pv11692soregh0onr4b1e5qjca.apps.googleusercontent.com`}>
              <App />
   </GoogleOAuthProvider>
 
