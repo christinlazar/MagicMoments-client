@@ -15,6 +15,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+
 const clientid:any = process.env.REACT_APP_CLIENT_ID
 root.render(
   <Provider store={store}>
