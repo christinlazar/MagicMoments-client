@@ -1,7 +1,7 @@
 import axios,{AxiosInstance} from 'axios'
 import { Role } from '../../interfaces/TypesAndInterfaces';
 const Api:AxiosInstance = axios.create({
-    baseURL:'https://adorehome.site/api',
+    baseURL:'https://genex.site/api',
     withCredentials:true
 }) 
 localStorage.debug = '*';
