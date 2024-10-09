@@ -57,7 +57,8 @@ export const SocketContextProvider: React.FC<SocketContextProviderProps> = ({ ch
         const vendorsId = verifiedVendorInfo?.id
 
         const sendingId = usersId != null ? usersId : vendorsId
-      const socket: Socket = io("https://genex.site",{
+      // const socket: Socket = io("https://genex.site",{
+      const socket : Socket = io("http://localhost:5000",{
         query:{
             userId:sendingId
         }

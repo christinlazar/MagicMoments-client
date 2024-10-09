@@ -344,16 +344,16 @@ return ()=>{
       <div className='w-screen overflow-x-hidden xl:w-1/2 xl:mx-20 scrollbar-none'>
         <div className='xl:grid grid-rows-6 grid-flow-col gap-1 xl:h-[75%] rounded-md'>
           <div className='border row-span-6 col-span-2 text-center'>
-            <img className="h-full object-cover" src={vendorDetail?.photos[0]} alt="Vendor photo" />
+            <img className="h-full object-cover" src={vendorDetail?.photos[0]} alt="Vendor photo" loading='lazy' />
           </div>
           <div className='border row-span-3 text-center overflow-hidden col-span-2'>
-            <img className="w-full object-cover" src={vendorDetail?.photos[1]} alt="Vendor photo" />
+            <img className="w-full object-cover" src={vendorDetail?.photos[1]} alt="Vendor photo" loading='lazy' />
           </div>
           <div className='border row-span-3 text-center col-span-3 overflow-hidden'>
-            <img className="w-full object-cover aspect-[5/2.5]" src={vendorDetail?.photos[2]} alt="Vendor photo" />
+            <img className="w-full object-cover aspect-[5/2.5]" src={vendorDetail?.photos[2]} alt="Vendor photo" loading='lazy'/>
           </div>
           <div className='border row-span-3 text-center'>
-            <img className="h-full object-cover" src={vendorDetail?.photos[3]} alt="Vendor photo" />
+            <img className="h-full object-cover" src={vendorDetail?.photos[3]} alt="Vendor photo" loading='lazy' />
           </div>
         </div>
         <div className='border border-gray-600 border-opacity-30 mt-10'></div>

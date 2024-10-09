@@ -13,29 +13,51 @@ import { getVendors } from '../../api/userApi'
 import { Link, useNavigate } from 'react-router-dom'
 import useListenMessages from '../../hooks/useListenMessages'
 import { Toaster } from 'sonner'
+import LoadingComponent from '../../components/LoadingComponent'
 function Home() {
   useListenMessages()
   const [vendors,setVendors] = useState([])
+  const [loaded,setLoaded] = useState(false)
+  const [showLoading,setShowLoading] = useState(true)
   const navigate = useNavigate()
+  const images = [
+    image1,
+    image2,
+    image3,
+    image4,
+    image5,
+    image6
+   ];
   useEffect(()=>{
     const fetchVendors = async () =>{
       const response = await getVendors()
-    
       if(response?.data.data){
         setVendors(response.data.data)
       }
     }
     fetchVendors()
 
-  },[])
-  const images = [
-   image1,
-   image2,
-   image3,
-   image4,
-   image5,
-   image6
-  ];
+    const preloadImages = async () => {
+      await Promise.all(images.map((src) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.src = src;
+          img.onload = resolve;
+          img.onerror = resolve; // Resolve on error to avoid blocking
+        });
+      }));
+      setLoaded(true);
+    };
+
+    preloadImages();
+    const timeout = setTimeout(() => {
+      setShowLoading(false); // Set showLoading to false after 2 seconds
+    }, 2000);
+
+    return () => clearTimeout(timeout);
+  
+
+  },[images])
 
     const goToSingleVendorView = (vendorId:string) =>{
         navigate('/singleVendorView',{state:vendorId})
@@ -46,21 +68,29 @@ function Home() {
     
     <div className="min-h-screen pt-20 bg-white  scrollbar-none overflow-y-auto scroll-smooth">
       <Toaster richColors position='top-center'/>
-      <div className="container mx-auto  px-4 py-4">
-        <div className="flex flex-wrap">
-          {images.map((image, index) => (
-            <div key={index} className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <div className="bg-white border rounded overflow-hidden">
-                <img
-                  src={image}
-                  alt={`Gallery Image ${index + 1}`}
-                  className="w-full h-64 object-cover"
-                />
+      {
+        loaded  ? (
+          <div className="container mx-auto  px-4 py-4">
+          <div className="flex flex-wrap">
+            {images.map((image, index) => (
+              <div key={index} className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
+                <div className="bg-white border rounded overflow-hidden">
+                  <img
+                    src={image}
+                    alt={`Gallery Image ${index + 1}`}
+                    className="w-full h-64 object-cover"
+                    loading='lazy'
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+        ):(
+          <LoadingComponent/>
+        )
+      }
+  
      
       <div className='flex items-center justify-center font-montserrat p-6'>
           <h4 className='text-xl'>BOOKING YOUR WEDDING PHOTOGRAPHER</h4>

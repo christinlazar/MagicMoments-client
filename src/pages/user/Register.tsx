@@ -7,6 +7,7 @@ import VerifyOTPmodal from '../../components/VerifyOTPmodal';
 import {Toaster,toast} from 'sonner'
 import 'react-toastify/dist/ReactToastify.css'
 import GoogleAuthSignup from '../../components/user/GoogleAuthSignup';
+import LoadingComponent from '../../components/LoadingComponent';
 const  Register:React.FC = () => {
 
   const [name,setName] = useState<string>("")
@@ -22,6 +23,8 @@ const  Register:React.FC = () => {
   const [isModalOpen,setIsModalOpen] = useState<boolean>(false)
   const formRef = useRef<HTMLDivElement>(null)
   const location = useLocation()
+  const [loading,setLoading] = useState(true)
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
 
 
@@ -34,6 +37,22 @@ const  Register:React.FC = () => {
       }
     }
   },[location])
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = RegisterImage;
+    img.onload = () => {
+      setImageLoaded(true); // Set image loaded to true after loading
+    };
+
+    // Minimum loading time of 2 seconds
+    const timer = setTimeout(() => {
+      if (imageLoaded) setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [imageLoaded]);
+  
 
   const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
@@ -112,7 +131,9 @@ const showError5 = () =>{
 }
   return (
    
-    <div className="flex scrollbar-none h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat mt-10 p-6 sm:p-20" style={{ backgroundImage: `url(${RegisterImage})` }}>
+    
+      !loading ? (
+        <div className="flex scrollbar-none h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat mt-10 p-6 sm:p-20" style={{ backgroundImage: `url(${RegisterImage})` }}>
   {isModalOpen && (
     <div className="fixed inset-0 bg-gray-700 bg-opacity-50 z-0"></div>
   )}
@@ -208,6 +229,11 @@ const showError5 = () =>{
   </div>
   {isModalOpen && <VerifyOTPmodal />}
 </div>
+      ):(
+        <LoadingComponent/>
+      )
+    
+    
 
   )
 }

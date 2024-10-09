@@ -14,14 +14,29 @@ function VendorLogin() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [isLoading,setIsLoading] = useState(false)
+  const [loading ,setLoading] = useState(true)
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+
     useEffect(()=>{
       const {state} = location
       if(state){
         // toast.success("User registration has been completed successfully")
       }
+      const img = new Image();
+    img.src = RegisterImage;
+    img.onload = () => {
+      setImageLoaded(true); // Set image loaded to true after loading
+    };
+
+    // Minimum loading time of 2 seconds
+    const timer = setTimeout(() => {
+      if (imageLoaded) setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
       
       
-    },[location])
+    },[location,imageLoaded])
     const [email,setEmail] = useState<string>('')
     const [password,setPassword] = useState<string>('')
     const handleSubmit  = async (e:React.FormEvent<HTMLFormElement>) => {
@@ -79,7 +94,7 @@ function VendorLogin() {
 
     <>
     {
-      isLoading ? (
+      isLoading && loading ? (
         <LoadingComponent/>
       ):(
         <div className="flex h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style={{ backgroundImage: `url(${RegisterImage})` }}>

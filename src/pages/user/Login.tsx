@@ -7,10 +7,14 @@ import { useDispatch } from 'react-redux'
 import { setUserCredentials } from '../../store/slice/AuthSlice'
 import {Toaster,toast} from 'sonner'
 import GoogleAuthSignup from '../../components/user/GoogleAuthSignup'
+import LoadingComponent from '../../components/LoadingComponent'
 function Login() {
   const location = useLocation()
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [loading, setLoading] = useState<boolean>(true);
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+  
     useEffect(()=>{
       const {state} = location
       if(state){
@@ -18,6 +22,23 @@ function Login() {
       }
       return ()=> state
     },[location])
+
+    useEffect(() => {
+      const img = new Image();
+      img.src = RegisterImage;
+      img.onload = () => {
+        setImageLoaded(true); // Set image loaded to true after loading
+      };
+  
+      // Minimum loading time of 2 seconds
+      const timer = setTimeout(() => {
+        if (imageLoaded) setLoading(false);
+      }, 1000);
+  
+      return () => clearTimeout(timer);
+    }, [imageLoaded]);
+    
+
     const [email,setEmail] = useState<string>('')
     const [password,setPassword] = useState<string>('')
     const handleSubmit  = async (e:React.FormEvent<HTMLFormElement>) => {
@@ -66,7 +87,9 @@ function Login() {
     }
 
   return (
-    <div className="flex h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style={{ backgroundImage: `url(${RegisterImage})` }}>
+
+     !loading ? (
+      <div className="flex h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat"  style={{ backgroundImage: `url(${RegisterImage})` }}>
   <Toaster richColors position="bottom-right" />
 
   <div className="rounded-xl  bg-white bg-opacity-20 m-4 my-12 px-6 py-10 shadow-lg backdrop-blur-[2px] max-w-md w-full">
@@ -114,6 +137,11 @@ function Login() {
 
   </div>
 </div>
+    ):(
+      <LoadingComponent/>
+    )
+
+    
 
   )
 }

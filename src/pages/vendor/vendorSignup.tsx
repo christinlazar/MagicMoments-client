@@ -5,6 +5,7 @@ import logo from '../../assets/wedding (2).png'
 import VendorVerifyOTPmodal from '../../components/vendor/vendorOtp'
 import RegisterImage from '../../assets/pexels-mateo-bastidas-218645935-11889744.jpg'
 import { vendorSignup } from '../../api/vendorApi'
+import LoadingComponent from '../../components/LoadingComponent'
 function VendorSignup() {
     
   const [companyName,setName] = useState<string>("")
@@ -16,6 +17,9 @@ function VendorSignup() {
   const [isModalOpen,setIsModalOpen] = useState<boolean>(false)
   const formRef = useRef<HTMLDivElement>(null)
   const location = useLocation()
+  const [loading,setLoading] = useState(true)
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+
 
   const BuisnessCategory = ['wedding photography']
   const places = [
@@ -58,6 +62,17 @@ function VendorSignup() {
    
 
   useEffect(()=>{
+    const img = new Image();
+    img.src = RegisterImage;
+    img.onload = () => {
+      setImageLoaded(true); // Set image loaded to true after loading
+    };
+
+    // Minimum loading time of 2 seconds
+    const timer = setTimeout(() => {
+      if (imageLoaded) setLoading(false);
+    }, 1000);
+
   const {state} = location
      if (state) {
       setIsModalOpen(false);
@@ -66,9 +81,10 @@ function VendorSignup() {
       }
     }
     return()=>{
+      clearTimeout(timer)
       setRefresh(false)
     }
-  },[location,refresh])
+  },[location,refresh,imageLoaded])
 
   const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
@@ -129,6 +145,7 @@ function VendorSignup() {
 }
 
   return (
+   !loading ? (
     <div className="flex h-full w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style={{ backgroundImage: `url(${RegisterImage})` }}>
     {isModalOpen && (
       <div className="fixed inset-0 bg-gray-700 bg-opacity-50 z-0"></div>
@@ -210,6 +227,10 @@ function VendorSignup() {
       <VendorVerifyOTPmodal />
     )}
   </div>
+   ):(
+    <LoadingComponent/>
+   )
+    
   
   )
 }
