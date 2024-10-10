@@ -29,6 +29,7 @@ function Home() {
     image6
    ];
   useEffect(()=>{
+    
     const fetchVendors = async () =>{
       const response = await getVendors()
       if(response?.data.data){
@@ -57,7 +58,7 @@ function Home() {
     return () => clearTimeout(timeout);
   
 
-  },[images])
+  },[])
 
     const goToSingleVendorView = (vendorId:string) =>{
         navigate('/singleVendorView',{state:vendorId})
