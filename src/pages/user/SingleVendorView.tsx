@@ -549,7 +549,7 @@ return ()=>{
   </div>
   <div className='m-3 w-full md:w-auto'>
     <button onClick={() => bookNow(vendorDetail?._id)} className='button mt-6 h-10 rounded-full text-sm w-full md:w-auto'>
-      <span>Book now</span>
+      <span>Send a quote</span>
     </button>
   </div>
   <div className='m-3 w-full md:w-auto'>
@@ -659,7 +659,7 @@ document.body
         
 
           <button onClick={()=>bookNow(vendorDetail?._id)} className='button ms-3 mt-6 h-10 rounded-full text-sm'>
-            <span >Book now</span>
+            <span >Send a quote</span>
           </button>
 
           <button onClick={handleChatClick} className='button ms-3 mt-6 h-10 rounded-full text-sm'>
