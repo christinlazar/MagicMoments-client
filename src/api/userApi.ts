@@ -27,7 +27,7 @@ export const verifyOtp = async(otp:string):Promise<any | undefined> =>{
         if(decoded.otp != otp){
             return false
         }
-        const res = await Api.post(userEndpoint.verifyOtp,{otp},{
+        const res = await Api.post(userEndpoint.verifyOtp,{otp },{
             headers:{
                 'authorization':`Bearer ${token}`
             }
