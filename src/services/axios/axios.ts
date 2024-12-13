@@ -33,7 +33,7 @@ Api.interceptors.response.use(
         const originalRequest = error.config;
         const originalRequestForAdmin = error.config
         const originalRequestForVendor = error.config
-        if(error.response.status == 401 && error.response.data.userBlocked){
+        if(error.response.status == 401 && error.response?.data?.userBlocked){
             localStorage.removeItem('userInfo')
             localStorage.removeItem('accessToken')
              window.location.href = "/login"
